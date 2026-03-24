@@ -1,0 +1,23 @@
+data:
+  input_csv: data/sample_taxi_calls.csv
+  processed_csv: outputs/processed_taxi_calls.csv
+  time_column: pickup_datetime
+  zone_column: zone_id
+  demand_column: call_count
+  supply_column: available_taxis
+
+features:
+  use_hour: true
+  use_day_of_week: true
+  use_lag_1: true
+  use_rolling_mean_3: true
+
+model:
+  name: random_forest
+  test_size: 0.2
+  random_state: 42
+
+dispatch:
+  low_threshold: 1.2
+  medium_threshold: 1.5
+  high_threshold: 2.0
