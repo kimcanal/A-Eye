@@ -44,3 +44,6 @@ A-Eye is a capstone project focused on taxi demand prediction and dynamic dispat
 
 ### Module 1 final summary
 - The repository now includes a final summary for Module 1 that ties together the scenario, runnable scaffold, asset analysis, Unity checklist, and result analysis.
+
+### Module 1 compendium
+- A single consolidated Module 1 document now ties together the spec, executable scaffold, asset mapping, results, and next step.

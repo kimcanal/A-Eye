@@ -26,3 +26,6 @@ When the Unity assets are imported, the same scenario and event model can be map
 
 ## Key takeaway
 The Module 1 scaffold is executable and documented, and the downloaded asset pack contains the expected map/object/animation Unity packages needed to take the next step into a real digital twin scene.
+
+## Consolidated document
+The consolidated Module 1 compendium is available at `docs/01_module1_compendium.md`.
