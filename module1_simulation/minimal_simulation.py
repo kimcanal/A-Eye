@@ -2,9 +2,11 @@ from __future__ import annotations
 
 """Minimal runnable scaffold for Module 1.
 
+Role: create a tiny city scenario, move the vehicles for a few steps, and
+write logs that can be inspected later.
+
 This is not a full 3D engine. It is a lightweight simulation skeleton that
-creates the required objects, advances a few time steps, and writes logs so the
-Module 1 requirements are represented in executable form.
+represents the Module 1 requirements in executable form.
 """
 
 from dataclasses import asdict, dataclass

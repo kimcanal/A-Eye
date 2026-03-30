@@ -15,3 +15,6 @@ https://nimble-ceder-40b.notion.site/28_DT_-32317efd202c8158b35ac245c2b4dc73
 
 ## Module 1 workflow checklist
 - `docs/07_unity_workflow_checklist.md` provides a step-by-step Unity setup and scene integration workflow.
+
+## Module 1 code map
+- `docs/08_module1_code_map.md` explains each Module 1 file in simple terms for non-technical readers.
