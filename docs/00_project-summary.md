@@ -38,3 +38,6 @@ A-Eye is a capstone project focused on taxi demand prediction and dynamic dispat
 
 ### Asset analysis
 - A downloaded 3D asset pack has been unpacked and the Kakaomobility Unity packages relevant to Module 1 were identified.
+
+### Module 1 results analysis
+- Module 1 now runs end-to-end in a minimal scaffold and produces JSON logs plus a summary file.
