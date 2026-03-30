@@ -35,3 +35,6 @@ A-Eye is a capstone project focused on taxi demand prediction and dynamic dispat
 2. Add MAPE and more visual diagnostics to Module 3.
 3. Improve Module 4 explanation and scenario linkage.
 4. Align folder naming more closely with the assignment spec if needed.
+
+### Asset analysis
+- A downloaded 3D asset pack has been unpacked and the Kakaomobility Unity packages relevant to Module 1 were identified.
