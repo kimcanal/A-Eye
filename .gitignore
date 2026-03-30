@@ -1,0 +1,12 @@
+.DS_Store
+.venv/
+__pycache__/
+**/__pycache__/
+*.pyc
+.ipynb_checkpoints/
+outputs/
+data/local_taxi_calls.csv
+build/
+dist/
+.idea/
+.vscode/

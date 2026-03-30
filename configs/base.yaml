@@ -1,5 +1,5 @@
 data:
-  input_csv: data/sample_taxi_calls.csv
+  input_csv: data/local_taxi_calls.csv
   processed_csv: outputs/processed_taxi_calls.csv
   time_column: pickup_datetime
   zone_column: zone_id
@@ -16,8 +16,31 @@ model:
   name: random_forest
   test_size: 0.2
   random_state: 42
+  n_estimators: 200
+  metrics_output: outputs/model_metrics.json
+  predictions_output: outputs/predictions.csv
 
 dispatch:
   low_threshold: 1.2
   medium_threshold: 1.5
   high_threshold: 2.0
+  output_csv: outputs/dispatch_recommendations.csv
+
+analysis:
+  zone_summary_output: outputs/zone_demand_summary.csv
+  hour_summary_output: outputs/hourly_demand_summary.csv
+
+visualization:
+  hourly_output: outputs/hourly_demand.png
+  heatmap_output: outputs/zone_hour_heatmap.png
+  prediction_plot_output: outputs/actual_vs_predicted.png
+
+lstm:
+  seq_len: 6
+  hidden_size: 32
+  num_layers: 1
+  batch_size: 32
+  epochs: 50
+  learning_rate: 0.001
+  metrics_output: outputs/lstm_metrics.json
+  predictions_output: outputs/lstm_predictions.csv

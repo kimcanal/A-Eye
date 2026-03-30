@@ -11,6 +11,10 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 import json
 from random import Random
+import sys
+
+# 패키지 내부 스크립트 직접 실행 시 발생하는 Import 에러 방지를 위해 프로젝트 최상위 경로 추가
+sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 from module1_simulation.minimal_stub import DEFAULT_SCENARIO, Scenario
 

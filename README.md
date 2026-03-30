@@ -1,20 +1,73 @@
 # A-Eye
 카카오모빌리티 - AI 기반 택시 수요 예측 및 동적 배차 시스템 (캡스톤디자인)
 
-<img width="2048" height="640" alt="image" src="https://github.com/user-attachments/assets/ce22475a-5c9a-4dcd-9131-886a3480f261" />
+## 프로젝트 개요
+이 저장소는 캡스톤 1차 기준의 오프라인 프로토타입을 담고 있습니다.
 
+- 로컬 택시 수요 데이터 생성
+- 시공간 피처 전처리
+- baseline 수요 예측
+- rule-based 배차 추천
+- 결과 시각화 및 요약 파일 생성
 
-# Notion 링크
-https://nimble-ceder-40b.notion.site/28_DT_-32317efd202c8158b35ac245c2b4dc73
+현재 기준으로 Python 파이프라인은 실행 가능하며, Unity/Module 1은 별도 문서와 스텁 코드가 정리된 상태입니다.
 
-## Module 1 compendium
-- `docs/01_module1_compendium.md` consolidates the Module 1 spec, scaffold, asset analysis, results, and next steps.
+## 빠른 실행
+```bash
+cd /Users/kenny31/Documents/Capstone
+python3 -m venv .venv
+source .venv/bin/activate
+pip install -r requirements.txt
+bash scripts/run_pipeline.sh
+```
 
-## Module 1 team guide
-- `docs/06_team_guide_module1.md` explains what the team should do next for Unity, simulation logic, and documentation.
+## 실행 결과
+파이프라인을 실행하면 아래 산출물이 생성됩니다.
 
-## Module 1 workflow checklist
-- `docs/07_unity_workflow_checklist.md` provides a step-by-step Unity setup and scene integration workflow.
+- `outputs/processed_taxi_calls.csv`
+- `outputs/model_metrics.json`
+- `outputs/predictions.csv`
+- `outputs/dispatch_recommendations.csv`
+- `outputs/hourly_demand.png`
+- `outputs/zone_hour_heatmap.png`
+- `outputs/actual_vs_predicted.png`
+- `outputs/zone_demand_summary.csv`
+- `outputs/hourly_demand_summary.csv`
 
-## Module 1 code map
-- `docs/08_module1_code_map.md` explains each Module 1 file in simple terms for non-technical readers.
+## 폴더 구조
+- `configs/`: 실행 설정
+- `data/`: 샘플/생성 데이터
+- `src/data/`: 로컬 데이터 생성
+- `src/preprocessing/`: 전처리 및 피처 생성
+- `src/prediction/`: baseline, LSTM 예측 코드
+- `src/dispatch/`: 배차 우선순위 계산
+- `src/analysis/`: 요약 CSV 생성
+- `src/visualization/`: 그래프 생성
+- `module1_simulation/`: Module 1 최소 시뮬레이션 스텁
+- `docs/`: 발표/계획/Unity/phase1 문서
+- `references/`: 과제 명세서 원문
+
+## 현재 기준 권장 흐름
+1. `scripts/run_pipeline.sh`로 1차 오프라인 흐름 실행
+2. `outputs/` 결과와 `docs/12_phase1_guide.md` 확인
+3. public dataset으로 교체할 데이터 스키마 정의
+4. 이후 LSTM, 실시간 데이터, Unity 시각화 순으로 확장
+
+## LSTM 관련
+`src/prediction/train_lstm.py`는 PyTorch가 필요합니다.
+
+```bash
+pip install torch
+.venv/bin/python -m src.prediction.train_lstm
+```
+
+이 단계는 선택적인 고도화 단계이며, 기본 파이프라인에는 포함되지 않습니다.
+
+## Module 1 / Unity 문서
+- `docs/01_module1_compendium.md`
+- `docs/06_team_guide_module1.md`
+- `docs/07_unity_workflow_checklist.md`
+- `docs/08_module1_code_map.md`
+
+## 참고 링크
+- Notion: https://nimble-ceder-40b.notion.site/28_DT_-32317efd202c8158b35ac245c2b4dc73
