@@ -15,6 +15,7 @@
 - 실제 3D 시뮬레이터(Unity, Carla, SUMO)는 미구현
 - 시뮬레이션에 필요한 개체와 제약조건을 명세에 맞춰 정의
 - runnable한 최소 시뮬레이션 스켈레톤을 제공
+- 실행 결과로 JSON 로그와 요약 파일을 생성
 
 ## 파일
 - `scenario.md`: 최소 시나리오 정의
@@ -29,6 +30,7 @@ python3 module1_simulation/minimal_simulation.py
 
 ## 출력
 - `outputs/module1/module1_simulation_log.json`
+- `outputs/module1/module1_summary.json`
 
 ## 향후 확장
 - 3D 맵 배치

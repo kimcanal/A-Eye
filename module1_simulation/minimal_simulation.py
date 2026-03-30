@@ -3,11 +3,11 @@ from __future__ import annotations
 """Minimal runnable scaffold for Module 1.
 
 This is not a full 3D engine. It is a lightweight simulation skeleton that
-creates the required objects, advances a few time steps, and prints/logs the
-state so the Module 1 requirements are represented in executable form.
+creates the required objects, advances a few time steps, and writes logs so the
+Module 1 requirements are represented in executable form.
 """
 
-from dataclasses import dataclass, asdict
+from dataclasses import asdict, dataclass
 from pathlib import Path
 import json
 from random import Random
@@ -55,20 +55,32 @@ def make_entities(s: Scenario) -> list[Entity]:
     return entities
 
 
-def step_entities(entities: list[Entity], city_size: tuple[int, int]) -> None:
+def step_entities(entities: list[Entity], city_size: tuple[int, int]) -> list[str]:
     w, h = city_size
+    events: list[str] = []
+
     for e in entities:
         if e.kind in {"passenger", "obstacle"}:
             continue
+        old = (e.x, e.y)
         dx = RNG.choice([-1, 0, 1])
         dy = RNG.choice([-1, 0, 1])
         e.x = max(0, min(w - 1, e.x + dx))
         e.y = max(0, min(h - 1, e.y + dy))
+        if (e.x, e.y) != old:
+            events.append(f"{e.entity_id}:{e.kind} moved {old}->{(e.x, e.y)}")
+
+    return events
 
 
-def snapshot(step: int, entities: list[Entity]) -> dict:
+def snapshot(step: int, entities: list[Entity], events: list[str]) -> dict:
     return {
         "step": step,
+        "entity_count": len(entities),
+        "taxi_count": sum(1 for e in entities if e.kind == "taxi"),
+        "passenger_count": sum(1 for e in entities if e.kind == "passenger"),
+        "obstacle_count": sum(1 for e in entities if e.kind == "obstacle"),
+        "events": events,
         "entities": [asdict(e) for e in entities],
     }
 
@@ -80,17 +92,35 @@ def main() -> None:
     out_dir.mkdir(parents=True, exist_ok=True)
 
     logs = []
-    logs.append(snapshot(0, entities))
+    logs.append(snapshot(0, entities, ["scenario initialized"]))
 
     for step in range(1, scenario.steps + 1):
-        step_entities(entities, scenario.city_size)
-        logs.append(snapshot(step, entities))
+        events = step_entities(entities, scenario.city_size)
+        if not events:
+            events = ["no movement events"]
+        logs.append(snapshot(step, entities, events))
 
     output_file = out_dir / "module1_simulation_log.json"
     output_file.write_text(json.dumps(logs, ensure_ascii=False, indent=2), encoding="utf-8")
 
+    summary = {
+        "city_size": list(scenario.city_size),
+        "passengers": scenario.passengers,
+        "taxis": scenario.taxis,
+        "regular_vehicle_types": list(scenario.regular_vehicle_types),
+        "vehicles_per_type": scenario.vehicles_per_type,
+        "autonomous_vehicles": scenario.autonomous_vehicles,
+        "obstacles": scenario.obstacles,
+        "steps": scenario.steps,
+        "total_entities": len(entities),
+        "output_file": str(output_file),
+    }
+    summary_file = out_dir / "module1_summary.json"
+    summary_file.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
+
     print(f"saved: {output_file}")
-    print(f"entities: {len(entities)}")
+    print(f"saved: {summary_file}")
+    print(f"total entities: {len(entities)}")
     print(f"steps: {scenario.steps}")
 
 
