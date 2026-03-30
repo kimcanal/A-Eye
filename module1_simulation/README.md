@@ -37,3 +37,7 @@ python3 module1_simulation/minimal_simulation.py
 - 객체 이동 로직 정교화
 - 이벤트 로그 출력 강화
 - 배차 알고리즘 연동
+
+## Digital Twin Asset Integration
+- `module1_simulation/assets/` is reserved for the provided 3D Map / Object / Animation assets.
+- `module1_simulation/integration_plan.md` describes how the simplified scaffold will connect to the real digital twin runtime.
