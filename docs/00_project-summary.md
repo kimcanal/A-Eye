@@ -1,56 +1,37 @@
-# 프로젝트 개요
+# Project Summary
 
-## 프로젝트명
-A-Eye: AI 기반 택시 수요 예측 및 동적 배차 시스템
+A-Eye is a capstone project focused on taxi demand prediction and dynamic dispatch for a mobility platform.
 
-## 프로젝트 한 줄 정의
-지역별 미래 택시 수요를 예측하고, 예측 결과를 바탕으로 차량을 사전에 재배치하는 동적 배차 시스템을 설계하고 검증하는 프로젝트.
+## Current implementation status
 
-## 배경 및 문제 정의
-현재 택시 호출 서비스는 특정 시간과 지역에 수요가 집중되는 경우가 많으며, 이로 인해 어떤 지역은 차량이 과도하게 몰리고 반대로 필요한 지역은 공급이 부족해지는 문제가 발생한다. 이러한 수급 불균형은 승객 대기 시간 증가와 차량 공회전 증가로 이어진다.
+### Module 1 — Digital Twin Environment
+- Minimal scenario scaffold completed.
+- City size, object counts, and asset requirements are documented.
+- Full 3D simulation runtime is not implemented yet.
 
-본 프로젝트는 이러한 문제를 해결하기 위해 시공간 데이터를 기반으로 미래 수요를 예측하고, 예측 결과를 바탕으로 차량을 효율적으로 분산 배치하는 동적 배차 로직을 설계하는 것을 목표로 한다.
+### Module 2 — Spatio-temporal preprocessing
+- Time-based features are implemented.
+- Lag and rolling demand features are implemented.
+- Feature flags are now read from `configs/base.yaml`.
 
-## 최종 목표
-- 지역별 단기 수요 예측 모델 구현
-- 수요/공급 불균형 지표 기반 동적 배차 알고리즘 설계
-- 배차 적용 전후 효과 시각화 또는 시뮬레이션 기반 검증
-- GitHub 저장소, README, 보고서, 발표자료 정리
+### Module 3 — Demand prediction
+- Baseline model pipeline exists.
+- Time-order train/test split is used.
+- RMSE and MAE are reported.
 
-## 과제 요구사항 기준 모듈 구성
+### Module 4 — Dispatch logic
+- Imbalance scoring is implemented.
+- Incentive multiplier rules are implemented.
 
-### Module 1. Digital Twin / 도시 시뮬레이션
-- 도시 교통 환경을 재현할 수 있는 시뮬레이션 또는 시각화 구조 설계
-- OSM, SUMO, Carla 또는 대체 가능한 최소 구현 방식 검토
-- 배차 알고리즘 적용 전후 비교가 가능한 환경 구성
+## Repository structure
+- `module1_simulation/`: Module 1 scaffold
+- `src/`: pipeline code
+- `docs/`: project documentation
+- `planning/`: planning notes
+- `REPORT.md`: implementation summary
 
-### Module 2. 시공간 데이터 처리 / 피처 엔지니어링
-- 호출 데이터의 시간 및 공간 단위 정의
-- GPS 또는 지역 정보를 격자/zone 단위로 변환
-- hour, day_of_week, lag, rolling mean 등 파생 변수 생성
-- 외부 데이터 결합 가능성 조사(날씨, 이벤트, 공휴일)
-
-### Module 3. 수요 예측 모델
-- 향후 일정 시간 동안의 지역별 수요 예측
-- baseline 모델부터 시작하여 필요 시 확장 모델 비교
-- RMSE, MAE, MAPE 기반 성능 평가
-
-### Module 4. 동적 배차 및 인센티브
-- 수요/공급 불균형 지표 정의
-- 배차 우선순위 규칙 설계
-- 필요 시 인센티브 배수 또는 surge pricing 로직 설계
-- 적용 전후 효과 비교
-
-## 최종 산출물
-- GitHub Repository
-- README.md
-- REPORT 또는 분석 문서
-- 모듈별 코드
-- 발표자료
-- 시각화 또는 시뮬레이션 결과
-
-## 활용 분야
-- 스마트 모빌리티
-- 공공/교통
-- 도시 교통 운영 최적화
-- AI 기반 수요 예측 및 배차 의사결정 지원
+## Next work
+1. Expand Module 1 into a runnable simulation.
+2. Add MAPE and more visual diagnostics to Module 3.
+3. Improve Module 4 explanation and scenario linkage.
+4. Align folder naming more closely with the assignment spec if needed.
