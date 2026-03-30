@@ -23,3 +23,6 @@ The assignment's Module 1 requires a digital twin environment concept. The curre
 
 ## Suggested next step
 When the Unity assets are imported, the same scenario and event model can be mapped to scene objects and animation events so that the JSON logs reflect the actual 3D environment.
+
+## Key takeaway
+The Module 1 scaffold is executable and documented, and the downloaded asset pack contains the expected map/object/animation Unity packages needed to take the next step into a real digital twin scene.
