@@ -9,3 +9,6 @@ https://nimble-ceder-40b.notion.site/28_DT_-32317efd202c8158b35ac245c2b4dc73
 
 ## Module 1 compendium
 - `docs/01_module1_compendium.md` consolidates the Module 1 spec, scaffold, asset analysis, results, and next steps.
+
+## Module 1 team guide
+- `docs/06_team_guide_module1.md` explains what the team should do next for Unity, simulation logic, and documentation.
