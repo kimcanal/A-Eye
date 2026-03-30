@@ -21,6 +21,19 @@ pip install -r requirements.txt
 bash scripts/run_pipeline.sh
 ```
 
+## 공공데이터 실험 실행
+서울시 행정동별 대중교통 총 승차 승객수 데이터를 붙이는 실험 경로도 추가되어 있습니다.
+
+```bash
+cd /Users/kenny31/Documents/Capstone
+source .venv/bin/activate
+bash scripts/run_public_pipeline.sh
+```
+
+설명 문서:
+- `docs/17_public_data_quickstart.md`
+- `planning/public-dataset-plan.md`
+
 ## 실행 결과
 파이프라인을 실행하면 아래 산출물이 생성됩니다.
 

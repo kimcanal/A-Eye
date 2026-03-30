@@ -6,6 +6,8 @@ __pycache__/
 .ipynb_checkpoints/
 outputs/
 data/local_taxi_calls.csv
+data/seoul_public/
+references/oa21223*.html
 build/
 dist/
 .idea/

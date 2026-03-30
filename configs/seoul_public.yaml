@@ -1,0 +1,46 @@
+data:
+  input_csv: data/seoul_public/transit_demand_long.csv
+  processed_csv: outputs/seoul_public/processed_taxi_calls.csv
+  time_column: pickup_datetime
+  zone_column: zone_id
+  demand_column: call_count
+  supply_column: available_taxis
+
+features:
+  use_hour: true
+  use_day_of_week: true
+  use_lag_1: true
+  use_rolling_mean_3: true
+
+model:
+  name: random_forest
+  test_size: 0.2
+  random_state: 42
+  n_estimators: 200
+  metrics_output: outputs/seoul_public/model_metrics.json
+  predictions_output: outputs/seoul_public/predictions.csv
+
+dispatch:
+  low_threshold: 1.2
+  medium_threshold: 1.5
+  high_threshold: 2.0
+  output_csv: outputs/seoul_public/dispatch_recommendations.csv
+
+analysis:
+  zone_summary_output: outputs/seoul_public/zone_demand_summary.csv
+  hour_summary_output: outputs/seoul_public/hourly_demand_summary.csv
+
+visualization:
+  hourly_output: outputs/seoul_public/hourly_demand.png
+  heatmap_output: outputs/seoul_public/zone_hour_heatmap.png
+  prediction_plot_output: outputs/seoul_public/actual_vs_predicted.png
+
+lstm:
+  seq_len: 6
+  hidden_size: 32
+  num_layers: 1
+  batch_size: 32
+  epochs: 50
+  learning_rate: 0.001
+  metrics_output: outputs/seoul_public/lstm_metrics.json
+  predictions_output: outputs/seoul_public/lstm_predictions.csv
