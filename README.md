@@ -12,3 +12,6 @@ https://nimble-ceder-40b.notion.site/28_DT_-32317efd202c8158b35ac245c2b4dc73
 
 ## Module 1 team guide
 - `docs/06_team_guide_module1.md` explains what the team should do next for Unity, simulation logic, and documentation.
+
+## Module 1 workflow checklist
+- `docs/07_unity_workflow_checklist.md` provides a step-by-step Unity setup and scene integration workflow.

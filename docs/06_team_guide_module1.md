@@ -58,3 +58,8 @@ These assets are the actual 3D pieces that can be imported into Unity.
 - Module 4 turns demand imbalance into dispatch decisions
 
 Without Module 1, the later modules do not have a real stage to work on.
+
+## Today's top 3 tasks
+1. Import the Unity packages and confirm they open cleanly.
+2. Build the 3x3 city scene and place the required objects.
+3. Connect the scene objects to the Module 1 scenario model and log events.
