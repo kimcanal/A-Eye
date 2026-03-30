@@ -5,7 +5,7 @@ Module 1 is a tiny fake city that can move a little and write down what happened
 
 ## Files
 - `module1_simulation/minimal_simulation.py` → runnable simulation
-- `module1_simulation/minimal_stub.py` → scenario blueprint
+- `module1_simulation/minimal_stub.py` → scenario blueprint used by the simulation
 - `module1_simulation/README.md` → how to run it
 - `module1_simulation/scenario.md` → city story and object counts
 - `module1_simulation/asset_requirements.md` → 3D asset shopping list

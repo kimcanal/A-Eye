@@ -8,7 +8,7 @@ This file keeps the scenario definition separate from the runnable simulation.
 from dataclasses import dataclass
 
 
-@dataclass
+@dataclass(frozen=True)
 class Scenario:
     city_size: tuple[int, int] = (3, 3)
     passengers: int = 5
@@ -18,3 +18,6 @@ class Scenario:
     autonomous_vehicles: int = 1
     obstacles: int = 2
     steps: int = 5
+
+
+DEFAULT_SCENARIO = Scenario()

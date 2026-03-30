@@ -2,17 +2,17 @@ from __future__ import annotations
 
 """Minimal runnable scaffold for Module 1.
 
-Role: create a tiny city scenario, move the vehicles for a few steps, and
-write logs that can be inspected later.
-
-This is not a full 3D engine. It is a lightweight simulation skeleton that
-represents the Module 1 requirements in executable form.
+This module creates a tiny city scenario, moves vehicles for a few steps,
+and writes machine-readable logs that can be reused by later documentation
+or Unity integration work.
 """
 
 from dataclasses import asdict, dataclass
 from pathlib import Path
 import json
 from random import Random
+
+from module1_simulation.minimal_stub import DEFAULT_SCENARIO, Scenario
 
 
 RNG = Random(42)
@@ -24,18 +24,6 @@ class Entity:
     kind: str
     x: int
     y: int
-
-
-@dataclass
-class Scenario:
-    city_size: tuple[int, int] = (3, 3)
-    passengers: int = 5
-    taxis: int = 3
-    regular_vehicle_types: tuple[str, ...] = ("sedan", "suv", "van", "compact")
-    vehicles_per_type: int = 5
-    autonomous_vehicles: int = 1
-    obstacles: int = 2
-    steps: int = 5
 
 
 def make_entities(s: Scenario) -> list[Entity]:
@@ -88,19 +76,16 @@ def snapshot(step: int, entities: list[Entity], events: list[str]) -> dict:
 
 
 def main() -> None:
-    scenario = Scenario()
+    scenario = DEFAULT_SCENARIO
     entities = make_entities(scenario)
     out_dir = Path("outputs/module1")
     out_dir.mkdir(parents=True, exist_ok=True)
 
-    logs = []
-    logs.append(snapshot(0, entities, ["scenario initialized"]))
+    logs = [snapshot(0, entities, ["scenario initialized"])]
 
     for step in range(1, scenario.steps + 1):
         events = step_entities(entities, scenario.city_size)
-        if not events:
-            events = ["no movement events"]
-        logs.append(snapshot(step, entities, events))
+        logs.append(snapshot(step, entities, events or ["no movement events"]))
 
     output_file = out_dir / "module1_simulation_log.json"
     output_file.write_text(json.dumps(logs, ensure_ascii=False, indent=2), encoding="utf-8")
