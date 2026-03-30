@@ -77,3 +77,6 @@ A-Eye는 크게 다음 순서로 구성됩니다.
 - Module 4: 예측 결과를 바탕으로 배차 전략을 정하기
 
 Module 1은 이 전체 흐름의 출발점입니다. 무대가 있어야 데이터도 의미가 있고, 예측도 의미가 있고, 배차도 의미가 생깁니다.
+
+## Asset compatibility check
+The downloaded asset pack contains Kakaomobility Unity packages that match the assignment's Module 1 theme: a road/map package, taxi and obstacle objects, movement animations, and a map-setting package. This means the current Module 1 scaffold is directionally aligned with the real asset set, and can be upgraded into a Unity scene by importing those packages.
