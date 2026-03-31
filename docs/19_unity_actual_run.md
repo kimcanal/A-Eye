@@ -16,6 +16,7 @@
 
 - Screenshot: `/Users/kenny31/Documents/Capstone/outputs/module1/unity_module1_view.png`
 - Scene file: `/Users/kenny31/Downloads/PBL_AssetPackge/Modeling/New Unity Project/Assets/Scenes/CapstoneModule1.unity`
+- Scenario JSON: `/Users/kenny31/Documents/Capstone/outputs/module1/unity_scenario.json`
 
 ## Important implementation note
 
@@ -34,6 +35,16 @@ This means:
 cd /Users/kenny31/Documents/Capstone
 bash scripts/run_unity_module1_capture.sh
 ```
+
+## Data bridge
+
+The current Module 1 path is now:
+
+1. dispatch results are generated from the Python pipeline
+2. `src/module1/export_unity_scenario.py` converts the top dispatch priorities into `unity_scenario.json`
+3. Unity reads that scenario file and places taxis into fixed demo slots in the city scene
+
+This is a real code bridge between the prediction/dispatch pipeline and the Unity scene, even though the zone-to-world mapping is still a demo-slot mapping rather than full GIS placement.
 
 ## Current Module 1 scene contents
 
