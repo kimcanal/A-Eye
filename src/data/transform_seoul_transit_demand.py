@@ -25,10 +25,38 @@ def main() -> None:
         candidates = sorted(Path("data/seoul_public/raw").glob("tpssPassengerCnt_*.json"))
         if not candidates:
             raise SystemExit("Missing raw input under data/seoul_public/raw. Run fetch_seoul_transit_demand first.")
-        raw_input = candidates[-1]
+        custom_candidates = [path for path in candidates if path.stem.endswith("_custom")]
+        raw_input = custom_candidates[-1] if custom_candidates else candidates[-1]
 
     payload = json.loads(raw_input.read_text(encoding="utf-8"))
     rows = payload["rows"]
+    api_key_type = payload.get("api_key_type", "unknown")
+
+    recent_days_env = os.environ.get("SEOUL_TRANSIT_RECENT_DAYS")
+    recent_days = int(recent_days_env) if recent_days_env else None
+
+    if recent_days is None and api_key_type == "custom":
+        # Full public data spans years. Keep the default training slice small
+        # enough for local baseline experiments unless the user overrides it.
+        recent_days = 30
+
+    if recent_days is not None and rows:
+        latest_date = max(row["CRTR_DD"] for row in rows)
+        latest_ts = pd.Timestamp(
+            year=int(latest_date[0:4]),
+            month=int(latest_date[4:6]),
+            day=int(latest_date[6:8]),
+        )
+        cutoff = latest_ts - pd.Timedelta(days=recent_days - 1)
+        rows = [
+            row
+            for row in rows
+            if pd.Timestamp(
+                year=int(row["CRTR_DD"][0:4]),
+                month=int(row["CRTR_DD"][4:6]),
+                day=int(row["CRTR_DD"][6:8]),
+            ) >= cutoff
+        ]
 
     records: list[dict] = []
     for row in rows:
@@ -57,6 +85,8 @@ def main() -> None:
     print(f"saved: {OUTPUT_CSV}")
     print(f"rows: {len(df)}")
     print(f"source: {raw_input}")
+    if recent_days is not None:
+        print(f"recent_days: {recent_days}")
 
 
 if __name__ == "__main__":

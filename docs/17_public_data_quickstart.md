@@ -56,6 +56,15 @@ bash scripts/run_public_pipeline.sh
 
 With a real key, the fetcher will request the full dataset in pages of 1000 rows.
 
+The transformer then keeps the most recent 30 days by default so the local
+baseline experiment stays lightweight enough to run on a normal laptop.
+
+If you want a different slice:
+
+```bash
+export SEOUL_TRANSIT_RECENT_DAYS=14
+```
+
 ## Important limitation
 
 This dataset contains demand only.
@@ -71,7 +80,7 @@ So the current transformer creates a deterministic `available_taxis` proxy to ke
 That means:
 
 - forecasting becomes public-data based
-- dispatch is still partly heuristic until real supply data is added
+- dispatch uses the predicted demand output, but supply is still heuristic until real taxi supply data is added
 
 ## Current public-data schema after transform
 

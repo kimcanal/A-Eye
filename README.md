@@ -7,7 +7,7 @@
 - 로컬 택시 수요 데이터 생성
 - 시공간 피처 전처리
 - baseline 수요 예측
-- rule-based 배차 추천
+- 예측 결과 기반 rule-based 배차 추천
 - 결과 시각화 및 요약 파일 생성
 
 현재 기준으로 Python 파이프라인은 실행 가능하며, Unity/Module 1은 별도 문서와 스텁 코드가 정리된 상태입니다.
@@ -63,7 +63,7 @@ bash scripts/run_public_pipeline.sh
 ## 현재 기준 권장 흐름
 1. `scripts/run_pipeline.sh`로 1차 오프라인 흐름 실행
 2. `outputs/` 결과와 `docs/12_phase1_guide.md` 확인
-3. public dataset으로 교체할 데이터 스키마 정의
+3. `predictions.csv`와 `dispatch_recommendations.csv`로 예측-배차 연결 확인
 4. 이후 LSTM, 실시간 데이터, Unity 시각화 순으로 확장
 
 ## LSTM 관련

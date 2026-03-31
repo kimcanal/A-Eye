@@ -16,7 +16,7 @@ model:
   name: random_forest
   test_size: 0.2
   random_state: 42
-  n_estimators: 200
+  n_estimators: 100
   metrics_output: outputs/seoul_public/model_metrics.json
   predictions_output: outputs/seoul_public/predictions.csv
 

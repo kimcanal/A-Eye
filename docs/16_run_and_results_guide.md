@@ -7,7 +7,7 @@ The current Capstone prototype supports the following offline flow:
 1. Generate a local taxi demand dataset
 2. Build time-series features
 3. Train a baseline RandomForest demand model
-4. Compute rule-based dispatch priorities
+4. Compute rule-based dispatch priorities from the latest predicted demand
 5. Save demand plots and summary CSV files
 
 This is the current "Phase 1" runnable baseline.
@@ -104,20 +104,26 @@ Interpretation:
 
 ### dispatch_recommendations.csv
 
-Current top dispatch ranking:
+Current dispatch file now includes:
 
-1. `B` with imbalance score `2.4`
-2. `A` with imbalance score `1.8889`
-3. `D` with imbalance score `1.6667`
-4. `C` with imbalance score `1.3333`
+- `observed_call_count`
+- `predicted_call_count`
+- `dispatch_demand`
+- `demand_source`
 
 Interpretation:
 
-- Zone `B` is the highest-priority dispatch target at the latest timestamp
-- `imbalance_score = demand / supply`
+- `demand_source = predicted` means dispatch used the model prediction
+- `dispatch_demand` is the demand value actually used in the imbalance calculation
+- `observed_call_count` is kept for comparison against the model estimate
+
+Example interpretation:
+
+- A zone can have moderate observed demand but still rank high if predicted demand is higher than supply
+- `imbalance_score = dispatch_demand / supply`
 - `incentive_multiplier` translates that score into a suggested dispatch incentive
 
-This is the current rule-based dispatch output for Phase 1.
+This means the current Phase 1 pipeline is no longer just "predict and dispatch separately"; it now uses the latest prediction output as the dispatch input when predictions are available.
 
 ### zone_demand_summary.csv
 
@@ -181,14 +187,14 @@ Interpretation:
 ## 6. What does not work yet
 
 - `train_lstm.py` requires PyTorch and is not part of the default pipeline yet
-- public dataset integration is not implemented yet
+- public dataset integration is implemented, but still uses a proxy supply value
 - real-time external data is not integrated yet
 - Unity execution is documented, but not verified end-to-end in this repo
 
 ## 7. Recommended next steps
 
 1. Keep this baseline as the stable Phase 1 reference point
-2. Replace the local synthetic dataset with a public dataset in the same schema
-3. Compare baseline vs LSTM
-4. Add dispatch before/after evaluation logic
+2. Improve dispatch evaluation with before/after comparison logic
+3. Add weather, holiday, or traffic features to the public pipeline
+4. Compare baseline vs LSTM
 5. Connect final outputs to Unity visualization

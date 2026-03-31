@@ -12,6 +12,7 @@ API_BASE = "http://openAPI.seoul.go.kr:8088"
 SERVICE_NAME = "tpssPassengerCnt"
 DEFAULT_KEY = "sample"
 PAGE_SIZE = 1000
+PROGRESS_INTERVAL = 20
 
 
 def build_url(api_key: str, start: int, end: int) -> str:
@@ -45,10 +46,14 @@ def main() -> None:
     api_key = os.environ.get("SEOUL_OPEN_API_KEY", DEFAULT_KEY)
     output_dir = Path("data/seoul_public/raw")
     output_dir.mkdir(parents=True, exist_ok=True)
+    key_type = "sample" if api_key == DEFAULT_KEY else "custom"
 
     all_rows: list[dict] = []
     total_count = None
     start = 1
+    page = 0
+
+    print(f"fetching Seoul API service={SERVICE_NAME} key_type={key_type}")
 
     while True:
         if api_key == DEFAULT_KEY:
@@ -57,6 +62,7 @@ def main() -> None:
             end = start + PAGE_SIZE - 1
 
         payload = fetch_json(build_url(api_key, start, end))
+        page += 1
 
         if "RESULT" in payload:
             raise SystemExit(payload["RESULT"].get("MESSAGE", "Unknown API error"))
@@ -73,17 +79,20 @@ def main() -> None:
         total_count = int(root.get("list_total_count", len(rows)))
         all_rows.extend(rows)
 
+        if page == 1 or page % PROGRESS_INTERVAL == 0 or len(all_rows) >= total_count:
+            print(f"page={page} rows_fetched={len(all_rows)} total_count={total_count}")
+
         if api_key == DEFAULT_KEY or not rows or len(all_rows) >= total_count:
             break
 
         start += PAGE_SIZE
 
-    output_path = output_dir / f"{SERVICE_NAME}_{api_key}.json"
+    output_path = output_dir / f"{SERVICE_NAME}_{key_type}.json"
     output_path.write_text(
         json.dumps(
             {
                 "service": SERVICE_NAME,
-                "api_key_type": "sample" if api_key == DEFAULT_KEY else "custom",
+                "api_key_type": key_type,
                 "row_count": len(all_rows),
                 "list_total_count": total_count,
                 "rows": all_rows,
