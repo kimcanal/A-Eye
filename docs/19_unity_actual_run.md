@@ -15,6 +15,7 @@
 ## Generated outputs
 
 - Screenshot: `/Users/kenny31/Documents/Capstone/outputs/module1/unity_module1_view.png`
+- Focus screenshot: `/Users/kenny31/Documents/Capstone/outputs/module1/unity_module1_focus.png`
 - Scene file: `/Users/kenny31/Downloads/PBL_AssetPackge/Modeling/New Unity Project/Assets/Scenes/CapstoneModule1.unity`
 - Scenario JSON: `/Users/kenny31/Documents/Capstone/outputs/module1/unity_scenario.json`
 
@@ -42,9 +43,15 @@ The current Module 1 path is now:
 
 1. dispatch results are generated from the Python pipeline
 2. `src/module1/export_unity_scenario.py` converts the top dispatch priorities into `unity_scenario.json`
-3. Unity reads that scenario file and places taxis into fixed demo slots in the city scene
+3. Unity reads that scenario file and places taxis into demo hotspot slots in the city scene
 
-This is a real code bridge between the prediction/dispatch pipeline and the Unity scene, even though the zone-to-world mapping is still a demo-slot mapping rather than full GIS placement.
+This is a real code bridge between the prediction/dispatch pipeline and the Unity scene, even though the zone-to-world mapping is still a demo hotspot mapping rather than full GIS placement.
+
+## Current limitation
+
+- The Unity city map is a large combined asset, so automatic road snapping is still approximate.
+- The overview screenshot is the most reliable representation right now.
+- The focus screenshot is useful as a close shot, but not yet a perfect "vehicle-on-lane" presentation.
 
 ## Current Module 1 scene contents
 
@@ -57,6 +64,6 @@ This is a real code bridge between the prediction/dispatch pipeline and the Unit
 
 ## Next logical steps
 
-1. Adjust camera framing to focus more tightly on one main intersection.
-2. Replace fallback materials with the correct shaders or compatible URP/Built-in conversions.
+1. Replace fallback materials with the correct shaders or compatible URP/Built-in conversions.
+2. Tune or manually author hotspot-to-road anchor positions for cleaner taxi lane placement.
 3. Add animated movement or multiple screenshots for before/after dispatch storytelling.

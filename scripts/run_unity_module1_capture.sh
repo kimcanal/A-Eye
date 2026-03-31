@@ -29,5 +29,6 @@ fi
 echo "Unity scene build complete."
 echo "Log: $UNITY_LOG"
 echo "Screenshot: /Users/kenny31/Documents/Capstone/outputs/module1/unity_module1_view.png"
+echo "Focus screenshot: /Users/kenny31/Documents/Capstone/outputs/module1/unity_module1_focus.png"
 echo "Scene: /Users/kenny31/Downloads/PBL_AssetPackge/Modeling/New Unity Project/Assets/Scenes/CapstoneModule1.unity"
 echo "Scenario: /Users/kenny31/Documents/Capstone/outputs/module1/unity_scenario.json"

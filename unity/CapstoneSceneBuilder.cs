@@ -9,6 +9,7 @@ public static class CapstoneSceneBuilder
 {
     private const string ScenePath = "Assets/Scenes/CapstoneModule1.unity";
     private const string ScreenshotPath = "/Users/kenny31/Documents/Capstone/outputs/module1/unity_module1_view.png";
+    private const string FocusScreenshotPath = "/Users/kenny31/Documents/Capstone/outputs/module1/unity_module1_focus.png";
     private const string ScenarioPath = "/Users/kenny31/Documents/Capstone/outputs/module1/unity_scenario.json";
     private static readonly Dictionary<string, Material> MaterialCache = new Dictionary<string, Material>();
 
@@ -25,6 +26,7 @@ public static class CapstoneSceneBuilder
         public string name;
         public string zone_id;
         public int dispatch_rank;
+        public string hotspot_label;
         public float dispatch_demand;
         public float predicted_call_count;
         public float observed_call_count;
@@ -76,32 +78,57 @@ public static class CapstoneSceneBuilder
 
         var mapInstance = (GameObject)PrefabUtility.InstantiatePrefab(mapPrefab, scene);
         mapInstance.name = "StreetMain";
+        var roadAnchors = CollectRoadAnchors(mapInstance);
         ApplyFallbackMaterials(mapInstance);
 
         var mapBounds = CalculateBounds(mapInstance);
         var center = mapBounds.center;
         var extents = mapBounds.extents;
         var scenario = LoadScenario();
+        var focusCameraObject = new GameObject("CapstoneFocusCamera");
+        var focusCam = focusCameraObject.AddComponent<Camera>();
+        focusCam.backgroundColor = new Color(0.78f, 0.86f, 0.95f);
+        focusCam.clearFlags = CameraClearFlags.SolidColor;
+        focusCam.fieldOfView = 42f;
+        focusCam.nearClipPlane = 0.1f;
+        focusCam.farClipPlane = 1000f;
 
         if (scenario != null && scenario.taxis != null)
         {
+            var taxiWorldPositions = new List<Vector3>();
             foreach (var taxiSlot in scenario.taxis)
             {
                 var taxiName = $"{taxiSlot.name}_{taxiSlot.zone_id}_R{taxiSlot.dispatch_rank}";
-                PlacePrefab(
+                var desiredPosition = center + taxiSlot.position.ToVector3();
+                var worldPosition = ResolveRoadAlignedPosition(desiredPosition, roadAnchors);
+                var taxiInstance = PlacePrefab(
                     taxiPrefab,
                     scene,
-                    center + taxiSlot.position.ToVector3(),
+                    worldPosition,
                     Quaternion.Euler(0f, taxiSlot.rotation_y, 0f),
                     taxiName
                 );
+                DecorateTaxiSpot(taxiInstance, center, taxiSlot);
+                taxiWorldPositions.Add(worldPosition);
             }
+
+            SetupFocusCamera(center, focusCam, taxiWorldPositions);
         }
         else
         {
             PlacePrefab(taxiPrefab, scene, center + new Vector3(-8f, 0.15f, -12f), Quaternion.Euler(0f, 0f, 0f), "Taxi_A");
             PlacePrefab(taxiPrefab, scene, center + new Vector3(4f, 0.15f, -12f), Quaternion.Euler(0f, 180f, 0f), "Taxi_B");
             PlacePrefab(taxiPrefab, scene, center + new Vector3(12f, 0.15f, 6f), Quaternion.Euler(0f, -90f, 0f), "Taxi_C");
+            SetupFocusCamera(
+                center,
+                focusCam,
+                new List<Vector3>
+                {
+                    center + new Vector3(-8f, 0.15f, -12f),
+                    center + new Vector3(4f, 0.15f, -12f),
+                    center + new Vector3(12f, 0.15f, 6f),
+                }
+            );
         }
 
         if (scenario != null && scenario.obstacles != null)
@@ -142,8 +169,8 @@ public static class CapstoneSceneBuilder
         var cam = cameraObject.AddComponent<Camera>();
         cam.backgroundColor = new Color(0.78f, 0.86f, 0.95f);
         cam.clearFlags = CameraClearFlags.SolidColor;
-        cam.transform.position = center + new Vector3(0f, Mathf.Max(32f, extents.magnitude * 1.05f), -extents.z * 0.05f);
-        cam.transform.rotation = Quaternion.Euler(65f, 0f, 0f);
+        cam.transform.position = center + new Vector3(0f, Mathf.Max(19f, extents.magnitude * 0.60f), -extents.z * 0.88f);
+        cam.transform.rotation = Quaternion.Euler(50f, 0f, 0f);
         cam.nearClipPlane = 0.1f;
         cam.farClipPlane = 1000f;
 
@@ -153,8 +180,15 @@ public static class CapstoneSceneBuilder
         Directory.CreateDirectory(Path.GetDirectoryName(ScreenshotPath));
         SaveScreenshot(cam, ScreenshotPath, 1600, 900);
 
+        focusCam.backgroundColor = cam.backgroundColor;
+        focusCam.transform.position = cam.transform.position + new Vector3(0f, -6f, 8f);
+        focusCam.transform.rotation = cam.transform.rotation;
+        focusCam.fieldOfView = 34f;
+        SaveScreenshot(focusCam, FocusScreenshotPath, 1600, 900);
+
         Debug.Log($"Saved scene: {ScenePath}");
         Debug.Log($"Saved screenshot: {ScreenshotPath}");
+        Debug.Log($"Saved focus screenshot: {FocusScreenshotPath}");
         EditorApplication.Exit(0);
     }
 
@@ -210,6 +244,185 @@ public static class CapstoneSceneBuilder
                 return fencePrefab;
             default:
                 return null;
+        }
+    }
+
+    private static List<Vector3> CollectRoadAnchors(GameObject root)
+    {
+        var anchors = new List<Vector3>();
+        foreach (var renderer in root.GetComponentsInChildren<Renderer>(true))
+        {
+            if (!IsRoadRenderer(renderer))
+            {
+                continue;
+            }
+
+            var bounds = renderer.bounds;
+            if (bounds.size.x < 1f || bounds.size.z < 1f)
+            {
+                continue;
+            }
+
+            anchors.Add(new Vector3(bounds.center.x, bounds.max.y + 0.18f, bounds.center.z));
+        }
+
+        return anchors;
+    }
+
+    private static bool IsRoadRenderer(Renderer renderer)
+    {
+        if (renderer.sharedMaterials == null)
+        {
+            return false;
+        }
+
+        foreach (var material in renderer.sharedMaterials)
+        {
+            if (material == null)
+            {
+                continue;
+            }
+
+            var name = material.name.ToLowerInvariant();
+            if (
+                name.Contains("road") ||
+                name.Contains("asphalt") ||
+                name.Contains("cross") ||
+                name.Contains("line") ||
+                name.Contains("yield") ||
+                name.Contains("bicycle")
+            )
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    private static Vector3 ResolveRoadAlignedPosition(Vector3 desiredPosition, List<Vector3> roadAnchors)
+    {
+        if (roadAnchors == null || roadAnchors.Count == 0)
+        {
+            return desiredPosition;
+        }
+
+        var bestIndex = 0;
+        var bestDistance = Vector3.Distance(desiredPosition, roadAnchors[0]);
+        for (int i = 1; i < roadAnchors.Count; i++)
+        {
+            var distance = Vector3.Distance(desiredPosition, roadAnchors[i]);
+            if (distance < bestDistance)
+            {
+                bestDistance = distance;
+                bestIndex = i;
+            }
+        }
+
+        var chosen = roadAnchors[bestIndex];
+        roadAnchors.RemoveAt(bestIndex);
+        return chosen;
+    }
+
+    private static void DecorateTaxiSpot(GameObject taxiInstance, Vector3 center, TaxiSlot taxiSlot)
+    {
+        var marker = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
+        marker.name = $"{taxiSlot.name}_Marker";
+        marker.transform.position = center + taxiSlot.position.ToVector3() + new Vector3(0f, 0.02f, 0f);
+        marker.transform.localScale = new Vector3(2.6f, 0.08f, 2.6f);
+
+        var markerMaterial = new Material(Shader.Find("Standard"));
+        markerMaterial.color = GetRankColor(taxiSlot.dispatch_rank);
+        markerMaterial.SetFloat("_Glossiness", 0.08f);
+        marker.GetComponent<Renderer>().sharedMaterial = markerMaterial;
+
+        var beacon = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+        beacon.name = $"{taxiSlot.name}_Beacon";
+        beacon.transform.position = center + taxiSlot.position.ToVector3() + new Vector3(0f, 1.25f, 0f);
+        beacon.transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
+        beacon.GetComponent<Renderer>().sharedMaterial = markerMaterial;
+
+        var labelPlate = GameObject.CreatePrimitive(PrimitiveType.Cube);
+        labelPlate.name = $"{taxiSlot.name}_LabelPlate";
+        labelPlate.transform.position = center + taxiSlot.position.ToVector3() + new Vector3(0f, 2.55f, 0f);
+        labelPlate.transform.rotation = Quaternion.Euler(50f, 0f, 0f);
+        labelPlate.transform.localScale = new Vector3(2.5f, 0.08f, 0.92f);
+        var plateMaterial = new Material(Shader.Find("Standard"));
+        plateMaterial.color = new Color(0.97f, 0.97f, 0.95f);
+        plateMaterial.SetFloat("_Glossiness", 0.02f);
+        labelPlate.GetComponent<Renderer>().sharedMaterial = plateMaterial;
+
+        var labelObject = new GameObject($"{taxiSlot.name}_Label");
+        labelObject.transform.position = center + taxiSlot.position.ToVector3() + new Vector3(0f, 2.62f, 0f);
+        var text = labelObject.AddComponent<TextMesh>();
+        text.text = $"R{taxiSlot.dispatch_rank} / {ShortZone(taxiSlot.zone_id)}\n{ShortHotspot(taxiSlot.hotspot_label)}";
+        text.characterSize = 0.14f;
+        text.fontSize = 30;
+        text.anchor = TextAnchor.MiddleCenter;
+        text.alignment = TextAlignment.Center;
+        text.color = new Color(0.12f, 0.12f, 0.12f);
+        labelObject.transform.rotation = Quaternion.Euler(50f, 0f, 0f);
+
+        taxiInstance.transform.localScale = taxiInstance.transform.localScale * 1.55f;
+    }
+
+    private static string ShortZone(string zoneId)
+    {
+        if (string.IsNullOrEmpty(zoneId) || zoneId.Length <= 4)
+        {
+            return zoneId;
+        }
+
+        return zoneId.Substring(zoneId.Length - 4);
+    }
+
+    private static string ShortHotspot(string hotspotLabel)
+    {
+        switch (hotspotLabel)
+        {
+            case "West Gate":
+                return "West";
+            case "South Hub":
+                return "South";
+            case "East Connector":
+                return "East";
+            default:
+                return hotspotLabel;
+        }
+    }
+
+    private static void SetupFocusCamera(Vector3 center, Camera focusCam, List<Vector3> taxiWorldPositions)
+    {
+        if (taxiWorldPositions == null || taxiWorldPositions.Count == 0)
+        {
+            focusCam.transform.position = center + new Vector3(0f, 10.5f, -9.5f);
+            focusCam.transform.rotation = Quaternion.Euler(38f, 0f, 0f);
+            return;
+        }
+
+        var focusCenter = Vector3.zero;
+        foreach (var position in taxiWorldPositions)
+        {
+            focusCenter += position;
+        }
+        focusCenter /= taxiWorldPositions.Count;
+
+        focusCam.transform.position = focusCenter + new Vector3(0f, 7.5f, -8.5f);
+        focusCam.transform.LookAt(focusCenter + new Vector3(0f, 0.6f, 0f));
+    }
+
+    private static Color GetRankColor(int dispatchRank)
+    {
+        switch (dispatchRank)
+        {
+            case 1:
+                return new Color(0.97f, 0.55f, 0.15f);
+            case 2:
+                return new Color(0.96f, 0.73f, 0.18f);
+            case 3:
+                return new Color(0.98f, 0.84f, 0.32f);
+            default:
+                return new Color(0.85f, 0.85f, 0.85f);
         }
     }
 

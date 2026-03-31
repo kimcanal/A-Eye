@@ -14,9 +14,24 @@ PUBLIC_DISPATCH = CAPSTONE_ROOT / "outputs" / "seoul_public" / "dispatch_recomme
 LOCAL_DISPATCH = CAPSTONE_ROOT / "outputs" / "dispatch_recommendations.csv"
 
 TAXI_SLOTS = [
-    {"name": "Taxi_A", "position": {"x": -8.0, "y": 0.15, "z": -12.0}, "rotation_y": 0.0},
-    {"name": "Taxi_B", "position": {"x": 4.0, "y": 0.15, "z": -12.0}, "rotation_y": 180.0},
-    {"name": "Taxi_C", "position": {"x": 12.0, "y": 0.15, "z": 6.0}, "rotation_y": -90.0},
+    {
+        "name": "Taxi_A",
+        "hotspot_label": "West Gate",
+        "position": {"x": -8.0, "y": 0.15, "z": -12.0},
+        "rotation_y": 0.0,
+    },
+    {
+        "name": "Taxi_B",
+        "hotspot_label": "South Hub",
+        "position": {"x": 4.0, "y": 0.15, "z": -12.0},
+        "rotation_y": 180.0,
+    },
+    {
+        "name": "Taxi_C",
+        "hotspot_label": "East Connector",
+        "position": {"x": 12.0, "y": 0.15, "z": 6.0},
+        "rotation_y": -90.0,
+    },
 ]
 
 OBSTACLE_SLOTS = [
@@ -76,6 +91,7 @@ def build_scenario(rows: list[dict[str, str]], source_csv: Path) -> dict:
                 "name": slot["name"],
                 "zone_id": row.get("zone_id"),
                 "dispatch_rank": int(float(row["dispatch_rank"])),
+                "hotspot_label": slot["hotspot_label"],
                 "pickup_datetime": row.get("pickup_datetime"),
                 "dispatch_demand": maybe_float(row.get("dispatch_demand")),
                 "predicted_call_count": maybe_float(row.get("predicted_call_count")),
