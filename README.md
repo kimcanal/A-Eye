@@ -10,7 +10,31 @@
 - 예측 결과 기반 rule-based 배차 추천
 - 결과 시각화 및 요약 파일 생성
 
-현재 기준으로 Python 파이프라인은 실행 가능하며, Unity/Module 1은 별도 문서와 스텁 코드가 정리된 상태입니다.
+현재 기준으로 Python 파이프라인은 실행 가능하며, Module 1은 Unity 실제 씬 브리지까지 연결된 상태입니다.
+
+## 최근 업데이트 로그
+
+### 2026-03-31
+- 서울 Open API 기반 공공데이터 fetch 파이프라인 추가
+- baseline 수요 예측 결과를 배차 로직에 직접 연결
+- 배차 전/후 비교 지표 및 시각화 추가
+- Unity Module 1 브리지 구현
+  - `dispatch_recommendations.csv` → `unity_scenario.json` → Unity 씬 생성
+- Unity 결과를 발표용 보드 이미지로 정리
+
+### 현재 확인된 상태
+- 로컬 더미데이터 기준: 예측, 배차, 시각화 실행 가능
+- 서울 공공데이터 기준: fetch, 변환, 예측, 배차, Unity 시각화 실행 가능
+- SUMO는 아직 미구현, Unity만 실제 실행 확인 완료
+
+### Module 1 현재 결과
+
+![Module 1 Presentation Board](docs/assets/unity_module1_presentation.png)
+
+- 발표용 보드: `docs/assets/unity_module1_presentation.png`
+- Unity 원본 캡처: `outputs/module1/unity_module1_view.png`
+- Unity 오버레이 캡처: `outputs/module1/unity_module1_annotated.png`
+- Unity 시나리오 입력: `outputs/module1/unity_scenario.json`
 
 ## 빠른 실행
 ```bash
@@ -96,6 +120,18 @@ bash scripts/run_module1.sh
 생성 결과:
 - `outputs/module1/module1_overview.png`
 - `outputs/module1/module1_simulation.gif`
+
+Unity 실제 브리지 실행:
+
+```bash
+bash scripts/run_unity_module1_capture.sh
+```
+
+생성 결과:
+- `outputs/module1/unity_module1_view.png`
+- `outputs/module1/unity_module1_annotated.png`
+- `outputs/module1/unity_module1_presentation.png`
+- `outputs/module1/unity_scenario.json`
 
 ## 참고 링크
 - Notion: https://nimble-ceder-40b.notion.site/28_DT_-32317efd202c8158b35ac245c2b4dc73
