@@ -38,7 +38,8 @@
 
 ## 빠른 실행
 ```bash
-cd /Users/kenny31/Documents/Capstone
+git clone https://github.com/kimcanal/A-Eye.git
+cd A-Eye
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
@@ -49,7 +50,7 @@ bash scripts/run_pipeline.sh
 서울시 행정동별 대중교통 총 승차 승객수 데이터를 붙이는 실험 경로도 추가되어 있습니다.
 
 ```bash
-cd /Users/kenny31/Documents/Capstone
+cd <repo-root>
 source .venv/bin/activate
 bash scripts/run_public_pipeline.sh
 ```
@@ -98,6 +99,7 @@ bash scripts/run_public_pipeline.sh
 `src/prediction/train_lstm.py`는 PyTorch가 필요합니다.
 
 ```bash
+cd <repo-root>
 pip install torch
 .venv/bin/python -m src.prediction.train_lstm
 ```
@@ -114,6 +116,7 @@ pip install torch
 Module 1 최소 시각화 실행:
 
 ```bash
+cd <repo-root>
 bash scripts/run_module1.sh
 ```
 
@@ -124,6 +127,7 @@ bash scripts/run_module1.sh
 Unity 실제 브리지 실행:
 
 ```bash
+cd <repo-root>
 bash scripts/run_unity_module1_capture.sh
 ```
 
@@ -132,6 +136,16 @@ bash scripts/run_unity_module1_capture.sh
 - `outputs/module1/unity_module1_annotated.png`
 - `outputs/module1/unity_module1_presentation.png`
 - `outputs/module1/unity_scenario.json`
+
+주의:
+- 기본값으로 macOS 일반 설치 경로와 `~/Downloads/PBL_AssetPackge/Modeling/New Unity Project`를 사용합니다.
+- 다른 환경에서는 실행 전에 아래처럼 환경변수로 경로를 지정하면 됩니다.
+
+```bash
+export UNITY_APP="/Applications/Unity/Unity.app/Contents/MacOS/Unity"
+export UNITY_PROJECT="/path/to/your/UnityProject"
+bash scripts/run_unity_module1_capture.sh
+```
 
 ## 참고 링크
 - Notion: https://nimble-ceder-40b.notion.site/28_DT_-32317efd202c8158b35ac245c2b4dc73

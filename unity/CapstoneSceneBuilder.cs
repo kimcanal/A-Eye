@@ -1,5 +1,5 @@
-using System.IO;
 using System.Collections.Generic;
+using System.IO;
 using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEngine;
@@ -8,11 +8,13 @@ using UnityEngine.SceneManagement;
 public static class CapstoneSceneBuilder
 {
     private const string ScenePath = "Assets/Scenes/CapstoneModule1.unity";
-    private const string ScreenshotPath = "/Users/kenny31/Documents/Capstone/outputs/module1/unity_module1_view.png";
-    private const string FocusScreenshotPath = "/Users/kenny31/Documents/Capstone/outputs/module1/unity_module1_focus.png";
-    private const string OverlayPointsPath = "/Users/kenny31/Documents/Capstone/outputs/module1/unity_overlay_points.json";
-    private const string ScenarioPath = "/Users/kenny31/Documents/Capstone/outputs/module1/unity_scenario.json";
     private static readonly Dictionary<string, Material> MaterialCache = new Dictionary<string, Material>();
+
+    private static string RepoRoot => GetRequiredPath("CAPSTONE_ROOT");
+    private static string ScreenshotPath => Path.Combine(RepoRoot, "outputs", "module1", "unity_module1_view.png");
+    private static string FocusScreenshotPath => Path.Combine(RepoRoot, "outputs", "module1", "unity_module1_focus.png");
+    private static string OverlayPointsPath => Path.Combine(RepoRoot, "outputs", "module1", "unity_overlay_points.json");
+    private static string ScenarioPath => Path.Combine(RepoRoot, "outputs", "module1", "unity_scenario.json");
 
     [System.Serializable]
     private class ScenarioData
@@ -78,6 +80,7 @@ public static class CapstoneSceneBuilder
     [MenuItem("Capstone/Build Module1 Scene")]
     public static void BuildModule1Scene()
     {
+        var repoRoot = RepoRoot;
         var scene = EditorSceneManager.NewScene(NewSceneSetup.EmptyScene, NewSceneMode.Single);
 
         var directionalLight = new GameObject("Directional Light");
@@ -217,7 +220,19 @@ public static class CapstoneSceneBuilder
         Debug.Log($"Saved screenshot: {ScreenshotPath}");
         Debug.Log($"Saved focus screenshot: {FocusScreenshotPath}");
         Debug.Log($"Saved overlay points: {OverlayPointsPath}");
+        Debug.Log($"Repo root: {repoRoot}");
         EditorApplication.Exit(0);
+    }
+
+    private static string GetRequiredPath(string name)
+    {
+        var value = System.Environment.GetEnvironmentVariable(name);
+        if (string.IsNullOrEmpty(value))
+        {
+            throw new IOException($"Required environment variable is missing: {name}");
+        }
+
+        return value;
     }
 
     private static ScenarioData LoadScenario()

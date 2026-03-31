@@ -8,7 +8,7 @@ from datetime import datetime, UTC
 from pathlib import Path
 
 
-CAPSTONE_ROOT = Path("/Users/kenny31/Documents/Capstone")
+CAPSTONE_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_OUTPUT = CAPSTONE_ROOT / "outputs" / "module1" / "unity_scenario.json"
 PUBLIC_DISPATCH = CAPSTONE_ROOT / "outputs" / "seoul_public" / "dispatch_recommendations.csv"
 LOCAL_DISPATCH = CAPSTONE_ROOT / "outputs" / "dispatch_recommendations.csv"
