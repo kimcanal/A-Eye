@@ -90,7 +90,13 @@ def spread_positions(base_x: int, base_y: int, count: int) -> list[tuple[float, 
 
 
 def draw_city_background(ax: plt.Axes, width: int, height: int) -> None:
-    ax.set_facecolor("#d7dee7")
+    road_color = "#384249"
+    lane_color = "#f8fafc"
+    block_color = "#f4f6f8"
+    block_edge = "#cfd5dc"
+    green_color = "#8fbc6b"
+
+    ax.set_facecolor(road_color)
     for x in range(width):
         for y in range(height):
             block = FancyBboxPatch(
@@ -98,8 +104,8 @@ def draw_city_background(ax: plt.Axes, width: int, height: int) -> None:
                 0.84,
                 0.84,
                 boxstyle="round,pad=0.02,rounding_size=0.05",
-                facecolor="#f8f5ef",
-                edgecolor="#c9c2b6",
+                facecolor=block_color,
+                edgecolor=block_edge,
                 linewidth=1.0,
                 zorder=0,
             )
@@ -108,17 +114,74 @@ def draw_city_background(ax: plt.Axes, width: int, height: int) -> None:
                 (x - 0.26, y - 0.26),
                 0.18,
                 0.18,
-                facecolor="#d7e7c4",
+                facecolor=green_color,
                 edgecolor="none",
-                alpha=0.9,
+                alpha=0.25,
                 zorder=0,
             )
             ax.add_patch(park)
 
     for x in range(width):
-        ax.plot([x, x], [-0.5, height - 0.5], color="#ffffff", linewidth=2.6, alpha=0.35, zorder=1)
+        ax.plot([x, x], [-0.5, height - 0.5], color=lane_color, linewidth=2.2, alpha=0.18, zorder=1)
     for y in range(height):
-        ax.plot([-0.5, width - 0.5], [y, y], color="#ffffff", linewidth=2.6, alpha=0.35, zorder=1)
+        ax.plot([-0.5, width - 0.5], [y, y], color=lane_color, linewidth=2.2, alpha=0.18, zorder=1)
+
+    stripe_length = 0.035
+    stripe_gap = 0.02
+    for x in range(1, width):
+        for y in range(height):
+            start_y = y - 0.12
+            for i in range(5):
+                y0 = start_y + i * (stripe_length + stripe_gap)
+                ax.add_patch(
+                    Rectangle(
+                        (x - 0.5, y0),
+                        0.08,
+                        stripe_length,
+                        facecolor=lane_color,
+                        edgecolor="none",
+                        alpha=0.9,
+                        zorder=1,
+                    )
+                )
+                ax.add_patch(
+                    Rectangle(
+                        (x + 0.42, y0),
+                        0.08,
+                        stripe_length,
+                        facecolor=lane_color,
+                        edgecolor="none",
+                        alpha=0.9,
+                        zorder=1,
+                    )
+                )
+    for y in range(1, height):
+        for x in range(width):
+            start_x = x - 0.12
+            for i in range(5):
+                x0 = start_x + i * (stripe_length + stripe_gap)
+                ax.add_patch(
+                    Rectangle(
+                        (x0, y - 0.5),
+                        stripe_length,
+                        0.08,
+                        facecolor=lane_color,
+                        edgecolor="none",
+                        alpha=0.9,
+                        zorder=1,
+                    )
+                )
+                ax.add_patch(
+                    Rectangle(
+                        (x0, y + 0.42),
+                        stripe_length,
+                        0.08,
+                        facecolor=lane_color,
+                        edgecolor="none",
+                        alpha=0.9,
+                        zorder=1,
+                    )
+                )
 
 
 def add_step_summary(ax: plt.Axes, step_log: dict) -> None:
