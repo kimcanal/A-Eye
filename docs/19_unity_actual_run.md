@@ -16,6 +16,8 @@
 
 - Screenshot: `/Users/kenny31/Documents/Capstone/outputs/module1/unity_module1_view.png`
 - Focus screenshot: `/Users/kenny31/Documents/Capstone/outputs/module1/unity_module1_focus.png`
+- Annotated screenshot: `/Users/kenny31/Documents/Capstone/outputs/module1/unity_module1_annotated.png`
+- Presentation board: `/Users/kenny31/Documents/Capstone/outputs/module1/unity_module1_presentation.png`
 - Scene file: `/Users/kenny31/Downloads/PBL_AssetPackge/Modeling/New Unity Project/Assets/Scenes/CapstoneModule1.unity`
 - Scenario JSON: `/Users/kenny31/Documents/Capstone/outputs/module1/unity_scenario.json`
 
@@ -52,6 +54,7 @@ This is a real code bridge between the prediction/dispatch pipeline and the Unit
 - The Unity city map is a large combined asset, so automatic road snapping is still approximate.
 - The overview screenshot is the most reliable representation right now.
 - The focus screenshot is useful as a close shot, but not yet a perfect "vehicle-on-lane" presentation.
+- For slides, the most readable asset is currently the generated presentation board, which combines the real Unity scene, hotspot overlay, and dispatch summary into one image.
 
 ## Current Module 1 scene contents
 

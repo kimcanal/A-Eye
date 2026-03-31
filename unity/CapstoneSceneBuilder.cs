@@ -10,6 +10,7 @@ public static class CapstoneSceneBuilder
     private const string ScenePath = "Assets/Scenes/CapstoneModule1.unity";
     private const string ScreenshotPath = "/Users/kenny31/Documents/Capstone/outputs/module1/unity_module1_view.png";
     private const string FocusScreenshotPath = "/Users/kenny31/Documents/Capstone/outputs/module1/unity_module1_focus.png";
+    private const string OverlayPointsPath = "/Users/kenny31/Documents/Capstone/outputs/module1/unity_overlay_points.json";
     private const string ScenarioPath = "/Users/kenny31/Documents/Capstone/outputs/module1/unity_scenario.json";
     private static readonly Dictionary<string, Material> MaterialCache = new Dictionary<string, Material>();
 
@@ -18,6 +19,22 @@ public static class CapstoneSceneBuilder
     {
         public TaxiSlot[] taxis;
         public ObstacleSlot[] obstacles;
+    }
+
+    [System.Serializable]
+    private class OverlayPointCollection
+    {
+        public OverlayPoint[] points;
+    }
+
+    [System.Serializable]
+    private class OverlayPoint
+    {
+        public string zone_id;
+        public int dispatch_rank;
+        public string hotspot_label;
+        public float viewport_x;
+        public float viewport_y;
     }
 
     [System.Serializable]
@@ -85,6 +102,8 @@ public static class CapstoneSceneBuilder
         var center = mapBounds.center;
         var extents = mapBounds.extents;
         var scenario = LoadScenario();
+        var placedOverlayPoints = new List<OverlayPoint>();
+        var taxiWorldPositions = new List<Vector3>();
         var focusCameraObject = new GameObject("CapstoneFocusCamera");
         var focusCam = focusCameraObject.AddComponent<Camera>();
         focusCam.backgroundColor = new Color(0.78f, 0.86f, 0.95f);
@@ -95,7 +114,6 @@ public static class CapstoneSceneBuilder
 
         if (scenario != null && scenario.taxis != null)
         {
-            var taxiWorldPositions = new List<Vector3>();
             foreach (var taxiSlot in scenario.taxis)
             {
                 var taxiName = $"{taxiSlot.name}_{taxiSlot.zone_id}_R{taxiSlot.dispatch_rank}";
@@ -108,8 +126,16 @@ public static class CapstoneSceneBuilder
                     Quaternion.Euler(0f, taxiSlot.rotation_y, 0f),
                     taxiName
                 );
-                DecorateTaxiSpot(taxiInstance, center, taxiSlot);
+                DecorateTaxiSpot(taxiInstance, worldPosition, taxiSlot);
                 taxiWorldPositions.Add(worldPosition);
+                placedOverlayPoints.Add(
+                    new OverlayPoint
+                    {
+                        zone_id = taxiSlot.zone_id,
+                        dispatch_rank = taxiSlot.dispatch_rank,
+                        hotspot_label = taxiSlot.hotspot_label,
+                    }
+                );
             }
 
             SetupFocusCamera(center, focusCam, taxiWorldPositions);
@@ -178,6 +204,7 @@ public static class CapstoneSceneBuilder
         EditorSceneManager.SaveScene(scene, ScenePath);
 
         Directory.CreateDirectory(Path.GetDirectoryName(ScreenshotPath));
+        SaveOverlayPoints(cam, taxiWorldPositions, placedOverlayPoints, OverlayPointsPath);
         SaveScreenshot(cam, ScreenshotPath, 1600, 900);
 
         focusCam.backgroundColor = cam.backgroundColor;
@@ -189,6 +216,7 @@ public static class CapstoneSceneBuilder
         Debug.Log($"Saved scene: {ScenePath}");
         Debug.Log($"Saved screenshot: {ScreenshotPath}");
         Debug.Log($"Saved focus screenshot: {FocusScreenshotPath}");
+        Debug.Log($"Saved overlay points: {OverlayPointsPath}");
         EditorApplication.Exit(0);
     }
 
@@ -250,6 +278,9 @@ public static class CapstoneSceneBuilder
     private static List<Vector3> CollectRoadAnchors(GameObject root)
     {
         var anchors = new List<Vector3>();
+        var rootBounds = CalculateBounds(root);
+        var groundThreshold = rootBounds.min.y + 1.2f;
+
         foreach (var renderer in root.GetComponentsInChildren<Renderer>(true))
         {
             if (!IsRoadRenderer(renderer))
@@ -258,6 +289,11 @@ public static class CapstoneSceneBuilder
             }
 
             var bounds = renderer.bounds;
+            if (bounds.max.y > groundThreshold)
+            {
+                continue;
+            }
+
             if (bounds.size.x < 1f || bounds.size.z < 1f)
             {
                 continue;
@@ -324,11 +360,11 @@ public static class CapstoneSceneBuilder
         return chosen;
     }
 
-    private static void DecorateTaxiSpot(GameObject taxiInstance, Vector3 center, TaxiSlot taxiSlot)
+    private static void DecorateTaxiSpot(GameObject taxiInstance, Vector3 worldPosition, TaxiSlot taxiSlot)
     {
         var marker = GameObject.CreatePrimitive(PrimitiveType.Cylinder);
         marker.name = $"{taxiSlot.name}_Marker";
-        marker.transform.position = center + taxiSlot.position.ToVector3() + new Vector3(0f, 0.02f, 0f);
+        marker.transform.position = worldPosition + new Vector3(0f, 0.02f, 0f);
         marker.transform.localScale = new Vector3(2.6f, 0.08f, 2.6f);
 
         var markerMaterial = new Material(Shader.Find("Standard"));
@@ -338,13 +374,13 @@ public static class CapstoneSceneBuilder
 
         var beacon = GameObject.CreatePrimitive(PrimitiveType.Sphere);
         beacon.name = $"{taxiSlot.name}_Beacon";
-        beacon.transform.position = center + taxiSlot.position.ToVector3() + new Vector3(0f, 1.25f, 0f);
+        beacon.transform.position = worldPosition + new Vector3(0f, 1.25f, 0f);
         beacon.transform.localScale = new Vector3(0.9f, 0.9f, 0.9f);
         beacon.GetComponent<Renderer>().sharedMaterial = markerMaterial;
 
         var labelPlate = GameObject.CreatePrimitive(PrimitiveType.Cube);
         labelPlate.name = $"{taxiSlot.name}_LabelPlate";
-        labelPlate.transform.position = center + taxiSlot.position.ToVector3() + new Vector3(0f, 2.55f, 0f);
+        labelPlate.transform.position = worldPosition + new Vector3(0f, 2.55f, 0f);
         labelPlate.transform.rotation = Quaternion.Euler(50f, 0f, 0f);
         labelPlate.transform.localScale = new Vector3(2.5f, 0.08f, 0.92f);
         var plateMaterial = new Material(Shader.Find("Standard"));
@@ -353,7 +389,7 @@ public static class CapstoneSceneBuilder
         labelPlate.GetComponent<Renderer>().sharedMaterial = plateMaterial;
 
         var labelObject = new GameObject($"{taxiSlot.name}_Label");
-        labelObject.transform.position = center + taxiSlot.position.ToVector3() + new Vector3(0f, 2.62f, 0f);
+        labelObject.transform.position = worldPosition + new Vector3(0f, 2.62f, 0f);
         var text = labelObject.AddComponent<TextMesh>();
         text.text = $"R{taxiSlot.dispatch_rank} / {ShortZone(taxiSlot.zone_id)}\n{ShortHotspot(taxiSlot.hotspot_label)}";
         text.characterSize = 0.14f;
@@ -570,5 +606,32 @@ public static class CapstoneSceneBuilder
         RenderTexture.active = previousActive;
         Object.DestroyImmediate(rt);
         Object.DestroyImmediate(image);
+    }
+
+    private static void SaveOverlayPoints(
+        Camera cam,
+        List<Vector3> taxiWorldPositions,
+        List<OverlayPoint> points,
+        string outputPath
+    )
+    {
+        if (points == null || taxiWorldPositions == null || points.Count != taxiWorldPositions.Count)
+        {
+            return;
+        }
+
+        for (int i = 0; i < points.Count; i++)
+        {
+            var viewport = cam.WorldToViewportPoint(taxiWorldPositions[i] + new Vector3(0f, 1.2f, 0f));
+            points[i].viewport_x = viewport.x;
+            points[i].viewport_y = viewport.y;
+        }
+
+        var payload = new OverlayPointCollection
+        {
+            points = points.ToArray(),
+        };
+
+        File.WriteAllText(outputPath, JsonUtility.ToJson(payload, true));
     }
 }
