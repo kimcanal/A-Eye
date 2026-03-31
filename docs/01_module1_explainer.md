@@ -37,6 +37,8 @@ python3 module1_simulation/minimal_simulation.py
 실행하면 다음 파일이 생성됩니다.
 - `outputs/module1/module1_simulation_log.json`
 - `outputs/module1/module1_summary.json`
+- `outputs/module1/module1_overview.png`
+- `outputs/module1/module1_simulation.gif`
 
 ## 실행 결과를 어떻게 해석하나
 ### `module1_simulation_log.json`
@@ -58,6 +60,13 @@ python3 module1_simulation/minimal_simulation.py
 - step 수
 
 즉, 이 파일만 봐도 Module 1이 어떤 조건으로 구성되었는지 빠르게 확인할 수 있습니다.
+
+### `module1_overview.png` / `module1_simulation.gif`
+각 step의 객체 배치를 2D 도시 격자 위에 시각화한 결과입니다.
+- `module1_overview.png`: 마지막 step의 상태를 한 장으로 보여줌
+- `module1_simulation.gif`: step 0부터 step 5까지의 변화를 애니메이션으로 보여줌
+
+이제 Module 1은 단순히 JSON 로그만 있는 것이 아니라, 팀원이 바로 볼 수 있는 시각 자료도 함께 제공합니다.
 
 ## 현재 한계
 이 Module 1은 아직 다음 기능은 포함하지 않습니다.

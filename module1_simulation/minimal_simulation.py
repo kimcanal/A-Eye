@@ -17,6 +17,7 @@ import sys
 sys.path.append(str(Path(__file__).resolve().parent.parent))
 
 from module1_simulation.minimal_stub import DEFAULT_SCENARIO, Scenario
+from module1_simulation.render_simulation import render_from_log
 
 
 RNG = Random(42)
@@ -107,10 +108,14 @@ def main() -> None:
         "output_file": str(output_file),
     }
     summary_file = out_dir / "module1_summary.json"
+    render_outputs = render_from_log(output_file, out_dir)
+    summary.update(render_outputs)
     summary_file.write_text(json.dumps(summary, ensure_ascii=False, indent=2), encoding="utf-8")
 
     print(f"saved: {output_file}")
     print(f"saved: {summary_file}")
+    print(f"saved: {render_outputs['overview_image']}")
+    print(f"saved: {render_outputs['animation_gif']}")
     print(f"total entities: {len(entities)}")
     print(f"steps: {scenario.steps}")
 

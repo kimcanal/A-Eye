@@ -86,5 +86,15 @@ pip install torch
 - `docs/07_unity_workflow_checklist.md`
 - `docs/08_module1_code_map.md`
 
+Module 1 최소 시각화 실행:
+
+```bash
+bash scripts/run_module1.sh
+```
+
+생성 결과:
+- `outputs/module1/module1_overview.png`
+- `outputs/module1/module1_simulation.gif`
+
 ## 참고 링크
 - Notion: https://nimble-ceder-40b.notion.site/28_DT_-32317efd202c8158b35ac245c2b4dc73
