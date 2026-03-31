@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+from collections import defaultdict
 from io import BytesIO
 import json
 from pathlib import Path
@@ -10,6 +11,7 @@ matplotlib.use("Agg")
 
 import matplotlib.pyplot as plt
 from matplotlib.lines import Line2D
+from matplotlib.patches import FancyBboxPatch, Rectangle
 from PIL import Image
 
 
@@ -24,6 +26,17 @@ ENTITY_STYLE = {
     "compact": {"color": "#17becf", "marker": "^", "label": "Compact", "size": 120},
 }
 
+ENTITY_CODE = {
+    "passenger": "P",
+    "taxi": "T",
+    "autonomous_vehicle": "AV",
+    "obstacle": "X",
+    "sedan": "SE",
+    "suv": "SU",
+    "van": "V",
+    "compact": "C",
+}
+
 
 def style_for(kind: str) -> dict:
     return ENTITY_STYLE.get(kind, {"color": "#7f7f7f", "marker": "o", "label": kind, "size": 120})
@@ -35,53 +48,171 @@ def infer_city_size(logs: list[dict]) -> tuple[int, int]:
     return max_x + 1, max_y + 1
 
 
+def summarize_entities(entities: list[dict]) -> dict[str, int]:
+    counts: dict[str, int] = defaultdict(int)
+    for entity in entities:
+        counts[entity["kind"]] += 1
+    return dict(counts)
+
+
+def make_count_badge(entities: list[dict]) -> str:
+    counts = summarize_entities(entities)
+    ordered = ["taxi", "passenger", "autonomous_vehicle", "obstacle", "sedan", "suv", "van", "compact"]
+    parts = [f"{ENTITY_CODE[k]}{counts[k]}" for k in ordered if counts.get(k)]
+    return " ".join(parts[:4]) if parts else f"N{len(entities)}"
+
+
+def spread_positions(base_x: int, base_y: int, count: int) -> list[tuple[float, float]]:
+    if count <= 1:
+        return [(float(base_x), float(base_y))]
+
+    slots = [
+        (-0.26, 0.26),
+        (0.0, 0.26),
+        (0.26, 0.26),
+        (-0.26, 0.0),
+        (0.0, 0.0),
+        (0.26, 0.0),
+        (-0.26, -0.26),
+        (0.0, -0.26),
+        (0.26, -0.26),
+        (-0.13, 0.13),
+        (0.13, 0.13),
+        (-0.13, -0.13),
+        (0.13, -0.13),
+        (-0.34, 0.13),
+        (0.34, 0.13),
+        (-0.34, -0.13),
+        (0.34, -0.13),
+    ]
+    chosen = slots[:count]
+    return [(base_x + dx, base_y + dy) for dx, dy in chosen]
+
+
+def draw_city_background(ax: plt.Axes, width: int, height: int) -> None:
+    ax.set_facecolor("#d7dee7")
+    for x in range(width):
+        for y in range(height):
+            block = FancyBboxPatch(
+                (x - 0.42, y - 0.42),
+                0.84,
+                0.84,
+                boxstyle="round,pad=0.02,rounding_size=0.05",
+                facecolor="#f8f5ef",
+                edgecolor="#c9c2b6",
+                linewidth=1.0,
+                zorder=0,
+            )
+            ax.add_patch(block)
+            park = Rectangle(
+                (x - 0.26, y - 0.26),
+                0.18,
+                0.18,
+                facecolor="#d7e7c4",
+                edgecolor="none",
+                alpha=0.9,
+                zorder=0,
+            )
+            ax.add_patch(park)
+
+    for x in range(width):
+        ax.plot([x, x], [-0.5, height - 0.5], color="#ffffff", linewidth=2.6, alpha=0.35, zorder=1)
+    for y in range(height):
+        ax.plot([-0.5, width - 0.5], [y, y], color="#ffffff", linewidth=2.6, alpha=0.35, zorder=1)
+
+
+def add_step_summary(ax: plt.Axes, step_log: dict) -> None:
+    counts = summarize_entities(step_log["entities"])
+    ordered = [
+        ("taxi", "Taxi"),
+        ("passenger", "Passenger"),
+        ("autonomous_vehicle", "Autonomous"),
+        ("obstacle", "Obstacle"),
+    ]
+    summary_lines = [f"{label}: {counts.get(kind, 0)}" for kind, label in ordered]
+    ax.text(
+        0.01,
+        1.02,
+        " | ".join(summary_lines),
+        transform=ax.transAxes,
+        ha="left",
+        va="bottom",
+        fontsize=10,
+        color="#374151",
+        bbox={"boxstyle": "round,pad=0.3", "facecolor": "#ffffff", "edgecolor": "#d1d5db", "alpha": 0.95},
+    )
+
+
 def render_step(step_log: dict, city_size: tuple[int, int]) -> Image.Image:
     width, height = city_size
-    fig, ax = plt.subplots(figsize=(7, 7))
+    fig, ax = plt.subplots(figsize=(9.5, 8.2))
     ax.set_xlim(-0.5, width - 0.5)
     ax.set_ylim(-0.5, height - 0.5)
     ax.set_xticks(range(width))
     ax.set_yticks(range(height))
     ax.set_aspect("equal")
-    ax.grid(True, linestyle="--", linewidth=0.8, alpha=0.4)
-    ax.set_facecolor("#f8fafc")
-    ax.set_title(f"Module 1 City Snapshot - Step {step_log['step']}")
-    ax.set_xlabel("X block")
-    ax.set_ylabel("Y block")
+    draw_city_background(ax, width, height)
+    ax.grid(False)
+    ax.set_title(f"Module 1 Digital Twin Snapshot - Step {step_log['step']}", fontsize=19, pad=24)
+    ax.set_xlabel("City X block", fontsize=13)
+    ax.set_ylabel("City Y block", fontsize=13)
+    add_step_summary(ax, step_log)
 
     legend_items: dict[str, Line2D] = {}
+    grouped: dict[tuple[int, int], list[dict]] = defaultdict(list)
     for entity in step_log["entities"]:
-        style = style_for(entity["kind"])
-        ax.scatter(
-            entity["x"],
-            entity["y"],
-            s=style["size"],
-            c=style["color"],
-            marker=style["marker"],
-            edgecolors="#111827",
-            linewidths=0.8,
-            alpha=0.95,
-            zorder=3,
-        )
-        ax.text(
-            entity["x"] + 0.06,
-            entity["y"] + 0.06,
-            entity["entity_id"],
-            fontsize=7,
-            color="#111827",
-            zorder=4,
-        )
-        if entity["kind"] not in legend_items:
-            legend_items[entity["kind"]] = Line2D(
-                [0],
-                [0],
-                marker=style["marker"],
-                color="w",
-                label=style["label"],
-                markerfacecolor=style["color"],
-                markeredgecolor="#111827",
-                markersize=9,
+        grouped[(entity["x"], entity["y"])].append(entity)
+
+    label_kinds = {"taxi", "autonomous_vehicle", "obstacle"}
+
+    for (base_x, base_y), entities in grouped.items():
+        entities = sorted(entities, key=lambda e: (e["kind"], e["entity_id"]))
+        positions = spread_positions(base_x, base_y, len(entities))
+
+        if len(entities) > 1:
+            ax.text(
+                base_x - 0.40,
+                base_y + 0.36,
+                make_count_badge(entities),
+                fontsize=7.5,
+                color="#374151",
+                bbox={"boxstyle": "round,pad=0.18", "facecolor": "#ffffff", "edgecolor": "#d1d5db", "alpha": 0.94},
+                zorder=2,
             )
+
+        for entity, (plot_x, plot_y) in zip(entities, positions):
+            style = style_for(entity["kind"])
+            ax.scatter(
+                plot_x,
+                plot_y,
+                s=style["size"],
+                c=style["color"],
+                marker=style["marker"],
+                edgecolors="#111827",
+                linewidths=0.8,
+                alpha=0.97,
+                zorder=3,
+            )
+            if entity["kind"] in label_kinds:
+                ax.text(
+                    plot_x + 0.04,
+                    plot_y + 0.04,
+                    entity["entity_id"],
+                    fontsize=7,
+                    color="#111827",
+                    zorder=4,
+                )
+            if entity["kind"] not in legend_items:
+                legend_items[entity["kind"]] = Line2D(
+                    [0],
+                    [0],
+                    marker=style["marker"],
+                    color="w",
+                    label=style["label"],
+                    markerfacecolor=style["color"],
+                    markeredgecolor="#111827",
+                    markersize=9,
+                )
 
     events = step_log.get("events", [])
     event_text = "\n".join(events[:5]) if events else "No events"
@@ -90,12 +221,12 @@ def render_step(step_log: dict, city_size: tuple[int, int]) -> Image.Image:
     ax.text(
         1.02,
         0.98,
-        f"Events\n{event_text}",
+        f"Latest Events\n{event_text}",
         transform=ax.transAxes,
         ha="left",
         va="top",
-        fontsize=9,
-        bbox={"boxstyle": "round,pad=0.5", "facecolor": "white", "edgecolor": "#d1d5db"},
+        fontsize=9.5,
+        bbox={"boxstyle": "round,pad=0.55", "facecolor": "white", "edgecolor": "#d1d5db"},
     )
 
     ax.legend(
@@ -103,6 +234,9 @@ def render_step(step_log: dict, city_size: tuple[int, int]) -> Image.Image:
         loc="lower left",
         bbox_to_anchor=(1.02, 0.02),
         frameon=True,
+        title="Entity Types",
+        title_fontsize=11,
+        fontsize=10,
     )
     plt.tight_layout()
 

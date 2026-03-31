@@ -85,6 +85,7 @@ pip install torch
 - `docs/06_team_guide_module1.md`
 - `docs/07_unity_workflow_checklist.md`
 - `docs/08_module1_code_map.md`
+- `docs/18_module1_visualization_guide.md`
 
 Module 1 최소 시각화 실행:
 
