@@ -40,6 +40,9 @@ The pipeline generates these files under `outputs/`.
 - `model_metrics.json`: baseline model metrics
 - `predictions.csv`: actual vs predicted demand values for the test split
 - `dispatch_recommendations.csv`: dispatch priority ranking by zone
+- `dispatch_comparison.csv`: zone-level before/after dispatch allocation comparison
+- `dispatch_evaluation.json`: aggregate before/after dispatch metrics
+- `dispatch_before_after.png`: aggregate before/after dispatch comparison plot
 - `hourly_demand.png`: hourly total demand plot
 - `zone_hour_heatmap.png`: average demand heatmap by zone and hour
 - `actual_vs_predicted.png`: actual vs predicted demand plot
@@ -124,6 +127,20 @@ Example interpretation:
 - `incentive_multiplier` translates that score into a suggested dispatch incentive
 
 This means the current Phase 1 pipeline is no longer just "predict and dispatch separately"; it now uses the latest prediction output as the dispatch input when predictions are available.
+
+### dispatch_evaluation.json / dispatch_before_after.png
+
+These outputs compare:
+
+- `before`: a naive uniform-allocation baseline
+- `after`: predicted-demand-based reallocation
+- `current_reference`: the supply state currently present in the dataset
+
+Interpretation:
+
+- If `after.total_shortage` is lower than `before.total_shortage`, the predicted dispatch policy improves supply-demand balance over the naive baseline.
+- `dispatch_before_after.png` makes that comparison easier to present in slides.
+- `current_reference` is useful when the source supply already reflects demand patterns, which can make `after` look similar to the current state.
 
 ### zone_demand_summary.csv
 

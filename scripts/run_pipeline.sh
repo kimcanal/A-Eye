@@ -16,3 +16,4 @@ cd "${ROOT_DIR}"
 "${PYTHON_BIN}" -m src.dispatch.rule_based_dispatch
 "${PYTHON_BIN}" -m src.visualization.plot_demand
 "${PYTHON_BIN}" -m src.analysis.summarize_phase1
+"${PYTHON_BIN}" -m src.analysis.evaluate_dispatch

@@ -41,6 +41,9 @@ bash scripts/run_public_pipeline.sh
 - `outputs/model_metrics.json`
 - `outputs/predictions.csv`
 - `outputs/dispatch_recommendations.csv`
+- `outputs/dispatch_comparison.csv`
+- `outputs/dispatch_evaluation.json`
+- `outputs/dispatch_before_after.png`
 - `outputs/hourly_demand.png`
 - `outputs/zone_hour_heatmap.png`
 - `outputs/actual_vs_predicted.png`
@@ -64,7 +67,8 @@ bash scripts/run_public_pipeline.sh
 1. `scripts/run_pipeline.sh`로 1차 오프라인 흐름 실행
 2. `outputs/` 결과와 `docs/12_phase1_guide.md` 확인
 3. `predictions.csv`와 `dispatch_recommendations.csv`로 예측-배차 연결 확인
-4. 이후 LSTM, 실시간 데이터, Unity 시각화 순으로 확장
+4. `dispatch_before_after.png`와 `dispatch_evaluation.json`으로 배차 전/후 효과 확인
+5. 이후 LSTM, 실시간 데이터, Unity 시각화 순으로 확장
 
 ## LSTM 관련
 `src/prediction/train_lstm.py`는 PyTorch가 필요합니다.

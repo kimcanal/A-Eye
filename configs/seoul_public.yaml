@@ -29,11 +29,14 @@ dispatch:
 analysis:
   zone_summary_output: outputs/seoul_public/zone_demand_summary.csv
   hour_summary_output: outputs/seoul_public/hourly_demand_summary.csv
+  dispatch_eval_output: outputs/seoul_public/dispatch_evaluation.json
+  dispatch_comparison_output: outputs/seoul_public/dispatch_comparison.csv
 
 visualization:
   hourly_output: outputs/seoul_public/hourly_demand.png
   heatmap_output: outputs/seoul_public/zone_hour_heatmap.png
   prediction_plot_output: outputs/seoul_public/actual_vs_predicted.png
+  dispatch_eval_plot_output: outputs/seoul_public/dispatch_before_after.png
 
 lstm:
   seq_len: 6
