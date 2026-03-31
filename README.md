@@ -12,6 +12,14 @@
 
 현재 기준으로 Python 파이프라인은 실행 가능하며, Module 1은 Unity 실제 씬 브리지까지 연결된 상태입니다.
 
+## 지금 상태 한눈에 보기
+- 한 장 정리: `docs/20_project-status.md`
+- 핵심 상태:
+  - 로컬 더미데이터 기준 `예측 -> 배차 -> 비교 평가` 실행 가능
+  - 서울 공공데이터 기준 `fetch -> 변환 -> 예측 -> 배차` 실행 가능
+  - Unity 기준 `배차 결과 -> scenario JSON -> 실제 씬 캡처` 실행 가능
+  - SUMO는 아직 미구현
+
 ## 최근 업데이트 로그
 
 ### 2026-03-31
@@ -21,11 +29,6 @@
 - Unity Module 1 브리지 구현
   - `dispatch_recommendations.csv` → `unity_scenario.json` → Unity 씬 생성
 - Unity 결과를 발표용 보드 이미지로 정리
-
-### 현재 확인된 상태
-- 로컬 더미데이터 기준: 예측, 배차, 시각화 실행 가능
-- 서울 공공데이터 기준: fetch, 변환, 예측, 배차, Unity 시각화 실행 가능
-- SUMO는 아직 미구현, Unity만 실제 실행 확인 완료
 
 ### Module 1 현재 결과
 
@@ -90,7 +93,7 @@ bash scripts/run_public_pipeline.sh
 
 ## 현재 기준 권장 흐름
 1. `scripts/run_pipeline.sh`로 1차 오프라인 흐름 실행
-2. `outputs/` 결과와 `docs/12_phase1_guide.md` 확인
+2. `outputs/` 결과와 `docs/20_project-status.md` 확인
 3. `predictions.csv`와 `dispatch_recommendations.csv`로 예측-배차 연결 확인
 4. `dispatch_before_after.png`와 `dispatch_evaluation.json`으로 배차 전/후 효과 확인
 5. 이후 LSTM, 실시간 데이터, Unity 시각화 순으로 확장
