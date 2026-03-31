@@ -137,6 +137,20 @@ bash scripts/run_unity_module1_capture.sh
 - `outputs/module1/unity_module1_presentation.png`
 - `outputs/module1/unity_scenario.json`
 
+입력 배차 결과 선택:
+- 기본값은 `outputs/seoul_public/dispatch_recommendations.csv`와 `outputs/dispatch_recommendations.csv` 중 최신 수정 파일입니다.
+- 강제로 지정하려면 아래 중 하나를 사용합니다.
+
+```bash
+export DISPATCH_SOURCE=public   # 또는 local
+bash scripts/run_unity_module1_capture.sh
+```
+
+```bash
+export DISPATCH_CSV="/absolute/path/to/dispatch_recommendations.csv"
+bash scripts/run_unity_module1_capture.sh
+```
+
 주의:
 - 기본값으로 macOS 일반 설치 경로와 `~/Downloads/PBL_AssetPackge/Modeling/New Unity Project`를 사용합니다.
 - 다른 환경에서는 실행 전에 아래처럼 환경변수로 경로를 지정하면 됩니다.

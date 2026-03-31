@@ -12,6 +12,7 @@ UNITY_LOG="${UNITY_LOG:-/tmp/unity_build_scene_manual.log}"
 PYTHON_BIN="${PYTHON_BIN:-$CAPSTONE_ROOT/.venv/bin/python}"
 UNITY_EDITOR_SCRIPT_SOURCE="$CAPSTONE_ROOT/unity/CapstoneSceneBuilder.cs"
 UNITY_EDITOR_SCRIPT_DEST="$UNITY_PROJECT/Assets/Editor/CapstoneSceneBuilder.cs"
+README_ASSET_DEST="$CAPSTONE_ROOT/docs/assets/unity_module1_presentation.png"
 
 if [[ ! -x "$PYTHON_BIN" ]]; then
   echo "Python executable not found: $PYTHON_BIN" >&2
@@ -48,11 +49,16 @@ export CAPSTONE_ROOT
 "$PYTHON_BIN" "$CAPSTONE_ROOT/src/module1/render_unity_overlay.py"
 "$PYTHON_BIN" "$CAPSTONE_ROOT/src/module1/build_unity_presentation.py"
 
+if [[ -d "$(dirname "$README_ASSET_DEST")" ]]; then
+  cp "$CAPSTONE_ROOT/outputs/module1/unity_module1_presentation.png" "$README_ASSET_DEST"
+fi
+
 echo "Unity scene build complete."
 echo "Log: $UNITY_LOG"
 echo "Screenshot: $CAPSTONE_ROOT/outputs/module1/unity_module1_view.png"
 echo "Focus screenshot: $CAPSTONE_ROOT/outputs/module1/unity_module1_focus.png"
 echo "Annotated screenshot: $CAPSTONE_ROOT/outputs/module1/unity_module1_annotated.png"
 echo "Presentation board: $CAPSTONE_ROOT/outputs/module1/unity_module1_presentation.png"
+echo "README asset copy: $README_ASSET_DEST"
 echo "Scene: $UNITY_PROJECT/Assets/Scenes/CapstoneModule1.unity"
 echo "Scenario: $CAPSTONE_ROOT/outputs/module1/unity_scenario.json"
