@@ -15,6 +15,7 @@
 
 ### 1. Public Data Pipeline
 - Seoul public transit data can be fetched and transformed into a time-series demand table.
+- Administrative dong codes are now resolved into readable names using a Seoul dong master lookup.
 - The end-to-end public pipeline completes without manual intervention.
 
 ### 2. Stable Baseline Path

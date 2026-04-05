@@ -11,6 +11,7 @@ fi
 cd "${ROOT_DIR}"
 
 "${PYTHON_BIN}" -m src.data.fetch_seoul_transit_demand
+"${PYTHON_BIN}" -m src.data.fetch_seoul_dong_master
 "${PYTHON_BIN}" -m src.data.transform_seoul_transit_demand
 
 export CAPSTONE_CONFIG="${ROOT_DIR}/configs/seoul_public.yaml"

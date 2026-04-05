@@ -17,7 +17,8 @@ bash scripts/run_public_pipeline.sh
 
 ### 1. Data Fetch & Transform
 - `src.data.fetch_seoul_transit_demand`: Fetches 1,000-row chunks from the Seoul Open API.
-- `src.data.transform_seoul_transit_demand`: Cleans and filters for the most recent 30-day window.
+- `src.data.fetch_seoul_dong_master`: Fetches the Seoul administrative-dong master used to resolve human-readable names.
+- `src.data.transform_seoul_transit_demand`: Cleans and filters for the most recent 30-day window, then joins `zone_id` with `zone_name`, `gu_name`, and `full_zone_name`.
 
 ### 2. Feature Engineering
 - `src.preprocessing.build_features`: Adds time-lag features, rolling means, holiday features, and currently mock weather features.
@@ -53,5 +54,6 @@ bash scripts/run_public_pipeline.sh
 - **ConvLSTM metrics**: `outputs/seoul_public/convlstm_metrics.json`
 - **ConvLSTM predictions**: `outputs/seoul_public/convlstm_predictions.csv`
 - **Dispatch recommendations**: `outputs/seoul_public/dispatch_recommendations.csv`
+- **Readable zone lookup**: `data/seoul_public/zone_lookup.csv`
 - **SUMO route file**: `module1_sumo/demand.rou.xml`
 - **Visuals**: `outputs/seoul_public/*.png`

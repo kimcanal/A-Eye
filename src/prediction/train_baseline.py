@@ -30,7 +30,16 @@ def main() -> None:
     df = df.sort_values(time_column).reset_index(drop=True)
 
     excluded = {demand_column, time_column, zone_column}
-    features = [c for c in df.columns if c not in excluded]
+    metadata_columns = [
+        c
+        for c in ["zone_name", "gu_name", "city_name", "full_zone_name"]
+        if c in df.columns
+    ]
+    features = [
+        c
+        for c in df.columns
+        if c not in excluded and c not in metadata_columns and pd.api.types.is_numeric_dtype(df[c])
+    ]
     if not features:
         raise SystemExit('No feature columns were found for baseline training.')
 
@@ -41,7 +50,7 @@ def main() -> None:
     y_train = df.loc[: split_idx - 1, demand_column]
     x_test = df.loc[split_idx:, features]
     y_test = df.loc[split_idx:, demand_column]
-    meta_test = df.loc[split_idx:, [time_column, zone_column]].copy()
+    meta_test = df.loc[split_idx:, [time_column, zone_column, *metadata_columns]].copy()
 
     model = RandomForestRegressor(n_estimators=n_estimators, random_state=random_state)
     model.fit(x_train, y_train)

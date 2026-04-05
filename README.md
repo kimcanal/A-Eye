@@ -41,6 +41,12 @@ This fetches Seoul public data, builds features, refreshes the baseline predicti
 bash scripts/run_public_pipeline.sh
 ```
 
+After the run, the public-data folder also includes a readable zone lookup:
+
+- `data/seoul_public/zone_lookup.csv`
+
+This maps each `zone_id` to `zone_name`, `gu_name`, and `full_zone_name` so that downstream CSV outputs are easier to read.
+
 ### 3. Optional: Launch SUMO
 
 ```bash
