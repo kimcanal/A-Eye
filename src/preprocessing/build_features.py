@@ -3,6 +3,8 @@ from __future__ import annotations
 from pathlib import Path
 
 import pandas as pd
+import numpy as np
+import holidays
 
 from src.common.config import load_config
 
@@ -42,6 +44,42 @@ def add_demand_features(
     return out
 
 
+def add_holiday_features(
+    df: pd.DataFrame,
+    time_column: str,
+    use_holiday: bool,
+) -> pd.DataFrame:
+    out = df.copy()
+    if use_holiday:
+        kr_holidays = holidays.KR()
+        out['is_holiday'] = out[time_column].dt.date.apply(lambda x: int(x in kr_holidays))
+    return out
+
+
+def add_weather_features(
+    df: pd.DataFrame,
+    time_column: str,
+    use_weather: bool,
+) -> pd.DataFrame:
+    out = df.copy()
+    if use_weather:
+        # Mock weather data generation using consistent seed based on date
+        # Actual implementation would fetch from Meteorological Agency API
+        np.random.seed(42)
+        dates = out[time_column].dt.date.unique()
+        weather_map = {
+            date: {
+                'temperature': np.random.uniform(-5, 35),
+                'precipitation': np.random.choice([0.0, 0.0, 0.0, 5.0, 15.0, 50.0])
+            }
+            for date in dates
+        }
+        
+        out['temperature'] = out[time_column].dt.date.map(lambda x: weather_map[x]['temperature'])
+        out['precipitation'] = out[time_column].dt.date.map(lambda x: weather_map[x]['precipitation'])
+    return out
+
+
 def main() -> None:
     cfg = load_config()
     input_csv = Path(cfg['data']['input_csv'])
@@ -64,6 +102,16 @@ def main() -> None:
         time_column=time_column,
         use_lag_1=cfg['features']['use_lag_1'],
         use_rolling_mean_3=cfg['features']['use_rolling_mean_3'],
+    )
+    df = add_holiday_features(
+        df,
+        time_column=time_column,
+        use_holiday=cfg['features'].get('use_holiday', False),
+    )
+    df = add_weather_features(
+        df,
+        time_column=time_column,
+        use_weather=cfg['features'].get('use_weather', False),
     )
 
     output_csv.parent.mkdir(parents=True, exist_ok=True)

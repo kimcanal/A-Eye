@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_absolute_error, mean_squared_error
+from sklearn.metrics import mean_absolute_error, mean_squared_error, mean_absolute_percentage_error
 
 from src.common.config import load_config
 
@@ -50,6 +50,7 @@ def main() -> None:
     mse = mean_squared_error(y_test, pred)
     rmse = round(mse ** 0.5, 4)
     mae = round(mean_absolute_error(y_test, pred), 4)
+    mape = round(mean_absolute_percentage_error(y_test, pred) * 100, 4)
 
     metrics_output.parent.mkdir(parents=True, exist_ok=True)
     metrics_output.write_text(
@@ -62,6 +63,7 @@ def main() -> None:
                 'features': features,
                 'rmse': rmse,
                 'mae': mae,
+                'mape': mape,
             },
             indent=2,
         ),
@@ -75,6 +77,7 @@ def main() -> None:
 
     print('rmse:', rmse)
     print('mae:', mae)
+    print('mape:', mape, '%')
     print(f'saved: {metrics_output}')
     print(f'saved: {predictions_output}')
 
