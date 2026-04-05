@@ -15,6 +15,7 @@ cd "${ROOT_DIR}"
 
 export CAPSTONE_CONFIG="${ROOT_DIR}/configs/seoul_public.yaml"
 "${PYTHON_BIN}" -m src.preprocessing.build_features
+"${PYTHON_BIN}" -m src.prediction.train_baseline
 "${PYTHON_BIN}" -m src.data.generate_grid_dataset
 "${PYTHON_BIN}" -m src.prediction.train_convlstm
 "${PYTHON_BIN}" -m src.dispatch.export_to_sumo

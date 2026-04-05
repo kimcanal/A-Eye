@@ -1,32 +1,42 @@
 # Project Status: A-Eye (Taxi Demand Prediction & Dispatch Simulation)
 
-## 📋 Assignment Requirements Mapping
+## Assignment Requirements Mapping
 
 | Module | Requirement | Status | Implementation Detail |
 | :--- | :--- | :--- | :--- |
-| **Module 1** | Digital Twin Simulation | **95%** | Unity-based minimal simulation and SUMO (Standard) integration. |
-| **Module 2** | Data Pipeline & External Features | **100%** | Seoul Open API (Transit Demand) + Weather + Holiday features. |
-| **Module 3** | Deep Learning Prediction | **100%** | **ConvLSTM (Custom)** architecture for 3x3 Grid prediction + MAPE metrics. |
-| **Module 4** | Dispatch Optimization | **90%** | Imbalance-score based rule-based dispatch and incentive multipliers. |
+| **Module 1** | Digital Twin / Simulation | **70%** | Unity minimal simulation exists, and SUMO route export is connected, but SUMO routing is still coarse. |
+| **Module 2** | Data Pipeline & Features | **80%** | Seoul Open API fetch/transform works. Holiday and weather scaffolding exist, but weather is still mock-generated. |
+| **Module 3** | Prediction | **75%** | RandomForest baseline is stable. ConvLSTM is implemented and runnable, but still experimental. |
+| **Module 4** | Dispatch | **80%** | Rule-based dispatch works using refreshed baseline predictions; ConvLSTM-to-dispatch is not yet the main path. |
 
 ---
 
-## ✅ Major Milestones Completed
+## What Is Working Well
 
-### 1. Spatio-Temporal Data Transformation
-- We successfully converted administrative district data (1D) into a **3x3 Spatial Grid (2D)**.
-- This allows the model to learn spatial dependencies (neighboring cell interactions) which is a core requirement of the assignment.
+### 1. Public Data Pipeline
+- Seoul public transit data can be fetched and transformed into a time-series demand table.
+- The end-to-end public pipeline completes without manual intervention.
 
-### 2. Custom ConvLSTM Architecture
-- Instead of using a black-box library, we implemented the `ConvLSTMCell` using PyTorch from scratch.
-- **Performance**: Achieved stable convergence on Apple Silicon (MPS) and calculated required **MAPE** metrics.
+### 2. Stable Baseline Path
+- A RandomForest baseline produces reproducible demand predictions.
+- Dispatch recommendations are generated from the baseline output and evaluated against a simple allocation baseline.
 
-### 3. Data-Driven Simulation
-- The simulation no longer uses random spawning. It reads the `dispatch_recommendations.csv` or ConvLSTM predictions to distribute taxi density across the map.
+### 3. Experimental Spatial Path
+- A hotspot zone can be expanded into a synthetic 3x3 grid.
+- A custom ConvLSTM can train on that grid and export a SUMO route file.
 
 ---
 
-## 🛠️ Next Steps / Remaining Tasks
-- [ ] **Full SUMO Integration**: Complete the export script to run industrial-standard traffic simulations.
-- [ ] **Refine Incentive Logic**: Potentially implement a more complex reinforcement learning or heuristic for the multipliers.
-- [ ] **Final Presentation Prep**: Visualize the 3x3 grid demand heatmaps.
+## Current Gaps
+
+- ConvLSTM predictions are not yet the main input used by the dispatch module.
+- SUMO export currently converts prediction volume into vehicle counts, but not into realistic cell-by-cell routes.
+- Weather is still mock-generated, not fetched from a real weather API.
+- Dependency reproducibility needs attention on fresh environments.
+
+## Near-Term Next Steps
+
+- [ ] Keep the baseline path stable and reproducible.
+- [ ] Make SUMO export more spatially meaningful.
+- [ ] Replace mock weather with real external data.
+- [ ] Revisit ConvLSTM once the data granularity improves.

@@ -50,7 +50,11 @@ def main() -> None:
     mse = mean_squared_error(y_test, pred)
     rmse = round(mse ** 0.5, 4)
     mae = round(mean_absolute_error(y_test, pred), 4)
-    mape = round(mean_absolute_percentage_error(y_test, pred) * 100, 4)
+    nonzero_mask = y_test.abs() >= 1e-6
+    if nonzero_mask.any():
+        mape = round(mean_absolute_percentage_error(y_test[nonzero_mask], pred[nonzero_mask]) * 100, 4)
+    else:
+        mape = None
 
     metrics_output.parent.mkdir(parents=True, exist_ok=True)
     metrics_output.write_text(

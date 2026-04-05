@@ -4,7 +4,7 @@ This guide explains how to run the full A-Eye data-to-prediction pipeline using 
 
 ## 🚀 One-Command Execution
 
-The easiest way to run the entire project (Fetch -> Transform -> Preprocess -> Predict) is:
+The easiest way to run the current public-data pipeline is:
 
 ```bash
 # Ensure your SEOUL_OPEN_API_KEY is in your .zshrc or environment
@@ -20,25 +20,38 @@ bash scripts/run_public_pipeline.sh
 - `src.data.transform_seoul_transit_demand`: Cleans and filters for the most recent 30-day window.
 
 ### 2. Feature Engineering
-- `src.preprocessing.build_features`: Adds time-lag features, rolling means, **Holiday features**, and **Weather mock features**.
+- `src.preprocessing.build_features`: Adds time-lag features, rolling means, holiday features, and currently mock weather features.
 
-### 3. Spatial Grid Generation
+### 3. Stable Baseline Prediction
+- `src.prediction.train_baseline`:
+  - Trains a RandomForest baseline on the processed public dataset.
+  - Produces `outputs/seoul_public/predictions.csv`.
+  - This is the prediction file currently used by the dispatch module.
+
+### 4. Spatial Grid Generation
 - `src.data.generate_grid_dataset`: Takes the top-demand zone (Hotspot) and artificially disaggregates it into a **3x3 grid (9 cells)**.
 
-### 4. Deep Learning Prediction (ConvLSTM)
+### 5. Deep Learning Prediction (ConvLSTM)
 - `src.prediction.train_convlstm`:
   - Custom PyTorch implementation of **ConvLSTMCell**.
   - Learns spatio-temporal dynamics from the 3x3 grids.
   - Outputs metrics including **MAPE**.
+  - This is currently an experimental branch, not the primary dispatch input.
 
-### 5. Dispatch Recommendation
-- `src.dispatch.rule_based_dispatch`: Calculates imbalance scores and generates a rank-ordered list of zones for reallocation.
+### 6. Dispatch Recommendation
+- `src.dispatch.rule_based_dispatch`: Calculates imbalance scores and generates a rank-ordered list of zones for reallocation using the baseline prediction file.
+
+### 7. SUMO Export
+- `src.dispatch.export_to_sumo`: Converts ConvLSTM output into a coarse SUMO route file for simulation experiments.
 
 ---
 
 ## 📊 Outputs
 
-- **Metrics**: `outputs/seoul_public/convlstm_metrics.json`
-- **Predictions**: `outputs/seoul_public/convlstm_predictions.csv`
-- **Recommendations**: `outputs/seoul_public/dispatch_recommendations.csv`
+- **Baseline metrics**: `outputs/seoul_public/model_metrics.json`
+- **Baseline predictions**: `outputs/seoul_public/predictions.csv`
+- **ConvLSTM metrics**: `outputs/seoul_public/convlstm_metrics.json`
+- **ConvLSTM predictions**: `outputs/seoul_public/convlstm_predictions.csv`
+- **Dispatch recommendations**: `outputs/seoul_public/dispatch_recommendations.csv`
+- **SUMO route file**: `module1_sumo/demand.rou.xml`
 - **Visuals**: `outputs/seoul_public/*.png`

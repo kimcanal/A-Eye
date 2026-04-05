@@ -9,9 +9,14 @@ import pandas as pd
 
 from src.common.config import load_config
 
-import torch
-import torch.nn as nn
-from torch.utils.data import DataLoader, TensorDataset
+try:
+    import torch
+    import torch.nn as nn
+    from torch.utils.data import DataLoader, TensorDataset
+except ImportError as exc:  # pragma: no cover
+    raise SystemExit(
+        "PyTorch is not installed. Install requirements first, then rerun the ConvLSTM pipeline."
+    ) from exc
 
 
 class ConvLSTMCell(nn.Module):
@@ -207,9 +212,16 @@ def main() -> None:
     rmse = float(np.sqrt(np.mean((test_pred - y_test) ** 2)))
     mae = float(np.mean(np.abs(test_pred - y_test)))
     
-    # Safe MAPE avoiding division by zero
-    y_test_safe = np.where(y_test == 0, 1e-6, y_test)
-    mape = float(np.mean(np.abs((test_pred - y_test) / y_test_safe)) * 100)
+    nonzero_mask = np.abs(y_test) >= 1e-6
+    if np.any(nonzero_mask):
+        mape = float(
+            np.mean(
+                np.abs((test_pred[nonzero_mask] - y_test[nonzero_mask]) / y_test[nonzero_mask])
+            )
+            * 100
+        )
+    else:
+        mape = float("nan")
     
     metrics_output = Path(cv_cfg["metrics_output"])
     predictions_output = Path(cv_cfg["predictions_output"])

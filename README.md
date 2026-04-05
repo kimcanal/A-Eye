@@ -1,53 +1,64 @@
 # A-Eye: Taxi Demand Prediction & Dispatch Simulation
 
-A-Eye is an end-to-end taxi demand forecasting and digital twin simulation framework for the **Kakao Mobility Capstone** project.
+A-Eye is a taxi demand forecasting and dispatch simulation project for the **Kakao Mobility Capstone**.
 
-## 🚀 Key Features
+## Current Scope
 
-- **Seoul Public Data Integration**: Fetches real-time transit demand and merges with weather/holiday features.
-- **3x3 Grid Spatio-Temporal Modeling**: Synthetically disaggregates dong-level demand for advanced spatial prediction.
-- **Custom ConvLSTM (from scratch)**: Proprietary PyTorch implementation of the `ConvLSTM` architecture for grid-based demand prediction.
-- **Incentive-Based Dispatch Ranking**: Multi-threshold rule-based dispatch for supply-demand balancing.
-- **Standard Simulation (SUMO & Unity)**: Maps predictions to the industrial-standard SUMO traffic simulator and custom Unity digital twin.
+- **Baseline demand prediction**: Seoul public transit demand is fetched, transformed, and used to train a stable RandomForest baseline.
+- **Experimental deep learning path**: A custom ConvLSTM runs on a synthetic 3x3 hotspot grid for spatio-temporal experiments.
+- **Dispatch ranking**: Dispatch recommendations are currently generated from the refreshed baseline prediction output.
+- **Simulation bridge**: SUMO route files are generated from ConvLSTM output as a coarse simulation demo.
 
----
+## Important Notes
 
-## 🛠️ Project Structure
+- Public weather and holiday features are enabled, but **weather is still mock-generated** inside the preprocessing step.
+- The SUMO export currently demonstrates pipeline connectivity, not fully realistic spatial routing.
+- Older planning and draft documents were moved under `docs/archive/` to keep the active docs slimmer.
 
-- `src/`: Core Python modules (Data, Preprocessing, Prediction, Dispatch, Analysis, Visualization).
-- `docs/`: Simplified documentation (Status, Pipeline Guide, SUMO Simulation).
-- `module1_sumo/`: SUMO 3x3 Grid simulation files.
-- `module1_simulation/`: Unity minimal simulation logic.
-- `configs/`: YAML-based configuration for multiple scenarios.
-- `scripts/`: Shell scripts for end-to-end pipeline execution.
+## Project Structure
 
----
+- `src/`: Core Python modules for data, preprocessing, prediction, dispatch, analysis, and visualization.
+- `docs/`: Active project docs.
+- `docs/archive/`: Older notes and archived drafts.
+- `module1_sumo/`: SUMO network/config/route files.
+- `module1_simulation/`: Unity/minimal simulation assets and logic.
+- `configs/`: YAML configuration for local and public-data runs.
+- `scripts/`: End-to-end execution scripts and utility scripts.
 
-## 🚦 Quick Start
+## Quick Start
 
 ### 1. Configure the environment
-Set your Seoul Open API key in your `.zshrc` (or `.bashrc`):
+
 ```bash
 export SEOUL_OPEN_API_KEY="your_api_key_here"
 ```
 
-### 2. Run the Full Pipeline
-Fetches data, trains the ConvLSTM, and generates SUMO simulation files:
+### 2. Run the public-data pipeline
+
+This fetches Seoul public data, builds features, refreshes the baseline prediction used by dispatch, trains the ConvLSTM experiment, and exports SUMO routes.
+
 ```bash
 bash scripts/run_public_pipeline.sh
 ```
 
-### 3. Launch SUMO Simulation
-Verify predictions in the traffic GUI:
+### 3. Optional: Launch SUMO
+
 ```bash
 cd module1_sumo
 sumo-gui -c sumo_config.sumocfg
 ```
 
----
+### 4. Optional: Clean generated files
 
-## 📊 Core Documentation
+If the generated CSV/PNG/JSON files feel too noisy during development:
 
-- [01_Project_Status.md](docs/01_Project_Status.md): Feature mapping and assignment checklist.
-- [02_Pipeline_Guide.md](docs/02_Pipeline_Guide.md): Detailed instruction for the Python codebase.
-- [03_SUMO_Simulation.md](docs/03_SUMO_Simulation.md): How to work with traffic simulation.
+```bash
+bash scripts/clean_generated_outputs.sh
+```
+
+## Core Docs
+
+- [docs/README.md](docs/README.md): entry point for active documentation
+- [docs/01_Project_Status.md](docs/01_Project_Status.md): current module-by-module status
+- [docs/02_Pipeline_Guide.md](docs/02_Pipeline_Guide.md): pipeline flow and outputs
+- [docs/03_SUMO_Simulation.md](docs/03_SUMO_Simulation.md): SUMO usage and current limitations

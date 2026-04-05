@@ -144,9 +144,11 @@ def main() -> None:
     rmse = float(np.sqrt(np.mean((test_pred - y_test) ** 2)))
     mae = float(np.mean(np.abs(test_pred - y_test)))
     
-    # Avoid division by zero for MAPE
-    y_test_safe = np.where(y_test == 0, 1e-6, y_test)
-    mape = float(np.mean(np.abs((test_pred - y_test) / y_test_safe)) * 100)
+    nonzero_mask = np.abs(y_test) >= 1e-6
+    if np.any(nonzero_mask):
+        mape = float(np.mean(np.abs((test_pred[nonzero_mask] - y_test[nonzero_mask]) / y_test[nonzero_mask])) * 100)
+    else:
+        mape = float("nan")
 
     metrics_output = Path(lstm_cfg["metrics_output"])
     predictions_output = Path(lstm_cfg["predictions_output"])
