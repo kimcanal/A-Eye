@@ -9,4 +9,5 @@ else
 fi
 
 cd "${ROOT_DIR}"
-"${PYTHON_BIN}" module1_simulation/minimal_simulation.py
+export PYTHONPATH="${ROOT_DIR}/legacy:${PYTHONPATH:-}"
+"${PYTHON_BIN}" legacy/module1_simulation/minimal_simulation.py

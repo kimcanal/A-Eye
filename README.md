@@ -59,8 +59,8 @@ Main outputs:
 ## Legacy / Secondary Paths
 
 These are kept, but they are not the main path right now:
-- `unity/`
-- `module1_simulation/`
+- `legacy/unity/`
+- `legacy/module1_simulation/`
 - public hourly Seoul-data experiments
 - older planning and meeting notes under `docs/archive/`
 

@@ -38,7 +38,8 @@ bash scripts/run_unity_module1_capture.sh
 ```
 
 ## 주요 결과물
-- `outputs/module1/unity_module1_view.png`
-- `outputs/module1/unity_module1_focus.png`
-- `outputs/module1/unity_module1_annotated.png`
-- `outputs/module1/unity_module1_presentation.png`
+- 최종 발표본: `outputs/module1/unity_module1_presentation.png`
+- 시나리오 파일: `outputs/module1/unity_scenario.json`
+- 스크래치 캡처: `outputs/module1/scratch/unity_module1_view.png`
+- 스크래치 포커스 캡처: `outputs/module1/scratch/unity_module1_focus.png`
+- 스크래치 오버레이: `outputs/module1/scratch/unity_module1_annotated.png`

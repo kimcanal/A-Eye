@@ -38,7 +38,11 @@ def make_entities(s: Scenario) -> list[Entity]:
     w, h = s.city_size
     
     # Try to load dispatch recommendations to distribute taxis rationally
-    dispatch_csv = Path("outputs/dispatch_recommendations.csv")
+    dispatch_candidates = [
+        Path("outputs/local/dispatch_recommendations.csv"),
+        Path("outputs/dispatch_recommendations.csv"),
+    ]
+    dispatch_csv = next((path for path in dispatch_candidates if path.exists()), dispatch_candidates[0])
     zone_ratios = {}
     if dispatch_csv.exists():
         df = pd.read_csv(dispatch_csv)
