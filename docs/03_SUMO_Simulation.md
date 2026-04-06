@@ -3,6 +3,20 @@
 This project uses **SUMO (Simulation of Urban MObility)** as a simulation bridge for the grid-based prediction experiment.
 At the current stage, SUMO export is connected, but the route mapping is still a coarse demo rather than a fully realistic traffic model.
 
+## Recommended Starting Path
+
+If we want the lowest-friction Digital Twin baseline right now, start here:
+
+```bash
+bash scripts/run_yeoksam_sumo_pipeline.sh
+```
+
+That path:
+- uses a 3x3 Yeoksam synthetic demand grid
+- runs in 5-minute intervals
+- skips ML for the first demonstration
+- generates `before` and `after` SUMO configs directly
+
 ## 🛠️ Prerequisites
 
 1.  **Install SUMO**:
@@ -37,6 +51,15 @@ bash scripts/run_public_pipeline.sh
 
 - Input: `outputs/seoul_public/convlstm_predictions.csv`
 - Output: `module1_sumo/demand.rou.xml`
+
+There is now also a simpler assignment-aligned baseline:
+
+- Input: `data/yeoksam_synthetic_5min.csv`
+- Outputs:
+  - `module1_sumo/yeoksam_before.rou.xml`
+  - `module1_sumo/yeoksam_after.rou.xml`
+  - `module1_sumo/yeoksam_before.sumocfg`
+  - `module1_sumo/yeoksam_after.sumocfg`
 
 ---
 
