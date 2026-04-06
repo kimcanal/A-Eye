@@ -10,6 +10,8 @@ fi
 
 cd "${ROOT_DIR}"
 
+export CAPSTONE_CONFIG="${ROOT_DIR}/configs/base.yaml"
+
 "${PYTHON_BIN}" -m src.data.generate_local_dataset
 "${PYTHON_BIN}" -m src.preprocessing.build_features
 "${PYTHON_BIN}" -m src.prediction.train_baseline
@@ -17,3 +19,5 @@ cd "${ROOT_DIR}"
 "${PYTHON_BIN}" -m src.visualization.plot_demand
 "${PYTHON_BIN}" -m src.analysis.summarize_phase1
 "${PYTHON_BIN}" -m src.analysis.evaluate_dispatch
+
+echo "saved outputs under outputs/local"

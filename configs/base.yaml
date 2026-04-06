@@ -1,6 +1,6 @@
 data:
   input_csv: data/local_taxi_calls.csv
-  processed_csv: outputs/processed_taxi_calls.csv
+  processed_csv: outputs/local/processed_taxi_calls.csv
   time_column: pickup_datetime
   zone_column: zone_id
   demand_column: call_count
@@ -19,26 +19,26 @@ model:
   test_size: 0.2
   random_state: 42
   n_estimators: 200
-  metrics_output: outputs/model_metrics.json
-  predictions_output: outputs/predictions.csv
+  metrics_output: outputs/local/model_metrics.json
+  predictions_output: outputs/local/predictions.csv
 
 dispatch:
   low_threshold: 1.2
   medium_threshold: 1.5
   high_threshold: 2.0
-  output_csv: outputs/dispatch_recommendations.csv
+  output_csv: outputs/local/dispatch_recommendations.csv
 
 analysis:
-  zone_summary_output: outputs/zone_demand_summary.csv
-  hour_summary_output: outputs/hourly_demand_summary.csv
-  dispatch_eval_output: outputs/dispatch_evaluation.json
-  dispatch_comparison_output: outputs/dispatch_comparison.csv
+  zone_summary_output: outputs/local/zone_demand_summary.csv
+  hour_summary_output: outputs/local/hourly_demand_summary.csv
+  dispatch_eval_output: outputs/local/dispatch_evaluation.json
+  dispatch_comparison_output: outputs/local/dispatch_comparison.csv
 
 visualization:
-  hourly_output: outputs/hourly_demand.png
-  heatmap_output: outputs/zone_hour_heatmap.png
-  prediction_plot_output: outputs/actual_vs_predicted.png
-  dispatch_eval_plot_output: outputs/dispatch_before_after.png
+  hourly_output: outputs/local/hourly_demand.png
+  heatmap_output: outputs/local/zone_hour_heatmap.png
+  prediction_plot_output: outputs/local/actual_vs_predicted.png
+  dispatch_eval_plot_output: outputs/local/dispatch_before_after.png
 
 lstm:
   seq_len: 6
@@ -47,13 +47,13 @@ lstm:
   batch_size: 32
   epochs: 50
   learning_rate: 0.001
-  metrics_output: outputs/lstm_metrics.json
-  predictions_output: outputs/lstm_predictions.csv
+  metrics_output: outputs/local/lstm_metrics.json
+  predictions_output: outputs/local/lstm_predictions.csv
 
 grid:
   width: 3
   height: 3
-  output_csv: outputs/grid_3x3_demand.csv
+  output_csv: outputs/local/grid_3x3_demand.csv
 
 convlstm:
   seq_len: 6
@@ -62,5 +62,5 @@ convlstm:
   epochs: 50
   batch_size: 16
   learning_rate: 0.001
-  metrics_output: outputs/convlstm_metrics.json
-  predictions_output: outputs/convlstm_predictions.csv
+  metrics_output: outputs/local/convlstm_metrics.json
+  predictions_output: outputs/local/convlstm_predictions.csv

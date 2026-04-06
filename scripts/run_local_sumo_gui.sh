@@ -18,5 +18,18 @@ fi
 
 export SUMO_HOME="${SUMO_HOME:-${SUMO_ROOT}/share/sumo}"
 
+# SUMO GUI on macOS still uses XQuartz/X11. Prefer the user's existing DISPLAY when
+# it already talks to XQuartz; otherwise fall back to the local XQuartz socket.
+if [[ -z "${DISPLAY:-}" ]]; then
+  export DISPLAY=":0"
+fi
+
+if command -v xset >/dev/null 2>&1; then
+  if ! xset q >/dev/null 2>&1; then
+    echo "DISPLAY=${DISPLAY} is not connected to XQuartz. Start XQuartz first." >&2
+    exit 1
+  fi
+fi
+
 cd "$(dirname "${SUMO_CFG}")"
 exec "${SUMO_GUI_BIN}" -c "$(basename "${SUMO_CFG}")"

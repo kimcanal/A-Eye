@@ -16,6 +16,7 @@ def main() -> None:
     time_column = cfg['data']['time_column']
     zone_column = cfg['data']['zone_column']
     demand_column = cfg['data']['demand_column']
+    supply_column = cfg['data']['supply_column']
     test_size = cfg['model']['test_size']
     random_state = cfg['model']['random_state']
     n_estimators = cfg['model']['n_estimators']
@@ -29,7 +30,13 @@ def main() -> None:
     df[time_column] = pd.to_datetime(df[time_column])
     df = df.sort_values(time_column).reset_index(drop=True)
 
-    excluded = {demand_column, time_column, zone_column}
+    excluded = {
+        demand_column,
+        time_column,
+        zone_column,
+        supply_column,
+        'source_total_passengers',
+    }
     metadata_columns = [
         c
         for c in ["zone_name", "gu_name", "city_name", "full_zone_name"]

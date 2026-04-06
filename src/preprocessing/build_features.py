@@ -38,8 +38,9 @@ def add_demand_features(
     if use_lag_1:
         out['lag_1'] = out.groupby(zone_column)[demand_column].shift(1)
     if use_rolling_mean_3:
+        # Use only prior observations so the feature remains valid at inference time.
         out['rolling_mean_3'] = out.groupby(zone_column)[demand_column].transform(
-            lambda s: s.rolling(3, min_periods=1).mean()
+            lambda s: s.shift(1).rolling(3, min_periods=1).mean()
         )
     return out
 
