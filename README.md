@@ -6,7 +6,7 @@ Kakao Mobility capstone repository for a **Yeoksam-dong 3x3 taxi dispatch Digita
 This branch keeps **one active path only**:
 - `Yeoksam 3x3 SUMO baseline`
 - `5-minute synthetic demand`
-- `rule-based dispatch`
+- `heuristic dispatch`
 - `before / after comparison`
 
 Everything else has been moved into `legacy/` or `docs/archive/`.

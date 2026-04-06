@@ -5,7 +5,7 @@ This is the simplified Module 1 baseline that does **not require machine learnin
 ## Goal
 - Treat Yeoksam-dong as a 3x3 micro area.
 - Use 5-minute synthetic taxi demand.
-- Compare `before` (uniform supply) vs `after` (rule-based reallocation).
+- Compare `before` (market-cruise patrol allocation) vs `after` (kakao-like heuristic reallocation).
 - Export both cases into SUMO route/config files.
 
 ## Zone layout

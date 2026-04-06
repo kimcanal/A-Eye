@@ -4,7 +4,7 @@ This repository now uses **SUMO as the active Digital Twin path**.
 
 The current focus is a **Yeoksam 3x3 baseline**:
 - 5-minute synthetic demand
-- rule-based dispatch
+- heuristic dispatch
 - `before` vs `after` taxi reallocation
 - SUMO route/config generation
 
@@ -43,15 +43,9 @@ sumo -c module1_sumo/yeoksam_before.sumocfg
 sumo -c module1_sumo/yeoksam_after.sumocfg
 ```
 
-Local GUI helper:
-
-```bash
-bash scripts/run_local_sumo_gui.sh module1_sumo/yeoksam_before.sumocfg
-bash scripts/run_local_sumo_gui.sh module1_sumo/yeoksam_after.sumocfg
-```
-
 Note:
 - macOS + XQuartz may still block `sumo-gui` because of GLX/OpenGL issues.
+- the older local GUI helper script was moved to `legacy/scripts/`
 - When GUI does not open, use the generated board/GIF outputs instead.
 
 ## Current Limitation

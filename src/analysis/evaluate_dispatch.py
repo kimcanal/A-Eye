@@ -9,6 +9,43 @@ import pandas as pd
 from src.common.config import load_config
 
 
+ZONE_COORDS = {
+    "A1": (0, 0),
+    "A2": (0, 1),
+    "A3": (0, 2),
+    "B1": (1, 0),
+    "B2": (1, 1),
+    "B3": (1, 2),
+    "C1": (2, 0),
+    "C2": (2, 1),
+    "C3": (2, 2),
+}
+
+MARKET_CRUISE_PRIOR = {
+    "A1": 0.85,
+    "A2": 1.15,
+    "A3": 1.05,
+    "B1": 0.95,
+    "B2": 1.45,
+    "B3": 1.25,
+    "C1": 0.70,
+    "C2": 1.20,
+    "C3": 0.80,
+}
+
+HOTSPOT_PRIORITY = {
+    "A1": 0.05,
+    "A2": 0.32,
+    "A3": 0.12,
+    "B1": 0.08,
+    "B2": 0.55,
+    "B3": 0.26,
+    "C1": 0.02,
+    "C2": 0.30,
+    "C3": 0.07,
+}
+
+
 def allocate_supply_by_demand(demand: pd.Series, total_supply: int) -> pd.Series:
     if total_supply <= 0 or demand.sum() <= 0:
         return pd.Series([0] * len(demand), index=demand.index, dtype=int)
@@ -26,16 +63,52 @@ def allocate_supply_by_demand(demand: pd.Series, total_supply: int) -> pd.Series
     return allocated.astype(int)
 
 
-def allocate_uniform_supply(count: int, total_supply: int, index: pd.Index) -> pd.Series:
-    if count <= 0 or total_supply <= 0:
-        return pd.Series([0] * count, index=index, dtype=int)
+def allocate_from_scores(scores: pd.Series, total_supply: int) -> pd.Series:
+    if len(scores) <= 0 or total_supply <= 0 or scores.sum() <= 0:
+        return pd.Series([0] * len(scores), index=scores.index, dtype=int)
 
-    base = total_supply // count
-    remainder = total_supply % count
-    values = [base] * count
-    for i in range(remainder):
-        values[i] += 1
-    return pd.Series(values, index=index, dtype=int)
+    weights = scores / scores.sum()
+    raw = weights * total_supply
+    allocated = raw.astype(int)
+    remainder = int(total_supply - allocated.sum())
+
+    if remainder > 0:
+        order = (raw - allocated).sort_values(ascending=False).index.tolist()
+        for idx in order[:remainder]:
+            allocated.loc[idx] += 1
+
+    return allocated.astype(int)
+
+
+def manhattan_distance(zone_a: str, zone_b: str) -> int:
+    ax, ay = ZONE_COORDS[zone_a]
+    bx, by = ZONE_COORDS[zone_b]
+    return abs(ax - bx) + abs(ay - by)
+
+
+def allocate_market_cruise_supply(df: pd.DataFrame, total_supply: int, zone_col: str) -> pd.Series:
+    scores = df[zone_col].map(MARKET_CRUISE_PRIOR).astype(float)
+    return allocate_from_scores(scores, total_supply)
+
+
+def allocate_kakao_like_supply(df: pd.DataFrame, total_supply: int, zone_col: str, demand_col: str) -> pd.Series:
+    demand_share = df[demand_col] / max(float(df[demand_col].sum()), 1.0)
+    hotspot_score = df[zone_col].map(HOTSPOT_PRIORITY).astype(float)
+    proximity_score = df[zone_col].map(lambda zone: 1.0 / (1.0 + manhattan_distance(zone, "B2"))).astype(float)
+    corridor_bonus = df[zone_col].map(lambda zone: 0.12 if zone in {"A2", "B2", "C2", "B3"} else 0.0).astype(float)
+
+    score = (
+        demand_share * 0.58
+        + hotspot_score * 0.22
+        + proximity_score * 0.12
+        + corridor_bonus * 0.08
+    )
+    score = score.clip(lower=0.001)
+    return allocate_from_scores(score, total_supply)
+
+
+def allocation_label() -> str:
+    return "compare market-cruise allocation against kakao-like heuristic reallocation"
 
 
 def summarize_metrics(df: pd.DataFrame, supply_col: str, demand_col: str) -> dict[str, float | int]:
@@ -96,10 +169,11 @@ def main() -> None:
     baseline_supply_col = "baseline_before_taxis"
     demand_col = "dispatch_demand"
     after_supply_col = "reallocated_taxis"
+    zone_col = cfg["data"]["zone_column"]
 
     total_supply = int(df[before_supply_col].sum())
-    df[baseline_supply_col] = allocate_uniform_supply(len(df), total_supply, df.index)
-    df[after_supply_col] = allocate_supply_by_demand(df[demand_col], total_supply)
+    df[baseline_supply_col] = allocate_market_cruise_supply(df, total_supply, zone_col)
+    df[after_supply_col] = allocate_kakao_like_supply(df, total_supply, zone_col, demand_col)
 
     df["current_shortage"] = (df[demand_col] - df[before_supply_col]).clip(lower=0)
     df["before_shortage"] = (df[demand_col] - df[baseline_supply_col]).clip(lower=0)
@@ -120,7 +194,7 @@ def main() -> None:
 
     summary = {
         "timestamp": str(df["pickup_datetime"].iloc[0]),
-        "strategy": "compare uniform baseline allocation against predicted-demand reallocation",
+        "strategy": allocation_label(),
         "current_reference": summarize_metrics(df, before_supply_col, demand_col),
         "before": summarize_metrics(df, baseline_supply_col, demand_col),
         "after": summarize_metrics(df, after_supply_col, demand_col),

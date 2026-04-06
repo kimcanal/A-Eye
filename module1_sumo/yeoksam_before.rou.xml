@@ -24,50 +24,50 @@
   <vehicle id="before_C3_000" type="taxi" route="south_east_loop" depart="0.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_A1_000" type="taxi" route="loop_nw" depart="0.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_B2_001" type="taxi" route="gangnam_south_loop" depart="342.9" departLane="best" departSpeed="max"/>
-  <vehicle id="before_C2_001" type="taxi" route="south_spine" depart="480.0" departLane="best" departSpeed="max"/>
+  <vehicle id="before_C2_001" type="taxi" route="south_spine" depart="342.9" departLane="best" departSpeed="max"/>
+  <vehicle id="before_B3_001" type="taxi" route="middle_loop_east" depart="342.9" departLane="best" departSpeed="max"/>
   <vehicle id="before_A2_001" type="taxi" route="teheran_loop" depart="480.0" departLane="best" departSpeed="max"/>
-  <vehicle id="before_B3_001" type="taxi" route="middle_loop_east" depart="480.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_A3_001" type="taxi" route="upper_east_loop" depart="480.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_B1_001" type="taxi" route="middle_loop_west" depart="480.0" departLane="best" departSpeed="max"/>
-  <vehicle id="before_C1_001" type="taxi" route="south_spine" depart="480.0" departLane="best" departSpeed="max"/>
-  <vehicle id="before_C3_001" type="taxi" route="east_spine" depart="480.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_A1_001" type="taxi" route="west_spine" depart="480.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_B2_002" type="taxi" route="teheran_loop" depart="685.7" departLane="best" departSpeed="max"/>
-  <vehicle id="before_C2_002" type="taxi" route="gangnam_south_loop" depart="960.0" departLane="best" departSpeed="max"/>
+  <vehicle id="before_C2_002" type="taxi" route="gangnam_south_loop" depart="685.7" departLane="best" departSpeed="max"/>
+  <vehicle id="before_B3_002" type="taxi" route="east_spine" depart="685.7" departLane="best" departSpeed="max"/>
+  <vehicle id="before_C1_001" type="taxi" route="south_spine" depart="800.0" departLane="best" departSpeed="max"/>
+  <vehicle id="before_C3_001" type="taxi" route="east_spine" depart="800.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_A2_002" type="taxi" route="north_spine" depart="960.0" departLane="best" departSpeed="max"/>
-  <vehicle id="before_B3_002" type="taxi" route="east_spine" depart="960.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_A3_002" type="taxi" route="east_spine" depart="960.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_B1_002" type="taxi" route="west_spine" depart="960.0" departLane="best" departSpeed="max"/>
-  <vehicle id="before_C1_002" type="taxi" route="south_west_loop" depart="960.0" departLane="best" departSpeed="max"/>
-  <vehicle id="before_C3_002" type="taxi" route="south_east_loop" depart="960.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_A1_002" type="taxi" route="loop_nw" depart="960.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_B2_003" type="taxi" route="core_loop" depart="1028.6" departLane="best" departSpeed="max"/>
+  <vehicle id="before_C2_003" type="taxi" route="south_spine" depart="1028.6" departLane="best" departSpeed="max"/>
+  <vehicle id="before_B3_003" type="taxi" route="middle_loop_east" depart="1028.6" departLane="best" departSpeed="max"/>
   <vehicle id="before_B2_004" type="taxi" route="gangnam_south_loop" depart="1371.4" departLane="best" departSpeed="max"/>
-  <vehicle id="before_C2_003" type="taxi" route="south_spine" depart="1440.0" departLane="best" departSpeed="max"/>
+  <vehicle id="before_C2_004" type="taxi" route="gangnam_south_loop" depart="1371.4" departLane="best" departSpeed="max"/>
+  <vehicle id="before_B3_004" type="taxi" route="east_spine" depart="1371.4" departLane="best" departSpeed="max"/>
   <vehicle id="before_A2_003" type="taxi" route="teheran_loop" depart="1440.0" departLane="best" departSpeed="max"/>
-  <vehicle id="before_B3_003" type="taxi" route="middle_loop_east" depart="1440.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_A3_003" type="taxi" route="upper_east_loop" depart="1440.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_B1_003" type="taxi" route="middle_loop_west" depart="1440.0" departLane="best" departSpeed="max"/>
-  <vehicle id="before_C1_003" type="taxi" route="south_spine" depart="1440.0" departLane="best" departSpeed="max"/>
-  <vehicle id="before_C3_003" type="taxi" route="east_spine" depart="1440.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_A1_003" type="taxi" route="west_spine" depart="1440.0" departLane="best" departSpeed="max"/>
+  <vehicle id="before_C1_002" type="taxi" route="south_west_loop" depart="1600.0" departLane="best" departSpeed="max"/>
+  <vehicle id="before_C3_002" type="taxi" route="south_east_loop" depart="1600.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_B2_005" type="taxi" route="teheran_loop" depart="1714.3" departLane="best" departSpeed="max"/>
-  <vehicle id="before_C2_004" type="taxi" route="gangnam_south_loop" depart="1920.0" departLane="best" departSpeed="max"/>
+  <vehicle id="before_C2_005" type="taxi" route="south_spine" depart="1714.3" departLane="best" departSpeed="max"/>
+  <vehicle id="before_B3_005" type="taxi" route="middle_loop_east" depart="1714.3" departLane="best" departSpeed="max"/>
   <vehicle id="before_A2_004" type="taxi" route="north_spine" depart="1920.0" departLane="best" departSpeed="max"/>
-  <vehicle id="before_B3_004" type="taxi" route="east_spine" depart="1920.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_A3_004" type="taxi" route="east_spine" depart="1920.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_B1_004" type="taxi" route="west_spine" depart="1920.0" departLane="best" departSpeed="max"/>
-  <vehicle id="before_C1_004" type="taxi" route="south_west_loop" depart="1920.0" departLane="best" departSpeed="max"/>
-  <vehicle id="before_C3_004" type="taxi" route="south_east_loop" depart="1920.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_A1_004" type="taxi" route="loop_nw" depart="1920.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_B2_006" type="taxi" route="core_loop" depart="2057.1" departLane="best" departSpeed="max"/>
+  <vehicle id="before_C2_006" type="taxi" route="gangnam_south_loop" depart="2057.1" departLane="best" departSpeed="max"/>
+  <vehicle id="before_B3_006" type="taxi" route="east_spine" depart="2057.1" departLane="best" departSpeed="max"/>
   <vehicle id="before_B2_007" type="taxi" route="gangnam_south_loop" depart="2400.0" departLane="best" departSpeed="max"/>
-  <vehicle id="before_C2_005" type="taxi" route="south_spine" depart="2400.0" departLane="best" departSpeed="max"/>
+  <vehicle id="before_C2_007" type="taxi" route="south_spine" depart="2400.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_A2_005" type="taxi" route="teheran_loop" depart="2400.0" departLane="best" departSpeed="max"/>
-  <vehicle id="before_B3_005" type="taxi" route="middle_loop_east" depart="2400.0" departLane="best" departSpeed="max"/>
+  <vehicle id="before_B3_007" type="taxi" route="middle_loop_east" depart="2400.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_A3_005" type="taxi" route="upper_east_loop" depart="2400.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_B1_005" type="taxi" route="middle_loop_west" depart="2400.0" departLane="best" departSpeed="max"/>
-  <vehicle id="before_C1_005" type="taxi" route="south_spine" depart="2400.0" departLane="best" departSpeed="max"/>
-  <vehicle id="before_C3_005" type="taxi" route="east_spine" depart="2400.0" departLane="best" departSpeed="max"/>
+  <vehicle id="before_C1_003" type="taxi" route="south_spine" depart="2400.0" departLane="best" departSpeed="max"/>
+  <vehicle id="before_C3_003" type="taxi" route="east_spine" depart="2400.0" departLane="best" departSpeed="max"/>
   <vehicle id="before_A1_005" type="taxi" route="west_spine" depart="2400.0" departLane="best" departSpeed="max"/>
 </routes>

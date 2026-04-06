@@ -162,8 +162,8 @@ def save_dashboard(comparison_csv: Path, evaluation_json: Path, output: Path) ->
     gs = fig.add_gridspec(2, 4, width_ratios=[1, 1, 1, 1.15], height_ratios=[1, 1], wspace=0.18, hspace=0.22)
 
     _draw_grid(fig.add_subplot(gs[0, 0]), comparison_df, "dispatch_demand", "Demand Hotspots", "YlOrRd", "Observed 5-minute demand at the latest step")
-    _draw_grid(fig.add_subplot(gs[0, 1]), comparison_df, "baseline_before_taxis", "Before Supply", "Blues", "Uniform baseline supply across 3x3 grid")
-    _draw_grid(fig.add_subplot(gs[0, 2]), comparison_df, "reallocated_taxis", "After Supply", "Blues", "Rule-based reallocation toward hotspot cells")
+    _draw_grid(fig.add_subplot(gs[0, 1]), comparison_df, "baseline_before_taxis", "Before Supply", "Blues", "Market-cruise patrol distribution before dispatch")
+    _draw_grid(fig.add_subplot(gs[0, 2]), comparison_df, "reallocated_taxis", "After Supply", "Blues", "Kakao-like heuristic reallocation toward hotspot cells")
     _draw_summary(fig.add_subplot(gs[:, 3]), comparison_df, evaluation)
     _draw_grid(fig.add_subplot(gs[1, 0]), comparison_df, "before_shortage", "Before Shortage", "OrRd", "Higher value means more unmet demand")
     _draw_grid(fig.add_subplot(gs[1, 1]), comparison_df, "after_shortage", "After Shortage", "OrRd", "Shortage after reallocation")
@@ -179,7 +179,7 @@ def save_dashboard(comparison_csv: Path, evaluation_json: Path, output: Path) ->
     fig.text(
         0.05,
         0.95,
-        "A 3x3 summary board that makes the dispatch before/after change readable without SUMO GUI",
+        "A 3x3 summary board that makes the patrol-vs-dispatch change readable without SUMO GUI",
         fontsize=11,
         color="#475569",
     )
