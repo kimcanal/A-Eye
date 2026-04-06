@@ -52,3 +52,5 @@ sumo:
   after_route_output: module1_sumo/yeoksam_after.rou.xml
   before_config_output: module1_sumo/yeoksam_before.sumocfg
   after_config_output: module1_sumo/yeoksam_after.sumocfg
+  horizon_seconds: 2400
+  vehicle_scale: 2.0
