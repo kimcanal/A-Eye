@@ -3,9 +3,9 @@
 
 Kakao Mobility capstone repository for a **Yeoksam-dong 3x3 taxi dispatch Digital Twin**.
 
-The repository now has **one active path only**:
-- `SUMO baseline`
-- `5-minute synthetic Yeoksam demand`
+This branch keeps **one active path only**:
+- `Yeoksam 3x3 SUMO baseline`
+- `5-minute synthetic demand`
 - `rule-based dispatch`
 - `before / after comparison`
 
@@ -28,29 +28,26 @@ Main outputs:
 - `module1_sumo/yeoksam_before.sumocfg`
 - `module1_sumo/yeoksam_after.sumocfg`
 
-## Folder Guide
+## Active Folders
 
-### Active
 - `configs/`
-  - active YAML config for the Yeoksam SUMO path
+  - active config only
 - `src/`
-  - active Python pipeline code
+  - active pipeline code
 - `scripts/`
-  - active runnable scripts only
+  - active entry script only
 - `module1_sumo/`
-  - active SUMO network, routes, and configs for Yeoksam
+  - active SUMO files only
 - `docs/`
-  - active docs for the current path
+  - active docs only
 - `data/`
-  - active generated input data for the current path
+  - active generated input data
 - `outputs/`
-  - active generated outputs for the current path
+  - active generated outputs
 
-### Archived / Legacy
+## Archived
 - `legacy/`
-  - old Unity work, public-data experiments, previous outputs, and older helper scripts
 - `docs/archive/`
-  - previous planning, meetings, and older pipeline notes
 
 ## What To Read First
 
@@ -68,40 +65,6 @@ bash scripts/clean_generated_outputs.sh safe
 bash scripts/clean_generated_outputs.sh intermediate
 bash scripts/clean_generated_outputs.sh all
 ```
-
-이 단계는 선택적인 고도화 단계이며, 기본 파이프라인에는 포함되지 않습니다.
-
-## Module 1 / Unity 문서
-- `docs/01_module1_compendium.md`
-- `docs/06_team_guide_module1.md`
-- `docs/07_unity_workflow_checklist.md`
-- `docs/08_module1_code_map.md`
-- `docs/18_module1_visualization_guide.md`
-
-Module 1 최소 시각화 실행:
-
-```bash
-bash scripts/run_module1.sh
-```
-
-생성 결과:
-- `outputs/module1/module1_overview.png`
-- `outputs/module1/module1_simulation.gif`
-
-Unity 실제 브리지 실행:
-
-```bash
-bash scripts/run_unity_module1_capture.sh
-
-
-.
-```
-
-생성 결과:
-- `outputs/module1/unity_module1_view.png`
-- `outputs/module1/unity_module1_annotated.png`
-- `outputs/module1/unity_module1_presentation.png`
-- `outputs/module1/unity_scenario.json`
 
 ## 참고 링크
 - Notion: https://nimble-ceder-40b.notion.site/28_DT_-32317efd202c8158b35ac245c2b4dc73
