@@ -1,5 +1,7 @@
 # Pipeline Execution Guide: A-Eye
 
+> Archived note: this document describes the older public-data path. The repository no longer keeps that flow in the active top-level structure. Related configs, scripts, data, and outputs were moved under `legacy/`.
+
 This guide explains how to run the full A-Eye data-to-prediction pipeline using the Seoul Public Transit dataset.
 
 ## 🚀 One-Command Execution

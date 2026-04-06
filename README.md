@@ -3,24 +3,17 @@
 
 Kakao Mobility capstone repository for a **Yeoksam-dong 3x3 taxi dispatch Digital Twin**.
 
-The repo currently has one active path:
-- **SUMO baseline**
-- **5-minute synthetic Yeoksam demand**
-- **rule-based dispatch**
-- **before / after comparison**
+The repository now has **one active path only**:
+- `SUMO baseline`
+- `5-minute synthetic Yeoksam demand`
+- `rule-based dispatch`
+- `before / after comparison`
 
-Everything else should be treated as reference or legacy work.
+Everything else has been moved into `legacy/` or `docs/archive/`.
 
-## Current Focus
+## Start Here
 
-We are using a small Yeoksam 3x3 micro-area to validate the assignment flow:
-
-1. generate 5-minute demand
-2. build dispatch inputs
-3. compare `before` vs `after`
-4. export both cases to SUMO
-
-Main entry point:
+Run the current baseline:
 
 ```bash
 bash scripts/run_yeoksam_sumo_pipeline.sh
@@ -30,8 +23,34 @@ Main outputs:
 - `outputs/yeoksam_sumo/dispatch_recommendations.csv`
 - `outputs/yeoksam_sumo/dispatch_comparison.csv`
 - `outputs/yeoksam_sumo/dispatch_evaluation.json`
+- `outputs/yeoksam_sumo/yeoksam_sumo_board.png`
+- `outputs/yeoksam_sumo/yeoksam_sumo_motion.gif`
 - `module1_sumo/yeoksam_before.sumocfg`
 - `module1_sumo/yeoksam_after.sumocfg`
+
+## Folder Guide
+
+### Active
+- `configs/`
+  - active YAML config for the Yeoksam SUMO path
+- `src/`
+  - active Python pipeline code
+- `scripts/`
+  - active runnable scripts only
+- `module1_sumo/`
+  - active SUMO network, routes, and configs for Yeoksam
+- `docs/`
+  - active docs for the current path
+- `data/`
+  - active generated input data for the current path
+- `outputs/`
+  - active generated outputs for the current path
+
+### Archived / Legacy
+- `legacy/`
+  - old Unity work, public-data experiments, previous outputs, and older helper scripts
+- `docs/archive/`
+  - previous planning, meetings, and older pipeline notes
 
 ## What To Read First
 
@@ -39,31 +58,6 @@ Main outputs:
 - [docs/01_Project_Status.md](docs/01_Project_Status.md)
 - [docs/03_SUMO_Simulation.md](docs/03_SUMO_Simulation.md)
 - [docs/22_Yeoksam_SUMO_Baseline.md](docs/22_Yeoksam_SUMO_Baseline.md)
-
-## Top-Level Guide
-
-- `configs/`
-  - active YAML configs
-- `src/`
-  - active Python pipeline code
-- `scripts/`
-  - runnable entry scripts
-- `module1_sumo/`
-  - SUMO network, route, and config files
-- `docs/`
-  - active docs plus archived notes
-- `data/`
-  - local/generated datasets
-- `outputs/`
-  - generated results
-
-## Legacy / Secondary Paths
-
-These are kept, but they are not the main path right now:
-- `legacy/unity/`
-- `legacy/module1_simulation/`
-- public hourly Seoul-data experiments
-- older planning and meeting notes under `docs/archive/`
 
 ## Cleanup
 

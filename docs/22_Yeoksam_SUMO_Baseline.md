@@ -32,6 +32,8 @@ bash scripts/run_yeoksam_sumo_pipeline.sh
 - dispatch result: `/Users/kenny31/Documents/Capstone/outputs/yeoksam_sumo/dispatch_recommendations.csv`
 - before/after comparison: `/Users/kenny31/Documents/Capstone/outputs/yeoksam_sumo/dispatch_comparison.csv`
 - evaluation summary: `/Users/kenny31/Documents/Capstone/outputs/yeoksam_sumo/dispatch_evaluation.json`
+- visual summary board: `/Users/kenny31/Documents/Capstone/outputs/yeoksam_sumo/yeoksam_sumo_board.png`
+- motion playback: `/Users/kenny31/Documents/Capstone/outputs/yeoksam_sumo/yeoksam_sumo_motion.gif`
 - before SUMO route: `/Users/kenny31/Documents/Capstone/module1_sumo/yeoksam_before.rou.xml`
 - after SUMO route: `/Users/kenny31/Documents/Capstone/module1_sumo/yeoksam_after.rou.xml`
 - before SUMO config: `/Users/kenny31/Documents/Capstone/module1_sumo/yeoksam_before.sumocfg`

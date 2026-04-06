@@ -1,31 +1,29 @@
 # Docs Index
 
-This folder now keeps only the actively used project documents at the top level.
+This folder now keeps only the documents that explain the **current Yeoksam 3x3 SUMO path**.
 
 ## Active Docs
 
 - [01_Project_Status.md](01_Project_Status.md)
-  - Current module status and what is really implemented.
-- [02_Pipeline_Guide.md](02_Pipeline_Guide.md)
-  - End-to-end pipeline flow for the public-data run.
+  - What is currently implemented, what is missing, and what the active scope is.
 - [03_SUMO_Simulation.md](03_SUMO_Simulation.md)
-  - SUMO setup, generated files, and current simulation limitations.
+  - How the active SUMO baseline is structured and what files it generates.
 - [21_Gangnam_Micro_Scope.md](21_Gangnam_Micro_Scope.md)
-  - Shared 3x3 zone map and realistic project scope around Gangnam Station.
+  - Shared Yeoksam/Gangnam 3x3 scope reference.
 - [22_Yeoksam_SUMO_Baseline.md](22_Yeoksam_SUMO_Baseline.md)
-  - 5-minute synthetic Yeoksam 3x3 demand with before/after SUMO exports.
+  - The active baseline path: synthetic 5-minute demand, dispatch, before/after SUMO export, and visual outputs.
 
 ## Archived Docs
 
-Older planning notes, meeting drafts, and previous summaries were moved into [`archive/`](archive/).
-They are kept for reference, but they are not the primary source of truth anymore.
+Everything that is not part of the current SUMO baseline lives under [`archive/`](archive/).
 
-Additional legacy planning/module notes that are no longer part of the active flow also live under:
-- [`archive/legacy_modules/`](archive/legacy_modules/)
-- [`archive/legacy_planning/`](archive/legacy_planning/)
-- [`archive/meetings/`](archive/meetings/)
+This includes:
+- older public-data pipeline notes
+- previous planning drafts
+- meeting notes
+- legacy module summaries
 
 ## Rule of Thumb
 
-- If you want to understand the **current implementation**, start with the active docs above.
-- If you want historical notes or earlier planning context, use `archive/`.
+- If you want to understand **what we are actually using right now**, stay in this top-level `docs/` folder.
+- If you want older context, experiments, or abandoned paths, use `archive/`.
