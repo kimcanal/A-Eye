@@ -11,6 +11,8 @@ features:
   use_day_of_week: true
   use_lag_1: true
   use_rolling_mean_3: true
+  use_weather: true
+  use_holiday: true
 
 model:
   name: random_forest
@@ -47,3 +49,18 @@ lstm:
   learning_rate: 0.001
   metrics_output: outputs/seoul_public/lstm_metrics.json
   predictions_output: outputs/seoul_public/lstm_predictions.csv
+
+grid:
+  width: 3
+  height: 3
+  output_csv: outputs/seoul_public/grid_3x3_demand.csv
+
+convlstm:
+  seq_len: 6
+  hidden_dim: 16
+  kernel_size: 3
+  epochs: 50
+  batch_size: 16
+  learning_rate: 0.001
+  metrics_output: outputs/seoul_public/convlstm_metrics.json
+  predictions_output: outputs/seoul_public/convlstm_predictions.csv

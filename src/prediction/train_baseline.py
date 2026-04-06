@@ -5,7 +5,7 @@ from pathlib import Path
 
 import pandas as pd
 from sklearn.ensemble import RandomForestRegressor
-from sklearn.metrics import mean_absolute_error, mean_squared_error
+from sklearn.metrics import mean_absolute_error, mean_squared_error, mean_absolute_percentage_error
 
 from src.common.config import load_config
 
@@ -16,6 +16,7 @@ def main() -> None:
     time_column = cfg['data']['time_column']
     zone_column = cfg['data']['zone_column']
     demand_column = cfg['data']['demand_column']
+    supply_column = cfg['data']['supply_column']
     test_size = cfg['model']['test_size']
     random_state = cfg['model']['random_state']
     n_estimators = cfg['model']['n_estimators']
@@ -29,8 +30,23 @@ def main() -> None:
     df[time_column] = pd.to_datetime(df[time_column])
     df = df.sort_values(time_column).reset_index(drop=True)
 
-    excluded = {demand_column, time_column, zone_column}
-    features = [c for c in df.columns if c not in excluded]
+    excluded = {
+        demand_column,
+        time_column,
+        zone_column,
+        supply_column,
+        'source_total_passengers',
+    }
+    metadata_columns = [
+        c
+        for c in ["zone_name", "gu_name", "city_name", "full_zone_name"]
+        if c in df.columns
+    ]
+    features = [
+        c
+        for c in df.columns
+        if c not in excluded and c not in metadata_columns and pd.api.types.is_numeric_dtype(df[c])
+    ]
     if not features:
         raise SystemExit('No feature columns were found for baseline training.')
 
@@ -41,7 +57,7 @@ def main() -> None:
     y_train = df.loc[: split_idx - 1, demand_column]
     x_test = df.loc[split_idx:, features]
     y_test = df.loc[split_idx:, demand_column]
-    meta_test = df.loc[split_idx:, [time_column, zone_column]].copy()
+    meta_test = df.loc[split_idx:, [time_column, zone_column, *metadata_columns]].copy()
 
     model = RandomForestRegressor(n_estimators=n_estimators, random_state=random_state)
     model.fit(x_train, y_train)
@@ -50,6 +66,11 @@ def main() -> None:
     mse = mean_squared_error(y_test, pred)
     rmse = round(mse ** 0.5, 4)
     mae = round(mean_absolute_error(y_test, pred), 4)
+    nonzero_mask = y_test.abs() >= 1e-6
+    if nonzero_mask.any():
+        mape = round(mean_absolute_percentage_error(y_test[nonzero_mask], pred[nonzero_mask]) * 100, 4)
+    else:
+        mape = None
 
     metrics_output.parent.mkdir(parents=True, exist_ok=True)
     metrics_output.write_text(
@@ -62,6 +83,7 @@ def main() -> None:
                 'features': features,
                 'rmse': rmse,
                 'mae': mae,
+                'mape': mape,
             },
             indent=2,
         ),
@@ -75,6 +97,7 @@ def main() -> None:
 
     print('rmse:', rmse)
     print('mae:', mae)
+    print('mape:', mape, '%')
     print(f'saved: {metrics_output}')
     print(f'saved: {predictions_output}')
 

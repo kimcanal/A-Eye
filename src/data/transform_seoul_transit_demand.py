@@ -6,8 +6,10 @@ from pathlib import Path
 
 import pandas as pd
 
+from src.data.fetch_seoul_dong_master import DONG_MASTER_CSV, ensure_dong_master_csv
 
 OUTPUT_CSV = Path("data/seoul_public/transit_demand_long.csv")
+ZONE_LOOKUP_CSV = Path("data/seoul_public/zone_lookup.csv")
 
 
 def compute_supply(call_count: float) -> int:
@@ -80,11 +82,35 @@ def main() -> None:
             )
 
     df = pd.DataFrame(records).sort_values(["zone_id", "pickup_datetime"]).reset_index(drop=True)
+
+    master_csv_env = os.environ.get("SEOUL_DONG_MASTER_CSV")
+    master_csv = Path(master_csv_env) if master_csv_env else DONG_MASTER_CSV
+    master_csv = ensure_dong_master_csv(master_csv)
+
+    master_df = pd.read_csv(master_csv, dtype={"zone_id": str})
+    df["zone_id"] = df["zone_id"].astype(str)
+    df = df.merge(master_df, on="zone_id", how="left")
+    df["zone_name"] = df["zone_name"].fillna(df["zone_id"])
+    df["gu_name"] = df["gu_name"].fillna("unknown")
+    df["city_name"] = df["city_name"].fillna("unknown")
+    df["full_zone_name"] = df["full_zone_name"].fillna(df["zone_name"])
+
     OUTPUT_CSV.parent.mkdir(parents=True, exist_ok=True)
     df.to_csv(OUTPUT_CSV, index=False)
+
+    zone_lookup = (
+        df[["zone_id", "zone_name", "gu_name", "city_name", "full_zone_name"]]
+        .drop_duplicates()
+        .sort_values(["gu_name", "zone_name", "zone_id"])
+        .reset_index(drop=True)
+    )
+    zone_lookup.to_csv(ZONE_LOOKUP_CSV, index=False)
+
     print(f"saved: {OUTPUT_CSV}")
+    print(f"saved: {ZONE_LOOKUP_CSV}")
     print(f"rows: {len(df)}")
     print(f"source: {raw_input}")
+    print(f"dong_master: {master_csv}")
     if recent_days is not None:
         print(f"recent_days: {recent_days}")
 

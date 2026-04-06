@@ -143,6 +143,12 @@ def main() -> None:
 
     rmse = float(np.sqrt(np.mean((test_pred - y_test) ** 2)))
     mae = float(np.mean(np.abs(test_pred - y_test)))
+    
+    nonzero_mask = np.abs(y_test) >= 1e-6
+    if np.any(nonzero_mask):
+        mape = float(np.mean(np.abs((test_pred[nonzero_mask] - y_test[nonzero_mask]) / y_test[nonzero_mask])) * 100)
+    else:
+        mape = float("nan")
 
     metrics_output = Path(lstm_cfg["metrics_output"])
     predictions_output = Path(lstm_cfg["predictions_output"])
@@ -159,6 +165,7 @@ def main() -> None:
                 "features": feature_columns,
                 "rmse": round(rmse, 4),
                 "mae": round(mae, 4),
+                "mape": round(mape, 4),
             },
             indent=2,
         ),
@@ -172,6 +179,7 @@ def main() -> None:
 
     print("lstm rmse:", round(rmse, 4))
     print("lstm mae:", round(mae, 4))
+    print("lstm mape:", round(mape, 4), "%")
     print(f"saved: {metrics_output}")
     print(f"saved: {predictions_output}")
 

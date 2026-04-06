@@ -8,7 +8,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageEnhance, ImageFilter, ImageFont
 
 
-CAPSTONE_ROOT = Path("/Users/kenny31/Documents/Capstone")
+CAPSTONE_ROOT = Path(__file__).resolve().parents[2]
 MODULE1_OUTPUTS = CAPSTONE_ROOT / "outputs" / "module1"
 ANNOTATED_IMAGE = MODULE1_OUTPUTS / "unity_module1_annotated.png"
 VIEW_IMAGE = MODULE1_OUTPUTS / "unity_module1_view.png"

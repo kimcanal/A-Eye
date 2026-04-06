@@ -1,0 +1,56 @@
+data:
+  input_csv: data/yeoksam_synthetic_5min.csv
+  processed_csv: outputs/yeoksam_sumo/processed_taxi_calls.csv
+  time_column: pickup_datetime
+  zone_column: zone_id
+  demand_column: call_count
+  supply_column: available_taxis
+
+features:
+  use_hour: true
+  use_day_of_week: true
+  use_lag_1: true
+  use_rolling_mean_3: true
+  use_weather: false
+  use_holiday: false
+
+model:
+  name: random_forest
+  test_size: 0.2
+  random_state: 42
+  n_estimators: 100
+  metrics_output: outputs/yeoksam_sumo/model_metrics.json
+  predictions_output: outputs/yeoksam_sumo/predictions.csv
+
+dispatch:
+  low_threshold: 1.2
+  medium_threshold: 1.5
+  high_threshold: 2.0
+  output_csv: outputs/yeoksam_sumo/dispatch_recommendations.csv
+
+analysis:
+  zone_summary_output: outputs/yeoksam_sumo/zone_demand_summary.csv
+  hour_summary_output: outputs/yeoksam_sumo/hourly_demand_summary.csv
+  dispatch_eval_output: outputs/yeoksam_sumo/dispatch_evaluation.json
+  dispatch_comparison_output: outputs/yeoksam_sumo/dispatch_comparison.csv
+
+visualization:
+  hourly_output: outputs/yeoksam_sumo/hourly_demand.png
+  heatmap_output: outputs/yeoksam_sumo/zone_hour_heatmap.png
+  prediction_plot_output: outputs/yeoksam_sumo/actual_vs_predicted.png
+  dispatch_eval_plot_output: outputs/yeoksam_sumo/dispatch_before_after.png
+
+yeoksam:
+  start: "2026-04-03 18:00:00"
+  periods: 72
+  freq_minutes: 5
+  output_csv: data/yeoksam_synthetic_5min.csv
+
+sumo:
+  net_file: module1_sumo/generated_grid3x3.net.xml
+  before_route_output: module1_sumo/yeoksam_before.rou.xml
+  after_route_output: module1_sumo/yeoksam_after.rou.xml
+  before_config_output: module1_sumo/yeoksam_before.sumocfg
+  after_config_output: module1_sumo/yeoksam_after.sumocfg
+  horizon_seconds: 2400
+  vehicle_scale: 2.0

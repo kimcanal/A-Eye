@@ -11,6 +11,7 @@ fi
 cd "${ROOT_DIR}"
 
 "${PYTHON_BIN}" -m src.data.fetch_seoul_transit_demand
+"${PYTHON_BIN}" -m src.data.fetch_seoul_dong_master
 "${PYTHON_BIN}" -m src.data.transform_seoul_transit_demand
 
 export CAPSTONE_CONFIG="${ROOT_DIR}/configs/seoul_public.yaml"
@@ -22,3 +23,4 @@ export CAPSTONE_CONFIG="${ROOT_DIR}/configs/seoul_public.yaml"
 "${PYTHON_BIN}" -m src.analysis.evaluate_dispatch
 
 echo "saved outputs under outputs/seoul_public"
+echo "run bash scripts/run_public_experiments.sh for ConvLSTM/SUMO experiments"

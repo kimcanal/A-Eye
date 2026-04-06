@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<net version="1.16" junctionCornerDetail="5" limitTurnSpeed="5.50" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/net_file.xsd">
+    <location netOffset="0.00,0.00" convBoundary="0.00,0.00,200.00,200.00" origBoundary="0.00,0.00,200.00,200.00" projParameter="!"/>
+    
+    <!-- Nodes (Junctions) -->
+    <junction id="0_0" type="priority" x="0.00"   y="0.00" />
+    <junction id="0_1" type="priority" x="100.00" y="0.00" />
+    <junction id="0_2" type="priority" x="200.00" y="0.00" />
+    <junction id="1_0" type="priority" x="0.00"   y="100.00" />
+    <junction id="1_1" type="priority" x="100.00" y="100.00" />
+    <junction id="1_2" type="priority" x="200.00" y="100.00" />
+    <junction id="2_0" type="priority" x="0.00"   y="200.00" />
+    <junction id="2_1" type="priority" x="100.00" y="200.00" />
+    <junction id="2_2" type="priority" x="200.00" y="200.00" />
+
+    <!-- Edges (Horizontal) -->
+    <edge id="e0_0_to_0_1" from="0_0" to="0_1" priority="1" numLanes="1" speed="13.89" length="100.00" />
+    <edge id="e0_1_to_0_2" from="0_1" to="0_2" priority="1" numLanes="1" speed="13.89" length="100.00" />
+    <edge id="e1_0_to_1_1" from="1_0" to="1_1" priority="1" numLanes="1" speed="13.89" length="100.00" />
+    <edge id="e1_1_to_1_2" from="1_1" to="1_2" priority="1" numLanes="1" speed="13.89" length="100.00" />
+    <edge id="e2_0_to_2_1" from="2_0" to="2_1" priority="1" numLanes="1" speed="13.89" length="100.00" />
+    <edge id="e2_1_to_2_2" from="2_1" to="2_2" priority="1" numLanes="1" speed="13.89" length="100.00" />
+
+    <!-- Edges (Vertical) -->
+    <edge id="e0_0_to_1_0" from="0_0" to="1_0" priority="1" numLanes="1" speed="13.89" length="100.00" />
+    <edge id="e1_0_to_2_0" from="1_0" to="2_0" priority="1" numLanes="1" speed="13.89" length="100.00" />
+    <edge id="e0_1_to_1_1" from="0_1" to="1_1" priority="1" numLanes="1" speed="13.89" length="100.00" />
+    <edge id="e1_1_to_2_1" from="1_1" to="2_1" priority="1" numLanes="1" speed="13.89" length="100.00" />
+    <edge id="e0_2_to_1_2" from="0_2" to="1_2" priority="1" numLanes="1" speed="13.89" length="100.00" />
+    <edge id="e1_2_to_2_2" from="1_2" to="2_2" priority="1" numLanes="1" speed="13.89" length="100.00" />
+</net>

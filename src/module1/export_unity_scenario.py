@@ -4,11 +4,12 @@ from __future__ import annotations
 
 import csv
 import json
+import os
 from datetime import datetime, UTC
 from pathlib import Path
 
 
-CAPSTONE_ROOT = Path("/Users/kenny31/Documents/Capstone")
+CAPSTONE_ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_OUTPUT = CAPSTONE_ROOT / "outputs" / "module1" / "unity_scenario.json"
 PUBLIC_DISPATCH = CAPSTONE_ROOT / "outputs" / "seoul_public" / "dispatch_recommendations.csv"
 LOCAL_DISPATCH = CAPSTONE_ROOT / "outputs" / "dispatch_recommendations.csv"
@@ -63,11 +64,28 @@ OBSTACLE_SLOTS = [
 
 
 def choose_dispatch_csv() -> Path:
-    if PUBLIC_DISPATCH.exists():
+    explicit_csv = os.environ.get("DISPATCH_CSV")
+    if explicit_csv:
+        path = Path(explicit_csv).expanduser().resolve()
+        if not path.exists():
+            raise FileNotFoundError(f"DISPATCH_CSV does not exist: {path}")
+        return path
+
+    dispatch_source = os.environ.get("DISPATCH_SOURCE", "").strip().lower()
+    if dispatch_source == "public":
+        if not PUBLIC_DISPATCH.exists():
+            raise FileNotFoundError(f"Public dispatch CSV not found: {PUBLIC_DISPATCH}")
         return PUBLIC_DISPATCH
-    if LOCAL_DISPATCH.exists():
+    if dispatch_source == "local":
+        if not LOCAL_DISPATCH.exists():
+            raise FileNotFoundError(f"Local dispatch CSV not found: {LOCAL_DISPATCH}")
         return LOCAL_DISPATCH
-    raise FileNotFoundError("No dispatch recommendations CSV found.")
+
+    candidates = [path for path in [PUBLIC_DISPATCH, LOCAL_DISPATCH] if path.exists()]
+    if not candidates:
+        raise FileNotFoundError("No dispatch recommendations CSV found.")
+
+    return max(candidates, key=lambda path: path.stat().st_mtime)
 
 
 def load_top_dispatch_rows(path: Path, limit: int = 3) -> list[dict[str, str]]:
@@ -119,6 +137,7 @@ def main() -> None:
     scenario = build_scenario(rows, source_csv)
     DEFAULT_OUTPUT.parent.mkdir(parents=True, exist_ok=True)
     DEFAULT_OUTPUT.write_text(json.dumps(scenario, indent=2, ensure_ascii=False), encoding="utf-8")
+    print(f"Selected dispatch CSV: {source_csv}")
     print(f"Saved Unity scenario: {DEFAULT_OUTPUT}")
 
 

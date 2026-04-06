@@ -8,7 +8,7 @@ from pathlib import Path
 from PIL import Image, ImageDraw, ImageFont
 
 
-CAPSTONE_ROOT = Path("/Users/kenny31/Documents/Capstone")
+CAPSTONE_ROOT = Path(__file__).resolve().parents[2]
 BASE_IMAGE = CAPSTONE_ROOT / "outputs" / "module1" / "unity_module1_view.png"
 POINTS_JSON = CAPSTONE_ROOT / "outputs" / "module1" / "unity_overlay_points.json"
 OUTPUT_IMAGE = CAPSTONE_ROOT / "outputs" / "module1" / "unity_module1_annotated.png"

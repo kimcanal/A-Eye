@@ -12,6 +12,8 @@ from pathlib import Path
 import json
 from random import Random
 import sys
+import os
+import pandas as pd
 
 # 패키지 내부 스크립트 직접 실행 시 발생하는 Import 에러 방지를 위해 프로젝트 최상위 경로 추가
 sys.path.append(str(Path(__file__).resolve().parent.parent))
@@ -34,11 +36,43 @@ class Entity:
 def make_entities(s: Scenario) -> list[Entity]:
     entities: list[Entity] = []
     w, h = s.city_size
+    
+    # Try to load dispatch recommendations to distribute taxis rationally
+    dispatch_candidates = [
+        Path("outputs/local/dispatch_recommendations.csv"),
+        Path("outputs/dispatch_recommendations.csv"),
+    ]
+    dispatch_csv = next((path for path in dispatch_candidates if path.exists()), dispatch_candidates[0])
+    zone_ratios = {}
+    if dispatch_csv.exists():
+        df = pd.read_csv(dispatch_csv)
+        if not df.empty and 'dispatch_demand' in df.columns and 'zone_id' in df.columns:
+            total_dd = df['dispatch_demand'].sum()
+            if total_dd > 0:
+                zone_ratios = {row['zone_id']: row['dispatch_demand'] / total_dd for _, row in df.iterrows()}
 
     for i in range(s.passengers):
         entities.append(Entity(f"p{i+1}", "passenger", RNG.randrange(w), RNG.randrange(h)))
-    for i in range(s.taxis):
-        entities.append(Entity(f"t{i+1}", "taxi", RNG.randrange(w), RNG.randrange(h)))
+        
+    taxis_placed = 0
+    # Map abstract zones to grid halves (left/right)
+    # Zone A -> Left half (x < w/2), Zone B -> Right half (x >= w/2)
+    zones = ["A", "B"]
+    for zone in zones:
+        ratio = zone_ratios.get(zone, 1.0 / len(zones))
+        zone_taxi_count = int(s.taxis * ratio)
+        for _ in range(zone_taxi_count):
+            taxis_placed += 1
+            if zone == "A":
+                entities.append(Entity(f"t{taxis_placed}", "taxi", RNG.randrange(w // 2), RNG.randrange(h)))
+            else:
+                entities.append(Entity(f"t{taxis_placed}", "taxi", RNG.randrange(w // 2) + w // 2, RNG.randrange(h)))
+    
+    # Place remaining taxis randomly due to integer division
+    while taxis_placed < s.taxis:
+        taxis_placed += 1
+        entities.append(Entity(f"t{taxis_placed}", "taxi", RNG.randrange(w), RNG.randrange(h)))
+
     for vehicle_kind in s.regular_vehicle_types:
         for i in range(s.vehicles_per_type):
             entities.append(Entity(f"{vehicle_kind[:2]}{i+1}", vehicle_kind, RNG.randrange(w), RNG.randrange(h)))

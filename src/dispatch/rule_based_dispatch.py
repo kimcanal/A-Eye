@@ -31,20 +31,27 @@ def build_dispatch_frame(cfg: dict) -> pd.DataFrame:
 
     processed = pd.read_csv(processed_csv).copy()
     processed[time_column] = pd.to_datetime(processed[time_column])
+    metadata_columns = [
+        c
+        for c in ["zone_name", "gu_name", "city_name", "full_zone_name"]
+        if c in processed.columns
+    ]
 
     if predictions_csv.exists():
         predictions = pd.read_csv(predictions_csv).copy()
         predictions[time_column] = pd.to_datetime(predictions[time_column])
         latest_prediction_time = predictions[time_column].max()
+        prediction_metadata_columns = [c for c in metadata_columns if c in predictions.columns]
+        processed_only_metadata_columns = [c for c in metadata_columns if c not in prediction_metadata_columns]
 
         latest_predictions = predictions.loc[
             predictions[time_column] == latest_prediction_time,
-            [time_column, zone_column, 'actual_call_count', 'predicted_call_count'],
+            [time_column, zone_column, 'actual_call_count', 'predicted_call_count', *prediction_metadata_columns],
         ].copy()
 
         latest_processed = processed.loc[
             processed[time_column] == latest_prediction_time,
-            [time_column, zone_column, demand_column, supply_column],
+            [time_column, zone_column, demand_column, supply_column, *processed_only_metadata_columns],
         ].copy()
 
         merged = latest_predictions.merge(
@@ -75,6 +82,11 @@ def main() -> None:
     zone_column = cfg['data']['zone_column']
 
     latest = build_dispatch_frame(cfg)
+    metadata_columns = [
+        c
+        for c in ["zone_name", "gu_name", "city_name", "full_zone_name"]
+        if c in latest.columns
+    ]
 
     latest['imbalance_score'] = latest.apply(
         lambda row: compute_imbalance_score(row['dispatch_demand'], row[supply_column]), axis=1
@@ -92,6 +104,7 @@ def main() -> None:
         [
             time_column,
             zone_column,
+            *metadata_columns,
             'demand_source',
             'observed_call_count',
             'predicted_call_count',
