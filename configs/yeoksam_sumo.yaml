@@ -39,6 +39,7 @@ visualization:
   heatmap_output: outputs/yeoksam_sumo/zone_hour_heatmap.png
   prediction_plot_output: outputs/yeoksam_sumo/actual_vs_predicted.png
   dispatch_eval_plot_output: outputs/yeoksam_sumo/dispatch_before_after.png
+  yeoksam_dashboard_output: outputs/yeoksam_sumo/yeoksam_sumo_board.png
 
 yeoksam:
   start: "2026-04-03 18:00:00"

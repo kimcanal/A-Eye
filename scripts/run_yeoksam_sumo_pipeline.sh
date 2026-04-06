@@ -17,6 +17,8 @@ export CAPSTONE_CONFIG="${ROOT_DIR}/configs/yeoksam_sumo.yaml"
 "${PYTHON_BIN}" -m src.analysis.summarize_phase1
 "${PYTHON_BIN}" -m src.analysis.evaluate_dispatch
 "${PYTHON_BIN}" -m src.visualization.plot_demand
+"${PYTHON_BIN}" -m src.visualization.plot_yeoksam_sumo_board
+"${PYTHON_BIN}" -m src.visualization.animate_yeoksam_sumo
 "${PYTHON_BIN}" -m src.dispatch.export_yeoksam_to_sumo
 
 echo "saved outputs under outputs/yeoksam_sumo"

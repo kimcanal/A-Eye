@@ -7,6 +7,8 @@ __pycache__/
 outputs/
 data/local_taxi_calls.csv
 data/seoul_public/
+legacy/data/**/*.csv
+legacy/data/**/*.json
 references/oa21223*.html
 build/
 dist/

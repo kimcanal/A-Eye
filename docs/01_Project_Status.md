@@ -1,43 +1,50 @@
-# Project Status: A-Eye (Taxi Demand Prediction & Dispatch Simulation)
+# Project Status: A-Eye
+
+## Current Active Scope
+
+The current repository is centered on **one active implementation path**:
+
+- `Yeoksam-dong 3x3 micro area`
+- `5-minute synthetic taxi demand`
+- `rule-based dispatch`
+- `before / after SUMO export`
+- `visual comparison board + motion playback`
+
+Everything else should be treated as archived or secondary.
 
 ## Assignment Requirements Mapping
 
-| Module | Requirement | Status | Implementation Detail |
+| Module | Requirement | Current Status | Current Active Interpretation |
 | :--- | :--- | :--- | :--- |
-| **Module 1** | Digital Twin / Simulation | **70%** | Unity minimal simulation exists, and SUMO route export is connected, but SUMO routing is still coarse. |
-| **Module 2** | Data Pipeline & Features | **80%** | Seoul Open API fetch/transform works. Holiday and weather scaffolding exist, but weather is still mock-generated. |
-| **Module 3** | Prediction | **75%** | RandomForest baseline is stable. ConvLSTM is implemented and runnable, but still experimental. |
-| **Module 4** | Dispatch | **80%** | Rule-based dispatch works using refreshed baseline predictions; ConvLSTM-to-dispatch is not yet the main path. |
+| **Module 1** | Digital Twin / Simulation | **Partially satisfied** | SUMO-based digital twin exists for a simplified 3x3 Yeoksam network. |
+| **Module 2** | Data Pipeline & Features | **Partially satisfied** | Synthetic 5-minute zone demand is generated and converted into dispatch inputs. |
+| **Module 3** | Prediction | **Not the active path yet** | The current Yeoksam baseline skips ML on purpose to stabilize the simulation path first. |
+| **Module 4** | Dispatch | **Satisfied for baseline demo** | Rule-based reallocation works and produces measurable before/after differences. |
 
----
+## What Is Working Right Now
 
-## What Is Working Well
+- A Yeoksam 3x3 demand table is generated at 5-minute intervals.
+- Dispatch recommendations are produced from the latest demand state.
+- `before` and `after` SUMO route/config files are exported.
+- SUMO CLI accepts the generated config files.
+- The repository also produces:
+  - a before/after summary board
+  - a motion playback GIF derived from SUMO routes
 
-### 1. Public Data Pipeline
-- Seoul public transit data can be fetched and transformed into a time-series demand table.
-- Administrative dong codes are now resolved into readable names using a Seoul dong master lookup.
-- The end-to-end public pipeline completes without manual intervention.
+## What Is Not in the Active Path
 
-### 2. Stable Baseline Path
-- A RandomForest baseline produces reproducible demand predictions.
-- Dispatch recommendations are generated from the baseline output and evaluated against a simple allocation baseline.
+These exist only as legacy or secondary work now:
 
-### 3. Experimental Spatial Path
-- A hotspot zone can be expanded into a synthetic 3x3 grid.
-- A custom ConvLSTM can train on that grid and export a SUMO route file.
+- Unity-based visual experiments
+- Seoul public-data hourly pipeline
+- ConvLSTM / public-data experimental branch
+- older public-data SUMO route generation
 
----
+## Next Practical Step
 
-## Current Gaps
+The next meaningful milestone is:
 
-- ConvLSTM predictions are not yet the main input used by the dispatch module.
-- SUMO export currently converts prediction volume into vehicle counts, but not into realistic cell-by-cell routes.
-- Weather is still mock-generated, not fetched from a real weather API.
-- Dependency reproducibility needs attention on fresh environments.
+- keep the current SUMO baseline stable
+- optionally add a simple ML baseline on top of the same Yeoksam 5-minute structure
 
-## Near-Term Next Steps
-
-- [ ] Keep the baseline path stable and reproducible.
-- [ ] Make SUMO export more spatially meaningful.
-- [ ] Replace mock weather with real external data.
-- [ ] Revisit ConvLSTM once the data granularity improves.
+That is a much better next step than expanding the repository back into multiple competing paths.
