@@ -22,15 +22,15 @@ ZONE_ROUTE_MAP = {
 }
 
 ROUTES = {
-    "north_west": "e1_0_to_2_0",
-    "north_center": "e1_1_to_2_1",
-    "north_east": "e1_2_to_2_2",
-    "middle_west": "e1_0_to_1_1",
-    "middle_center": "e0_1_to_1_1 e1_1_to_2_1",
-    "middle_east": "e0_2_to_1_2",
-    "south_west": "e0_0_to_1_0",
-    "south_center": "e0_1_to_1_1",
-    "south_east": "e0_2_to_1_2",
+    "north_west": "A0A1",
+    "north_center": "A1B1",
+    "north_east": "A2B2",
+    "middle_west": "B0B1",
+    "middle_center": "B1C1",
+    "middle_east": "B1B2",
+    "south_west": "C0B0",
+    "south_center": "C1B1",
+    "south_east": "C2B2",
 }
 
 

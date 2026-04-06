@@ -47,7 +47,7 @@ yeoksam:
   output_csv: data/yeoksam_synthetic_5min.csv
 
 sumo:
-  net_file: module1_sumo/grid3x3.net.xml
+  net_file: module1_sumo/generated_grid3x3.net.xml
   before_route_output: module1_sumo/yeoksam_before.rou.xml
   after_route_output: module1_sumo/yeoksam_after.rou.xml
   before_config_output: module1_sumo/yeoksam_before.sumocfg

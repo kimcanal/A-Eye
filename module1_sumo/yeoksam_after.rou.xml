@@ -1,15 +1,15 @@
 <?xml version="1.0" ?>
 <routes>
   <vType id="taxi" accel="2.6" decel="4.5" sigma="0.5" length="5" minGap="2.5" maxSpeed="13.89" color="255,165,0"/>
-  <route id="north_west" edges="e1_0_to_2_0"/>
-  <route id="north_center" edges="e1_1_to_2_1"/>
-  <route id="north_east" edges="e1_2_to_2_2"/>
-  <route id="middle_west" edges="e1_0_to_1_1"/>
-  <route id="middle_center" edges="e0_1_to_1_1 e1_1_to_2_1"/>
-  <route id="middle_east" edges="e0_2_to_1_2"/>
-  <route id="south_west" edges="e0_0_to_1_0"/>
-  <route id="south_center" edges="e0_1_to_1_1"/>
-  <route id="south_east" edges="e0_2_to_1_2"/>
+  <route id="north_west" edges="A0A1"/>
+  <route id="north_center" edges="A1B1"/>
+  <route id="north_east" edges="A2B2"/>
+  <route id="middle_west" edges="B0B1"/>
+  <route id="middle_center" edges="B1C1"/>
+  <route id="middle_east" edges="B1B2"/>
+  <route id="south_west" edges="C0B0"/>
+  <route id="south_center" edges="C1B1"/>
+  <route id="south_east" edges="C2B2"/>
   <vehicle id="after_B2_000" type="taxi" route="middle_center" depart="0.0"/>
   <vehicle id="after_C2_000" type="taxi" route="south_center" depart="0.0"/>
   <vehicle id="after_A2_000" type="taxi" route="north_center" depart="0.0"/>
