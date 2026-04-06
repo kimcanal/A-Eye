@@ -20,6 +20,11 @@ This folder now keeps only the actively used project documents at the top level.
 Older planning notes, meeting drafts, and previous summaries were moved into [`archive/`](archive/).
 They are kept for reference, but they are not the primary source of truth anymore.
 
+Additional legacy planning/module notes that are no longer part of the active flow also live under:
+- [`archive/legacy_modules/`](archive/legacy_modules/)
+- [`archive/legacy_planning/`](archive/legacy_planning/)
+- [`archive/meetings/`](archive/meetings/)
+
 ## Rule of Thumb
 
 - If you want to understand the **current implementation**, start with the active docs above.
