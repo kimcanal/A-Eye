@@ -1,4 +1,5 @@
 # A-Eye
+# [카카오모빌리티 - AI 기반 택시 수요 예측 및 동적 배차 시스템 (캡스톤디자인)](https://nimble-ceder-40b.notion.site/28_DT_-32317efd202c8158b35ac245c2b4dc73)
 
 Kakao Mobility capstone repository for a **Yeoksam-dong 3x3 taxi dispatch Digital Twin**.
 
@@ -73,3 +74,40 @@ bash scripts/clean_generated_outputs.sh safe
 bash scripts/clean_generated_outputs.sh intermediate
 bash scripts/clean_generated_outputs.sh all
 ```
+
+이 단계는 선택적인 고도화 단계이며, 기본 파이프라인에는 포함되지 않습니다.
+
+## Module 1 / Unity 문서
+- `docs/01_module1_compendium.md`
+- `docs/06_team_guide_module1.md`
+- `docs/07_unity_workflow_checklist.md`
+- `docs/08_module1_code_map.md`
+- `docs/18_module1_visualization_guide.md`
+
+Module 1 최소 시각화 실행:
+
+```bash
+bash scripts/run_module1.sh
+```
+
+생성 결과:
+- `outputs/module1/module1_overview.png`
+- `outputs/module1/module1_simulation.gif`
+
+Unity 실제 브리지 실행:
+
+```bash
+bash scripts/run_unity_module1_capture.sh
+
+
+.
+```
+
+생성 결과:
+- `outputs/module1/unity_module1_view.png`
+- `outputs/module1/unity_module1_annotated.png`
+- `outputs/module1/unity_module1_presentation.png`
+- `outputs/module1/unity_scenario.json`
+
+## 참고 링크
+- Notion: https://nimble-ceder-40b.notion.site/28_DT_-32317efd202c8158b35ac245c2b4dc73
