@@ -125,6 +125,9 @@ Unity 실제 브리지 실행:
 
 ```bash
 bash scripts/run_unity_module1_capture.sh
+
+
+.
 ```
 
 생성 결과:
