@@ -56,6 +56,7 @@ python3 scripts/build_gangnam_5min_prior.py --month 202603
 python3 scripts/build_nyc_context_features.py
 python3 scripts/train_nyc_baseline_model.py
 python3 scripts/train_nyc_context_model.py
+python3 scripts/build_gangnam_context_transfer.py --month 202603
 python3 scripts/plot_nyc_baseline_results.py
 ```
 
@@ -71,6 +72,7 @@ models/
 docs/NYC_BASELINE_MODEL.md
 docs/NYC_CONTEXT_FEATURES.md
 docs/NYC_CONTEXT_MODEL.md
+docs/GANGNAM_CONTEXT_TRANSFER.md
 ```
 
 ## Related Workspaces

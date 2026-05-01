@@ -1,0 +1,87 @@
+{
+  "source": "Gangnam public features + NYC context-aware taxi demand model",
+  "month": "202603",
+  "row_count": 89280,
+  "timestamp_count": 8928,
+  "context_weights": {
+    "subway_net_coefficient": 0.3122175,
+    "weather_abs_coefficient": 0.01660244,
+    "calendar_abs_coefficient": 0.02233632,
+    "subway_boost_weight": 0.31118946,
+    "weather_boost_weight": 0.01654777,
+    "calendar_boost_weight": 0.02226277,
+    "max_context_boost": 0.35
+  },
+  "calendar_note": "US federal holidays are used in NYC context training. Gangnam transfer currently uses weekend/calendar proxy because no Korean holiday table is present in the Gangnam feature CSV.",
+  "safe_claim": "Relative Gangnam demand heatmap signal, not exact taxi pickup count.",
+  "outputs": {
+    "five_min_csv": "data/processed/demand/gangnam_context_transfer_5min_202603.csv",
+    "latest_json": "data/processed/demand/latest_context_transfer_prediction.json",
+    "summary_json": "data/processed/model/gangnam_context_transfer_summary_202603.json",
+    "report": "docs/GANGNAM_CONTEXT_TRANSFER.md"
+  },
+  "latest_top_dongs": [
+    {
+      "rank": 1,
+      "dong_name": "역삼1동",
+      "included_in_3d_map": true,
+      "relative_score": 1.0,
+      "context_transfer_5min_prior": 0.0226914358,
+      "context_multiplier": 1.31118946,
+      "public_transit_signal": 1.0,
+      "top_reasons": [
+        "NYC context model: subway ridership was the strongest added signal",
+        "Gangnam local transit/subway pressure is high",
+        "Gangnam hourly public-feature prior is high"
+      ]
+    },
+    {
+      "rank": 2,
+      "dong_name": "논현1동",
+      "included_in_3d_map": true,
+      "relative_score": 0.41457599,
+      "context_transfer_5min_prior": 0.0094073246,
+      "context_multiplier": 1.17723384,
+      "public_transit_signal": 0.56953676,
+      "top_reasons": [
+        "NYC context model: subway ridership was the strongest added signal"
+      ]
+    },
+    {
+      "rank": 3,
+      "dong_name": "삼성2동",
+      "included_in_3d_map": true,
+      "relative_score": 0.30951815,
+      "context_transfer_5min_prior": 0.0070234112,
+      "context_multiplier": 1.11215009,
+      "public_transit_signal": 0.36039166,
+      "top_reasons": [
+        "NYC context model: subway ridership was the strongest added signal"
+      ]
+    },
+    {
+      "rank": 4,
+      "dong_name": "압구정동",
+      "included_in_3d_map": false,
+      "relative_score": 0.25847129,
+      "context_transfer_5min_prior": 0.0058650846,
+      "context_multiplier": 1.07029625,
+      "public_transit_signal": 0.22589534,
+      "top_reasons": [
+        "NYC context model: subway ridership was the strongest added signal"
+      ]
+    },
+    {
+      "rank": 5,
+      "dong_name": "대치4동",
+      "included_in_3d_map": true,
+      "relative_score": 0.24091982,
+      "context_transfer_5min_prior": 0.0054668166,
+      "context_multiplier": 1.05509082,
+      "public_transit_signal": 0.17703306,
+      "top_reasons": [
+        "NYC context model: subway ridership was the strongest added signal"
+      ]
+    }
+  ]
+}
