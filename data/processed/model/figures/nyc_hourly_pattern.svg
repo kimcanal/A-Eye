@@ -1,0 +1,90 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="520" viewBox="0 0 920 520">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <style>
+    text { font-family: Arial, sans-serif; fill: #111827; }
+    .title { font-size: 22px; font-weight: 700; }
+    .subtitle { font-size: 13px; fill: #6b7280; }
+    .label { font-size: 12px; fill: #6b7280; }
+    .tick { font-size: 11px; fill: #6b7280; }
+  </style>
+<text x="40" y="42" class="title">NYC Hourly Taxi Demand Pattern</text>
+<text x="40" y="64" class="subtitle">Average Manhattan zone pickups per 5-minute bucket, 2025-01 through 2026-03.</text>
+<line x1="76" y1="398.0" x2="856" y2="398.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="66" y="402.0" text-anchor="end" class="tick">0.0</text>
+<line x1="76" y1="336.0" x2="856" y2="336.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="66" y="340.0" text-anchor="end" class="tick">2.4</text>
+<line x1="76" y1="274.0" x2="856" y2="274.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="66" y="278.0" text-anchor="end" class="tick">4.7</text>
+<line x1="76" y1="212.0" x2="856" y2="212.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="66" y="216.0" text-anchor="end" class="tick">7.1</text>
+<line x1="76" y1="150.0" x2="856" y2="150.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="66" y="154.0" text-anchor="end" class="tick">9.4</text>
+<line x1="76" y1="88.0" x2="856" y2="88.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="66" y="92.0" text-anchor="end" class="tick">11.8</text>
+<text x="76.0" y="422" text-anchor="middle" class="tick">0</text>
+<text x="177.73913043478262" y="422" text-anchor="middle" class="tick">3</text>
+<text x="279.47826086956525" y="422" text-anchor="middle" class="tick">6</text>
+<text x="381.2173913043478" y="422" text-anchor="middle" class="tick">9</text>
+<text x="482.95652173913044" y="422" text-anchor="middle" class="tick">12</text>
+<text x="584.695652173913" y="422" text-anchor="middle" class="tick">15</text>
+<text x="686.4347826086956" y="422" text-anchor="middle" class="tick">18</text>
+<text x="788.1739130434783" y="422" text-anchor="middle" class="tick">21</text>
+<text x="889.9130434782609" y="422" text-anchor="middle" class="tick"></text>
+<line x1="76" y1="398" x2="856" y2="398" stroke="#1f2937" stroke-width="1"/>
+<line x1="76" y1="88" x2="76" y2="398" stroke="#1f2937" stroke-width="1"/>
+<polyline points="76.00,335.43 109.91,365.47 143.83,378.74 177.74,384.94 211.65,384.35 245.57,374.23 279.48,341.20 313.39,279.19 347.30,232.66 381.22,232.33 415.13,237.54 449.04,229.10 482.96,217.14 516.87,210.92 550.78,196.11 584.70,183.19 618.61,177.60 652.52,136.85 686.43,116.18 720.35,156.00 754.26,172.52 788.17,162.99 822.09,190.82 856.00,253.26" fill="none" stroke="#2563eb" stroke-width="3"/>
+<circle cx="76.0" cy="335.4252695735701" r="3.5" fill="#2563eb"/>
+<circle cx="109.91304347826087" cy="365.466199703331" r="3.5" fill="#2563eb"/>
+<circle cx="143.82608695652175" cy="378.74218268523754" r="3.5" fill="#2563eb"/>
+<circle cx="177.73913043478262" cy="384.94273607079253" r="3.5" fill="#2563eb"/>
+<circle cx="211.65217391304347" cy="384.35245814543583" r="3.5" fill="#2563eb"/>
+<circle cx="245.56521739130434" cy="374.23077282715417" r="3.5" fill="#2563eb"/>
+<circle cx="279.47826086956525" cy="341.1962903616557" r="3.5" fill="#2563eb"/>
+<circle cx="313.3913043478261" cy="279.1881213367959" r="3.5" fill="#2563eb"/>
+<circle cx="347.30434782608694" cy="232.65893683669177" r="3.5" fill="#2563eb"/>
+<circle cx="381.2173913043478" cy="232.3269055036786" r="3.5" fill="#2563eb"/>
+<circle cx="415.1304347826087" cy="237.53663522881345" r="3.5" fill="#2563eb"/>
+<circle cx="449.04347826086956" cy="229.1014582686938" r="3.5" fill="#2563eb"/>
+<circle cx="482.95652173913044" cy="217.137789602982" r="3.5" fill="#2563eb"/>
+<circle cx="516.8695652173913" cy="210.91615486294998" r="3.5" fill="#2563eb"/>
+<circle cx="550.7826086956522" cy="196.11177368145908" r="3.5" fill="#2563eb"/>
+<circle cx="584.695652173913" cy="183.18626821773302" r="3.5" fill="#2563eb"/>
+<circle cx="618.6086956521739" cy="177.59707411201174" r="3.5" fill="#2563eb"/>
+<circle cx="652.5217391304348" cy="136.84681590792212" r="3.5" fill="#2563eb"/>
+<circle cx="686.4347826086956" cy="116.18181818181824" r="3.5" fill="#2563eb"/>
+<circle cx="720.3478260869565" cy="155.99659128098983" r="3.5" fill="#2563eb"/>
+<circle cx="754.2608695652174" cy="172.5164676830487" r="3.5" fill="#2563eb"/>
+<circle cx="788.1739130434783" cy="162.98506029012367" r="3.5" fill="#2563eb"/>
+<circle cx="822.0869565217391" cy="190.81771853841613" r="3.5" fill="#2563eb"/>
+<circle cx="856.0" cy="253.258055330055" r="3.5" fill="#2563eb"/>
+<polyline points="76.00,181.95 109.91,223.56 143.83,274.37 177.74,315.10 211.65,350.02 245.57,376.87 279.48,369.55 313.39,356.69 347.30,331.39 381.22,293.52 415.13,258.15 449.04,230.67 482.96,210.12 516.87,199.31 550.78,201.65 584.70,200.18 618.61,189.17 652.52,177.91 686.43,169.54 720.35,188.09 754.26,219.72 788.17,224.41 822.09,221.04 856.00,237.84" fill="none" stroke="#dc2626" stroke-width="3"/>
+<circle cx="76.0" cy="181.94510347289815" r="3.5" fill="#dc2626"/>
+<circle cx="109.91304347826087" cy="223.5623323798554" r="3.5" fill="#dc2626"/>
+<circle cx="143.82608695652175" cy="274.37103183879566" r="3.5" fill="#dc2626"/>
+<circle cx="177.73913043478262" cy="315.1002086884082" r="3.5" fill="#dc2626"/>
+<circle cx="211.65217391304347" cy="350.02147237960037" r="3.5" fill="#dc2626"/>
+<circle cx="245.56521739130434" cy="376.87121247540153" r="3.5" fill="#dc2626"/>
+<circle cx="279.47826086956525" cy="369.5454417946353" r="3.5" fill="#dc2626"/>
+<circle cx="313.3913043478261" cy="356.6884507329596" r="3.5" fill="#dc2626"/>
+<circle cx="347.30434782608694" cy="331.3881901912198" r="3.5" fill="#dc2626"/>
+<circle cx="381.2173913043478" cy="293.5155368732441" r="3.5" fill="#dc2626"/>
+<circle cx="415.1304347826087" cy="258.1515647380344" r="3.5" fill="#dc2626"/>
+<circle cx="449.04347826086956" cy="230.67201917723216" r="3.5" fill="#dc2626"/>
+<circle cx="482.95652173913044" cy="210.11769856213263" r="3.5" fill="#dc2626"/>
+<circle cx="516.8695652173913" cy="199.30559888472837" r="3.5" fill="#dc2626"/>
+<circle cx="550.7826086956522" cy="201.65353473960704" r="3.5" fill="#dc2626"/>
+<circle cx="584.695652173913" cy="200.17520475690563" r="3.5" fill="#dc2626"/>
+<circle cx="618.6086956521739" cy="189.16810255058888" r="3.5" fill="#dc2626"/>
+<circle cx="652.5217391304348" cy="177.91065925985745" r="3.5" fill="#dc2626"/>
+<circle cx="686.4347826086956" cy="169.53609119385922" r="3.5" fill="#dc2626"/>
+<circle cx="720.3478260869565" cy="188.0929534722606" r="3.5" fill="#dc2626"/>
+<circle cx="754.2608695652174" cy="219.71762035710796" r="3.5" fill="#dc2626"/>
+<circle cx="788.1739130434783" cy="224.40558655893645" r="3.5" fill="#dc2626"/>
+<circle cx="822.0869565217391" cy="221.03784018123167" r="3.5" fill="#dc2626"/>
+<circle cx="856.0" cy="237.83704453011111" r="3.5" fill="#dc2626"/>
+<rect x="690" y="88" width="160" height="54" fill="#ffffff" stroke="#e5e7eb" rx="6"/>
+<circle cx="712" cy="108" r="5" fill="#2563eb"/><text x="726" y="113" class="label">weekday</text>
+<circle cx="712" cy="130" r="5" fill="#dc2626"/><text x="726" y="135" class="label">weekend</text>
+<text x="410" y="454" text-anchor="middle" class="label">Hour of day</text>
+<text x="22" y="250" transform="rotate(-90 22 250)" text-anchor="middle" class="label">Avg zone pickups / 5min</text>
+</svg>

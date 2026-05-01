@@ -31,3 +31,10 @@ available in the public dataset.
 - `models/nyc_baseline_ridge_model.json`
 - `data/processed/model/nyc_baseline_metrics.json`
 - `data/processed/model/nyc_baseline_prediction_sample.csv`
+
+## Figures
+
+- `data/processed/model/figures/nyc_baseline_metrics.svg`
+- `data/processed/model/figures/nyc_hourly_pattern.svg`
+- `data/processed/model/figures/nyc_actual_vs_predicted.svg`
+- `data/processed/model/figures/nyc_error_by_zone_type.svg`
