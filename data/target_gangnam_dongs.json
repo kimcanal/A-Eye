@@ -1,0 +1,74 @@
+{
+  "description": "Gangnam micro-area target administrative dongs for A-Eye demand features.",
+  "basis": [
+    "A-Eye/data/processed/gangnam_ultimate_dataset.csv",
+    "__yeoksam_taxi/public/dongs.geojson"
+  ],
+  "notes": [
+    "transit_dong_code is the Seoul public-transport TPSS administrative dong ID used in the OD files.",
+    "gangnam_dataset_codes are the codes observed in gangnam_ultimate_dataset.csv.",
+    "included_in_3d_map is false for Apgujeong-dong because the current __yeoksam_taxi 3D map uses 9 dongs and excludes it."
+  ],
+  "dongs": [
+    {
+      "dong_name": "신사동",
+      "transit_dong_code": "11230510",
+      "gangnam_dataset_codes": ["11680510"],
+      "included_in_3d_map": true
+    },
+    {
+      "dong_name": "논현1동",
+      "transit_dong_code": "11230520",
+      "gangnam_dataset_codes": ["11680521"],
+      "included_in_3d_map": true
+    },
+    {
+      "dong_name": "논현2동",
+      "transit_dong_code": "11230530",
+      "gangnam_dataset_codes": ["11680531"],
+      "included_in_3d_map": true
+    },
+    {
+      "dong_name": "삼성1동",
+      "transit_dong_code": "11230580",
+      "gangnam_dataset_codes": ["11680580"],
+      "included_in_3d_map": true
+    },
+    {
+      "dong_name": "삼성2동",
+      "transit_dong_code": "11230590",
+      "gangnam_dataset_codes": ["11680590"],
+      "included_in_3d_map": true
+    },
+    {
+      "dong_name": "대치4동",
+      "transit_dong_code": "11230630",
+      "gangnam_dataset_codes": ["11680630"],
+      "included_in_3d_map": true
+    },
+    {
+      "dong_name": "역삼1동",
+      "transit_dong_code": "11230640",
+      "gangnam_dataset_codes": ["11680640"],
+      "included_in_3d_map": true
+    },
+    {
+      "dong_name": "역삼2동",
+      "transit_dong_code": "11230650",
+      "gangnam_dataset_codes": ["11230650", "11680650"],
+      "included_in_3d_map": true
+    },
+    {
+      "dong_name": "압구정동",
+      "transit_dong_code": "11230770",
+      "gangnam_dataset_codes": ["11680545"],
+      "included_in_3d_map": false
+    },
+    {
+      "dong_name": "청담동",
+      "transit_dong_code": "11230780",
+      "gangnam_dataset_codes": ["11680565"],
+      "included_in_3d_map": true
+    }
+  ]
+}

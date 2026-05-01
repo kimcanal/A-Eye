@@ -1,70 +1,72 @@
 # A-Eye
-# [카카오모빌리티 - AI 기반 택시 수요 예측 및 동적 배차 시스템 (캡스톤디자인)](https://nimble-ceder-40b.notion.site/28_DT_-32317efd202c8158b35ac245c2b4dc73)
 
-Kakao Mobility capstone repository for a **Yeoksam-dong 3x3 taxi dispatch Digital Twin**.
+Data-first workspace for the Kakao Mobility capstone:
 
-This branch keeps **one active path only**:
-- `Yeoksam 3x3 SUMO baseline`
-- `5-minute synthetic demand`
-- `rule-based dispatch`
-- `before / after comparison`
+> AI-based taxi demand prediction and dynamic dispatch for a Gangnam micro area.
 
-Everything else has been moved into `legacy/` or `docs/archive/`.
+This repository has been reset to keep the active work data-first.
+The current work starts from real and open datasets only.
 
-## Start Here
+## Current Position
 
-Run the current baseline:
+We do not have exact Kakao Taxi call logs, exact pickup longitude/latitude, or
+exact Gangnam taxi pickup counts.
 
-```bash
-bash scripts/run_yeoksam_sumo_pipeline.sh
-```
+So the project target is:
 
-Main outputs:
-- `outputs/yeoksam_sumo/dispatch_recommendations.csv`
-- `outputs/yeoksam_sumo/dispatch_comparison.csv`
-- `outputs/yeoksam_sumo/dispatch_evaluation.json`
-- `outputs/yeoksam_sumo/yeoksam_sumo_board.png`
-- `outputs/yeoksam_sumo/yeoksam_sumo_motion.gif`
-- `module1_sumo/yeoksam_before.sumocfg`
-- `module1_sumo/yeoksam_after.sumocfg`
+- predict relative demand rise by Gangnam administrative dong or micro-zone
+- show the result as a 5-minute or 1-hour-ahead heatmap
+- use the heatmap as the input signal for dispatch-priority visualization
 
-## Active Folders
+The project should not claim exact passenger-count prediction for Gangnam.
 
-- `configs/`
-  - active config only
-- `src/`
-  - active pipeline code
-- `scripts/`
-  - active entry script only
-- `module1_sumo/`
-  - active SUMO files only
-- `docs/`
-  - active docs only
-- `data/`
-  - active generated input data
-- `outputs/`
-  - active generated outputs
+## Current Data
 
-## Archived
-- `legacy/`
-- `docs/archive/`
+- `data/processed/gangnam_ultimate_dataset.csv`
+  - Gangnam dong-hour public-data feature table
+  - living population by gender/age
+  - weather
+  - business category counts
+  - weekday/weekend
+  - subway daily-average alighting proxy
+  - average traffic speed
+- `data/processed/transit/`
+  - Gangnam/Yeoksam-area Seoul public-transport OD and subway hourly profiles
+  - generated from local raw files in `../a-eye-raw-data/seoul-raw`
+- `data/processed/demand/`
+  - Gangnam hourly relative demand and 5-minute heatmap prior
+  - uses 15 months of NYC TLC Manhattan taxi data as a temporal-shape prior
+  - full NYC collection workspace lives in `../a-eye-us-taxi-transfer`
 
-## What To Read First
+## Intended Pipeline
 
-- [docs/README.md](docs/README.md)
-- [docs/01_Project_Status.md](docs/01_Project_Status.md)
-- [docs/03_SUMO_Simulation.md](docs/03_SUMO_Simulation.md)
-- [docs/22_Yeoksam_SUMO_Baseline.md](docs/22_Yeoksam_SUMO_Baseline.md)
+1. Validate and document the Gangnam feature dataset.
+2. Build a proxy/relative demand score for Gangnam.
+3. Use NYC TLC taxi data to demonstrate real `t -> t+5min` demand labels.
+4. Train or sanity-check a temporal model on real 5-minute taxi pickup patterns.
+5. Apply the framing to Gangnam as relative demand heatmap prediction.
+6. Export heatmap JSON for the Three.js digital twin in `../__yeoksam_taxi`.
 
-## Cleanup
-
-If generated files get noisy:
+## Useful Commands
 
 ```bash
-bash scripts/clean_generated_outputs.sh safe
-bash scripts/clean_generated_outputs.sh intermediate
-bash scripts/clean_generated_outputs.sh all
+python3 scripts/profile_gangnam_dataset.py
+python3 scripts/build_gangnam_transit_profile.py --month 202603
+python3 scripts/build_gangnam_5min_prior.py --month 202603
 ```
 
-## 참고 링크
-- Notion: https://nimble-ceder-40b.notion.site/28_DT_-32317efd202c8158b35ac245c2b4dc73
+The profile outputs are written to:
+
+```text
+data/processed/transit/
+docs/GANGNAM_TRANSIT_COLLECTION.md
+data/processed/demand/
+docs/GANGNAM_5MIN_PRIOR.md
+```
+
+## Related Workspaces
+
+- `../a-eye-raw-data`: collected Seoul public raw data snapshots
+- `../a-eye-us-taxi-transfer`: NYC TLC real 5-minute taxi-demand transfer data
+- `../__yeoksam_taxi`: Three.js digital-twin visualization
+- `../A-Eye_legacy_backup_20260501_230111`: backup of the removed old A-Eye state

@@ -1,0 +1,147 @@
+{
+  "source": "gangnam_hourly_public_features_x_nyc_tlc_5min_slot_ratio",
+  "timestamp": "2026-03-31 23:55:00",
+  "description": "5-minute relative demand prior for Gangnam dongs. Not exact taxi pickup count.",
+  "dongs": [
+    {
+      "rank": 1,
+      "dong_name": "역삼1동",
+      "included_in_3d_map": true,
+      "relative_score": 1.0,
+      "raw_5min_score": 0.0199008805,
+      "hourly_relative_demand": 0.29100713,
+      "nyc_slot_ratio": 0.06838623,
+      "top_reasons": [
+        "local transit pressure",
+        "subway station pressure",
+        "NYC 5-minute temporal shape prior"
+      ]
+    },
+    {
+      "rank": 2,
+      "dong_name": "논현1동",
+      "included_in_3d_map": true,
+      "relative_score": 0.46174996,
+      "raw_5min_score": 0.0091892307,
+      "hourly_relative_demand": 0.13437253,
+      "nyc_slot_ratio": 0.06838623,
+      "top_reasons": [
+        "local transit pressure",
+        "subway station pressure",
+        "NYC 5-minute temporal shape prior"
+      ]
+    },
+    {
+      "rank": 3,
+      "dong_name": "삼성2동",
+      "included_in_3d_map": true,
+      "relative_score": 0.36491202,
+      "raw_5min_score": 0.0072620705,
+      "hourly_relative_demand": 0.106192,
+      "nyc_slot_ratio": 0.06838623,
+      "top_reasons": [
+        "local transit pressure",
+        "subway station pressure",
+        "NYC 5-minute temporal shape prior"
+      ]
+    },
+    {
+      "rank": 4,
+      "dong_name": "압구정동",
+      "included_in_3d_map": false,
+      "relative_score": 0.31664581,
+      "raw_5min_score": 0.0063015305,
+      "hourly_relative_demand": 0.09214619,
+      "nyc_slot_ratio": 0.06838623,
+      "top_reasons": [
+        "local transit pressure",
+        "subway station pressure",
+        "NYC 5-minute temporal shape prior"
+      ]
+    },
+    {
+      "rank": 5,
+      "dong_name": "대치4동",
+      "included_in_3d_map": true,
+      "relative_score": 0.29939748,
+      "raw_5min_score": 0.0059582734,
+      "hourly_relative_demand": 0.0871268,
+      "nyc_slot_ratio": 0.06838623,
+      "top_reasons": [
+        "local transit pressure",
+        "subway station pressure",
+        "NYC 5-minute temporal shape prior"
+      ]
+    },
+    {
+      "rank": 6,
+      "dong_name": "논현2동",
+      "included_in_3d_map": true,
+      "relative_score": 0.25577233,
+      "raw_5min_score": 0.0050900945,
+      "hourly_relative_demand": 0.07443157,
+      "nyc_slot_ratio": 0.06838623,
+      "top_reasons": [
+        "local transit pressure",
+        "subway station pressure",
+        "NYC 5-minute temporal shape prior"
+      ]
+    },
+    {
+      "rank": 7,
+      "dong_name": "신사동",
+      "included_in_3d_map": true,
+      "relative_score": 0.22251747,
+      "raw_5min_score": 0.0044282936,
+      "hourly_relative_demand": 0.06475417,
+      "nyc_slot_ratio": 0.06838623,
+      "top_reasons": [
+        "local transit pressure",
+        "subway station pressure",
+        "NYC 5-minute temporal shape prior"
+      ]
+    },
+    {
+      "rank": 8,
+      "dong_name": "청담동",
+      "included_in_3d_map": true,
+      "relative_score": 0.19148782,
+      "raw_5min_score": 0.0038107762,
+      "hourly_relative_demand": 0.05572432,
+      "nyc_slot_ratio": 0.06838623,
+      "top_reasons": [
+        "local transit pressure",
+        "subway station pressure",
+        "NYC 5-minute temporal shape prior"
+      ]
+    },
+    {
+      "rank": 9,
+      "dong_name": "역삼2동",
+      "included_in_3d_map": true,
+      "relative_score": 0.16897036,
+      "raw_5min_score": 0.003362659,
+      "hourly_relative_demand": 0.04917158,
+      "nyc_slot_ratio": 0.06838623,
+      "top_reasons": [
+        "local transit pressure",
+        "subway station pressure",
+        "NYC 5-minute temporal shape prior"
+      ]
+    },
+    {
+      "rank": 10,
+      "dong_name": "삼성1동",
+      "included_in_3d_map": true,
+      "relative_score": 0.15488868,
+      "raw_5min_score": 0.0030824211,
+      "hourly_relative_demand": 0.04507371,
+      "nyc_slot_ratio": 0.06838623,
+      "top_reasons": [
+        "local transit pressure",
+        "subway station pressure",
+        "NYC 5-minute temporal shape prior"
+      ]
+    }
+  ]
+}
