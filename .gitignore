@@ -1,6 +1,6 @@
 __pycache__/
 .python-packages/
 .venv/
+.ipynb_checkpoints/
 outputs/
 data/raw/
-
