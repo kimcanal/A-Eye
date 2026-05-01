@@ -53,7 +53,9 @@ The project should not claim exact passenger-count prediction for Gangnam.
 python3 scripts/profile_gangnam_dataset.py
 python3 scripts/build_gangnam_transit_profile.py --month 202603
 python3 scripts/build_gangnam_5min_prior.py --month 202603
+python3 scripts/build_nyc_context_features.py
 python3 scripts/train_nyc_baseline_model.py
+python3 scripts/train_nyc_context_model.py
 python3 scripts/plot_nyc_baseline_results.py
 ```
 
@@ -67,6 +69,8 @@ docs/GANGNAM_5MIN_PRIOR.md
 data/processed/model/
 models/
 docs/NYC_BASELINE_MODEL.md
+docs/NYC_CONTEXT_FEATURES.md
+docs/NYC_CONTEXT_MODEL.md
 ```
 
 ## Related Workspaces

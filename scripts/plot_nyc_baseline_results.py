@@ -10,6 +10,7 @@ from xml.sax.saxutils import escape
 ROOT_DIR = Path(__file__).resolve().parents[1]
 WORKSPACE_DIR = ROOT_DIR.parent
 METRICS_PATH = ROOT_DIR / "data" / "processed" / "model" / "nyc_baseline_metrics.json"
+CONTEXT_METRICS_PATH = ROOT_DIR / "data" / "processed" / "model" / "nyc_context_metrics.json"
 PREDICTION_SAMPLE_PATH = (
     ROOT_DIR / "data" / "processed" / "model" / "nyc_baseline_prediction_sample.csv"
 )
@@ -122,6 +123,56 @@ def draw_metric_bars(payload: dict[str, object]) -> Path:
             body.append(f'<text x="{x + bar_w / 2}" y="{y0 + panel_h + 22}" text-anchor="middle" class="tick">{MODEL_LABELS[model]}</text>')
     body.append('<text x="40" y="480" class="subtitle">Ridge improves RMSE and ranking overlap against the two simple baselines.</text>')
     path = FIGURE_DIR / "nyc_baseline_metrics.svg"
+    write_svg(path, "\n".join(body), width, height)
+    return path
+
+
+def draw_context_comparison(baseline_payload: dict[str, object]) -> Path | None:
+    if not CONTEXT_METRICS_PATH.exists():
+        return None
+    context_payload = json.loads(CONTEXT_METRICS_PATH.read_text(encoding="utf-8"))
+    baseline = baseline_payload["metrics"]["ridge_model"]
+    context = context_payload["metrics"]["context_ridge_model"]
+    baseline_top5 = baseline_payload["top5_overlap"]["ridge_model"]
+    context_top5 = context_payload["top5_overlap"]["context_ridge_model"]
+    panels = [
+        ("RMSE lower is better", "rmse"),
+        ("sMAPE lower is better", "smape"),
+        ("R2 higher is better", "r2"),
+        ("Top-5 overlap higher is better", "top5"),
+    ]
+    width, height = 920, 520
+    left, top = 72, 92
+    panel_w, panel_h, gap = 174, 300, 28
+    body = [
+        '<text x="40" y="42" class="title">Baseline vs Context-Aware Model</text>',
+        '<text x="40" y="64" class="subtitle">Context features add NYC weather, US holiday, and Manhattan subway ridership signals.</text>',
+    ]
+    for panel_index, (title, key) in enumerate(panels):
+        x0 = left + panel_index * (panel_w + gap)
+        if key == "top5":
+            values = {"Baseline": float(baseline_top5), "Context": float(context_top5)}
+        else:
+            values = {"Baseline": float(baseline[key]), "Context": float(context[key])}
+        max_value = max(values.values()) * 1.12
+        body.append(f'<text x="{x0}" y="{top - 20}" class="label">{escape(title)}</text>')
+        body.append(f'<line x1="{x0}" y1="{top + panel_h}" x2="{x0 + panel_w}" y2="{top + panel_h}" stroke="{COLORS["axis"]}" stroke-width="1"/>')
+        for tick in range(5):
+            y = top + panel_h - tick * panel_h / 4
+            v = max_value * tick / 4
+            body.append(f'<line x1="{x0}" y1="{y}" x2="{x0 + panel_w}" y2="{y}" stroke="{COLORS["grid"]}" stroke-width="1"/>')
+            body.append(f'<text x="{x0 - 8}" y="{y + 4}" text-anchor="end" class="tick">{v:.2f}</text>')
+        for index, (label, value) in enumerate(values.items()):
+            bar_w = 54
+            bar_h = scale(value, 0, max_value, 0, panel_h)
+            x = x0 + 26 + index * 74
+            y = top + panel_h - bar_h
+            color = "#2563eb" if label == "Baseline" else "#7c3aed"
+            body.append(f'<rect x="{x}" y="{y}" width="{bar_w}" height="{bar_h}" fill="{color}" rx="4"/>')
+            body.append(f'<text x="{x + bar_w / 2}" y="{y - 8}" text-anchor="middle" class="tick">{value:.3f}</text>')
+            body.append(f'<text x="{x + bar_w / 2}" y="{top + panel_h + 22}" text-anchor="middle" class="tick">{label}</text>')
+    body.append('<text x="40" y="480" class="subtitle">Context improves RMSE/sMAPE/R2 slightly; 5-minute ranking overlap is nearly unchanged.</text>')
+    path = FIGURE_DIR / "nyc_context_comparison.svg"
     write_svg(path, "\n".join(body), width, height)
     return path
 
@@ -249,6 +300,7 @@ def update_report(paths: list[Path]) -> None:
         "- `data/processed/model/figures/nyc_hourly_pattern.svg`",
         "- `data/processed/model/figures/nyc_actual_vs_predicted.svg`",
         "- `data/processed/model/figures/nyc_error_by_zone_type.svg`",
+        "- `data/processed/model/figures/nyc_context_comparison.svg`",
         "",
     ]
     if marker in report:
@@ -267,6 +319,9 @@ def main() -> None:
         draw_prediction_scatter(prediction_sample),
         draw_error_by_zone_type(prediction_sample),
     ]
+    context_comparison = draw_context_comparison(metrics)
+    if context_comparison:
+        paths.append(context_comparison)
     update_report(paths)
     print(json.dumps({"figures": [str(path.relative_to(ROOT_DIR)) for path in paths]}, indent=2))
 

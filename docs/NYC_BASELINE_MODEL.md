@@ -38,3 +38,4 @@ available in the public dataset.
 - `data/processed/model/figures/nyc_hourly_pattern.svg`
 - `data/processed/model/figures/nyc_actual_vs_predicted.svg`
 - `data/processed/model/figures/nyc_error_by_zone_type.svg`
+- `data/processed/model/figures/nyc_context_comparison.svg`

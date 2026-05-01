@@ -1,0 +1,85 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="920" height="520" viewBox="0 0 920 520">
+  <rect width="100%" height="100%" fill="#ffffff"/>
+  <style>
+    text { font-family: Arial, sans-serif; fill: #111827; }
+    .title { font-size: 22px; font-weight: 700; }
+    .subtitle { font-size: 13px; fill: #6b7280; }
+    .label { font-size: 12px; fill: #6b7280; }
+    .tick { font-size: 11px; fill: #6b7280; }
+  </style>
+<text x="40" y="42" class="title">Baseline vs Context-Aware Model</text>
+<text x="40" y="64" class="subtitle">Context features add NYC weather, US holiday, and Manhattan subway ridership signals.</text>
+<text x="72" y="72" class="label">RMSE lower is better</text>
+<line x1="72" y1="392" x2="246" y2="392" stroke="#1f2937" stroke-width="1"/>
+<line x1="72" y1="392.0" x2="246" y2="392.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="64" y="396.0" text-anchor="end" class="tick">0.00</text>
+<line x1="72" y1="317.0" x2="246" y2="317.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="64" y="321.0" text-anchor="end" class="tick">0.79</text>
+<line x1="72" y1="242.0" x2="246" y2="242.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="64" y="246.0" text-anchor="end" class="tick">1.59</text>
+<line x1="72" y1="167.0" x2="246" y2="167.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="64" y="171.0" text-anchor="end" class="tick">2.38</text>
+<line x1="72" y1="92.0" x2="246" y2="92.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="64" y="96.0" text-anchor="end" class="tick">3.18</text>
+<rect x="98" y="124.14285714285717" width="54" height="267.85714285714283" fill="#2563eb" rx="4"/>
+<text x="125.0" y="116.14285714285717" text-anchor="middle" class="tick">2.837</text>
+<text x="125.0" y="414" text-anchor="middle" class="tick">Baseline</text>
+<rect x="172" y="124.45363089473238" width="54" height="267.5463691052676" fill="#7c3aed" rx="4"/>
+<text x="199.0" y="116.45363089473238" text-anchor="middle" class="tick">2.834</text>
+<text x="199.0" y="414" text-anchor="middle" class="tick">Context</text>
+<text x="274" y="72" class="label">sMAPE lower is better</text>
+<line x1="274" y1="392" x2="448" y2="392" stroke="#1f2937" stroke-width="1"/>
+<line x1="274" y1="392.0" x2="448" y2="392.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="266" y="396.0" text-anchor="end" class="tick">0.00</text>
+<line x1="274" y1="317.0" x2="448" y2="317.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="266" y="321.0" text-anchor="end" class="tick">0.22</text>
+<line x1="274" y1="242.0" x2="448" y2="242.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="266" y="246.0" text-anchor="end" class="tick">0.44</text>
+<line x1="274" y1="167.0" x2="448" y2="167.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="266" y="171.0" text-anchor="end" class="tick">0.66</text>
+<line x1="274" y1="92.0" x2="448" y2="92.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="266" y="96.0" text-anchor="end" class="tick">0.87</text>
+<rect x="300" y="124.14285714285717" width="54" height="267.85714285714283" fill="#2563eb" rx="4"/>
+<text x="327.0" y="116.14285714285717" text-anchor="middle" class="tick">0.780</text>
+<text x="327.0" y="414" text-anchor="middle" class="tick">Baseline</text>
+<rect x="374" y="132.81504335372057" width="54" height="259.18495664627943" fill="#7c3aed" rx="4"/>
+<text x="401.0" y="124.81504335372057" text-anchor="middle" class="tick">0.755</text>
+<text x="401.0" y="414" text-anchor="middle" class="tick">Context</text>
+<text x="476" y="72" class="label">R2 higher is better</text>
+<line x1="476" y1="392" x2="650" y2="392" stroke="#1f2937" stroke-width="1"/>
+<line x1="476" y1="392.0" x2="650" y2="392.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="468" y="396.0" text-anchor="end" class="tick">0.00</text>
+<line x1="476" y1="317.0" x2="650" y2="317.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="468" y="321.0" text-anchor="end" class="tick">0.25</text>
+<line x1="476" y1="242.0" x2="650" y2="242.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="468" y="246.0" text-anchor="end" class="tick">0.49</text>
+<line x1="476" y1="167.0" x2="650" y2="167.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="468" y="171.0" text-anchor="end" class="tick">0.74</text>
+<line x1="476" y1="92.0" x2="650" y2="92.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="468" y="96.0" text-anchor="end" class="tick">0.98</text>
+<rect x="502" y="124.2316106421934" width="54" height="267.7683893578066" fill="#2563eb" rx="4"/>
+<text x="529.0" y="116.2316106421934" text-anchor="middle" class="tick">0.875</text>
+<text x="529.0" y="414" text-anchor="middle" class="tick">Baseline</text>
+<rect x="576" y="124.14285714285717" width="54" height="267.85714285714283" fill="#7c3aed" rx="4"/>
+<text x="603.0" y="116.14285714285717" text-anchor="middle" class="tick">0.875</text>
+<text x="603.0" y="414" text-anchor="middle" class="tick">Context</text>
+<text x="678" y="72" class="label">Top-5 overlap higher is better</text>
+<line x1="678" y1="392" x2="852" y2="392" stroke="#1f2937" stroke-width="1"/>
+<line x1="678" y1="392.0" x2="852" y2="392.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="670" y="396.0" text-anchor="end" class="tick">0.00</text>
+<line x1="678" y1="317.0" x2="852" y2="317.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="670" y="321.0" text-anchor="end" class="tick">0.17</text>
+<line x1="678" y1="242.0" x2="852" y2="242.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="670" y="246.0" text-anchor="end" class="tick">0.35</text>
+<line x1="678" y1="167.0" x2="852" y2="167.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="670" y="171.0" text-anchor="end" class="tick">0.52</text>
+<line x1="678" y1="92.0" x2="852" y2="92.0" stroke="#e5e7eb" stroke-width="1"/>
+<text x="670" y="96.0" text-anchor="end" class="tick">0.69</text>
+<rect x="704" y="124.14285714285717" width="54" height="267.85714285714283" fill="#2563eb" rx="4"/>
+<text x="731.0" y="116.14285714285717" text-anchor="middle" class="tick">0.618</text>
+<text x="731.0" y="414" text-anchor="middle" class="tick">Baseline</text>
+<rect x="778" y="124.249454533353" width="54" height="267.750545466647" fill="#7c3aed" rx="4"/>
+<text x="805.0" y="116.249454533353" text-anchor="middle" class="tick">0.618</text>
+<text x="805.0" y="414" text-anchor="middle" class="tick">Context</text>
+<text x="40" y="480" class="subtitle">Context improves RMSE/sMAPE/R2 slightly; 5-minute ranking overlap is nearly unchanged.</text>
+</svg>

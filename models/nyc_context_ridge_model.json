@@ -1,0 +1,227 @@
+{
+  "type": "context_ridge_regression",
+  "alpha": 25.0,
+  "features": [
+    "pickup_count",
+    "lag_t_minus_5",
+    "lag_t_minus_15",
+    "lag_t_minus_60",
+    "rolling_avg_prev_1h",
+    "avg_passenger_count",
+    "avg_trip_distance_miles",
+    "is_weekend",
+    "is_morning_commute",
+    "is_lunch",
+    "is_evening_peak",
+    "is_late_night",
+    "hour_sin",
+    "hour_cos",
+    "slot_sin",
+    "slot_cos",
+    "dow_sin",
+    "dow_cos",
+    "temperature_2m_c",
+    "precipitation_mm",
+    "wind_speed_10m_kmh",
+    "is_rain",
+    "subway_ridership",
+    "subway_transfers",
+    "log_subway_ridership",
+    "is_us_federal_holiday",
+    "is_day_before_holiday",
+    "is_day_after_holiday",
+    "zone_type_business_core",
+    "zone_type_commercial_mixed",
+    "zone_type_residential_mixed",
+    "zone_type_transit_hub",
+    "zone_type_urban_mixed"
+  ],
+  "intercept": 5.6926906666660075,
+  "coefficients": [
+    2.5241581538578703,
+    1.3342937071865035,
+    0.5666878396828336,
+    -0.49707287225399166,
+    3.843554104124013,
+    0.012492125841658526,
+    -0.003921536850111002,
+    0.012324540588500825,
+    0.000599991218019513,
+    0.003193844254040841,
+    -0.039800203785456935,
+    -0.13710992582572373,
+    0.18578347012707017,
+    0.014536622309327524,
+    -0.025117457635561887,
+    -0.009855053417801551,
+    -0.02665174059778169,
+    0.011037723531582761,
+    -0.003148768366340077,
+    -0.0016433630183381419,
+    0.011061397372204492,
+    0.0007489084857811814,
+    0.23358066916064163,
+    -0.04385940459827393,
+    0.12249623751829761,
+    0.007271321505508235,
+    0.0019352847379862216,
+    -0.0008051728103426119,
+    0.029725104242391488,
+    -0.004384693625203637,
+    0.05371114189208947,
+    0.022100066356280486,
+    -0.051695956791863895
+  ],
+  "feature_mean": [
+    5.694448666666666,
+    5.694387333333333,
+    5.691104,
+    5.692596,
+    5.693455259594469,
+    0.5955406404073601,
+    5.158839697063589,
+    0.28640333333333334,
+    0.124792,
+    0.08328866666666666,
+    0.16687733333333332,
+    0.207814,
+    -0.0005925231161823663,
+    -0.0004795515869329356,
+    -0.00036796278207974856,
+    0.00014310809387789406,
+    -0.0013055625803180984,
+    0.0008114220407663338,
+    10.445238533334551,
+    0.11803613333346027,
+    10.187037333328389,
+    0.13660066666666668,
+    82124.74213666667,
+    1925.8659526666668,
+    10.751985163579164,
+    0.033052,
+    0.031030666666666668,
+    0.033341333333333334,
+    0.101716,
+    0.13019533333333333,
+    0.07264333333333334,
+    0.014554666666666667,
+    0.6808906666666666
+  ],
+  "feature_std": [
+    8.231284977644012,
+    8.232621305804855,
+    8.228187928944044,
+    8.23652524513882,
+    7.809018885877404,
+    0.5998271170848732,
+    423.6476791767764,
+    0.4520801521774467,
+    0.3304829144362127,
+    0.27631804984350505,
+    0.37286631512230106,
+    0.40574294990953047,
+    0.7072607527740022,
+    0.7069523651071546,
+    0.7071927115516151,
+    0.7070207301461108,
+    0.7067023770760125,
+    0.7075092842682272,
+    11.39373810103665,
+    0.5813973207426761,
+    5.411314857704494,
+    0.34342528231460684,
+    68780.05510006066,
+    1697.364197754551,
+    1.3027691356638165,
+    0.17877238404058862,
+    0.17340058936902303,
+    0.17952629006668908,
+    0.30227447021496284,
+    0.3365182142349061,
+    0.2595501482449165,
+    0.11976154785788633,
+    0.46613149079508365
+  ],
+  "top_standardized_coefficients": [
+    {
+      "feature": "rolling_avg_prev_1h",
+      "standardized_coefficient": 3.8435541
+    },
+    {
+      "feature": "pickup_count",
+      "standardized_coefficient": 2.52415815
+    },
+    {
+      "feature": "lag_t_minus_5",
+      "standardized_coefficient": 1.33429371
+    },
+    {
+      "feature": "lag_t_minus_15",
+      "standardized_coefficient": 0.56668784
+    },
+    {
+      "feature": "lag_t_minus_60",
+      "standardized_coefficient": -0.49707287
+    },
+    {
+      "feature": "subway_ridership",
+      "standardized_coefficient": 0.23358067
+    },
+    {
+      "feature": "hour_sin",
+      "standardized_coefficient": 0.18578347
+    },
+    {
+      "feature": "is_late_night",
+      "standardized_coefficient": -0.13710993
+    },
+    {
+      "feature": "log_subway_ridership",
+      "standardized_coefficient": 0.12249624
+    },
+    {
+      "feature": "zone_type_residential_mixed",
+      "standardized_coefficient": 0.05371114
+    },
+    {
+      "feature": "zone_type_urban_mixed",
+      "standardized_coefficient": -0.05169596
+    },
+    {
+      "feature": "subway_transfers",
+      "standardized_coefficient": -0.0438594
+    },
+    {
+      "feature": "is_evening_peak",
+      "standardized_coefficient": -0.0398002
+    },
+    {
+      "feature": "zone_type_business_core",
+      "standardized_coefficient": 0.0297251
+    },
+    {
+      "feature": "dow_sin",
+      "standardized_coefficient": -0.02665174
+    },
+    {
+      "feature": "slot_sin",
+      "standardized_coefficient": -0.02511746
+    },
+    {
+      "feature": "zone_type_transit_hub",
+      "standardized_coefficient": 0.02210007
+    },
+    {
+      "feature": "hour_cos",
+      "standardized_coefficient": 0.01453662
+    },
+    {
+      "feature": "avg_passenger_count",
+      "standardized_coefficient": 0.01249213
+    },
+    {
+      "feature": "is_weekend",
+      "standardized_coefficient": 0.01232454
+    }
+  ]
+}

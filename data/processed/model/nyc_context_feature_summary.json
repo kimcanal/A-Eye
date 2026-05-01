@@ -1,0 +1,29 @@
+{
+  "sources": {
+    "weather": "Open-Meteo Historical Weather API",
+    "subway": "MTA Subway Hourly Ridership: Beginning 2025",
+    "holidays": "US federal holiday calendar",
+    "taxi": "NYC TLC Yellow Taxi Trip Records"
+  },
+  "raw_feature_rows": {
+    "weather_hourly": 10920,
+    "subway_hourly": 10920,
+    "holiday_hourly": 10920
+  },
+  "enriched_training_parquet": "a-eye-us-taxi-transfer/processed/nyc_yellow_2025_01_2026_03_manhattan_context_training_tplus5.parquet",
+  "stats": {
+    "rows": 9041691,
+    "first_pickup_5min": "2025-01-01 00:00:00",
+    "last_pickup_5min": "2026-03-31 23:50:00",
+    "hour_count": 10920,
+    "avg_temperature_2m_c": 10.047,
+    "rain_rows": 1235376,
+    "avg_subway_ridership_hour": 82421.7322,
+    "holiday_rows": 278208
+  },
+  "join_quality": {
+    "missing_weather_rows": 0,
+    "missing_subway_rows": 828,
+    "missing_holiday_rows": 0
+  }
+}
